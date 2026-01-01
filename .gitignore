@@ -1,0 +1,22 @@
+# Python environment and artifacts
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+.pytest_cache/
+
+# React/Node dependancies
+moon-app/.env.local
+
+# Operating System files
+Thumbs.db
+
+# Ignore the large astronomy data
+backend/de421.bsp
+de421.bsp
+
+# Ignore React dependencies
+moon-app/node_modules/
+moon-app/dist/
+
+# System files
+.DS_Store
