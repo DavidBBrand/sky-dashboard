@@ -11,7 +11,7 @@ moon-app/.env.local
 Thumbs.db
 
 # Ignore the large astronomy data
-backend/de421.bsp
+backend/*.bsp
 de421.bsp
 
 # Ignore React dependencies
