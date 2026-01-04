@@ -1,3 +1,46 @@
 body {
-    background-image: linear-gradient(black, black, darkgray, gray)
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  /* A sophisticated mesh gradient using your tan base color */
+  background-color: #bdb5a9;
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(36, 28%, 75%, 1) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(210, 30%, 85%, 1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(30, 20%, 60%, 1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(180, 15%, 80%, 1) 0px, transparent 50%);
+  background-attachment: fixed; /* Keeps the gradient still while scrolling */
+  
+  /* Smooth font rendering is key for the "premium" look */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.weather-card {
+    /* The "Glass" effect */
+    background: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
+    backdrop-filter: blur(12px);          /* Frosted blur effect */
+    -webkit-backdrop-filter: blur(12px);   /* Safari support */
+    
+    /* Border and Shadow */
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    border-radius: 24px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    
+    /* Layout */
+    padding: 25px;
+    min-width: 280px;
+    flex: 1; /* Allows it to grow/shrink in your horizontal row */
+    max-width: 350px;
+    
+    /* Text styling */
+    color: #ffffff;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for interactivity */
+.weather-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
 }

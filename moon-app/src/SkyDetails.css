@@ -1,0 +1,51 @@
+.sky-details-card {
+    /* Glass Effect */
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    
+    /* Border & Shape */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    
+    /* Layout */
+    padding: 25px;
+    min-width: 350px; /* Slightly wider to accommodate planet grid */
+    flex: 2;          /* Takes up more space in the flex row */
+    display: flex;
+    flex-direction: column;
+    
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.sky-details-card:hover {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.planet-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.planet-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+}
+
+.status-tag {
+    font-size: 0.65rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.status-visible { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+.status-set { background: rgba(255, 255, 255, 0.1); color: rgba(255,255,255,0.4); }
