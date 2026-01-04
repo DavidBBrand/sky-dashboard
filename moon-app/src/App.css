@@ -1,42 +1,46 @@
+/* 1. Global Layout */
 #root {
-  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* 2. Theme Variables (Synchronized with index.css) */
+:root {
+  --bg-color: #bdb5a9;
+  --mesh-1: hsla(36, 28%, 75%, 1);
+  --mesh-2: hsla(210, 30%, 85%, 1);
+  --card-bg: rgba(255, 255, 255, 0.25);
+  --card-border: rgba(255, 255, 255, 0.4);
+  --text-main: #3e3323;
+  --text-sub: rgba(62, 51, 35, 0.7);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+[data-theme='night'] {
+  --bg-color: #0b0e14;
+  --mesh-1: hsla(220, 40%, 15%, 1);
+  --mesh-2: hsla(260, 30%, 10%, 1);
+  --card-bg: rgba(15, 20, 30, 0.4);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --text-main: #ffffff;
+  --text-sub: rgba(255, 255, 255, 0.6);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 4s linear;
-  }
+/* 3. The Toggle Button Styling */
+.theme-toggle-btn {
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text-main);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
 }

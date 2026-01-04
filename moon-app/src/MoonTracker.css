@@ -1,12 +1,12 @@
 .moon-card {
-    /* Glass Effect */
-    background: rgba(255, 255, 255, 0.12);
+    /* Use variables for dynamic themes */
+    background: var(--card-bg);
+    color: var(--text-main);
+    border: 1px solid var(--card-border);
+    
+    /* Keep the glass effects */
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    
-    /* Border & Glow */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 24px;
     
     /* Layout */
     padding: 25px;
@@ -17,24 +17,29 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height:300px;
+    min-height: 300px;
+    border-radius: 24px;
     
-    /* Interactive shadow */
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15), 
-                inset 0 0 20px rgba(255, 255, 255, 0.05); /* Soft inner glow */
-    color: white;
+    /* Interactive shadow - adjusted to be subtle in light, deep in dark */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1); 
+    
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .moon-card:hover {
     transform: scale(1.06);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 15px 45px 0 rgba(0, 0, 0, 0.25);
+    /* Hover glow also uses a variable now */
+    border: 1px solid var(--text-sub);
+    box-shadow: 0 15px 45px 0 rgba(0, 0, 0, 0.2);
 }
 
 .moon-percentage {
     font-size: 3rem;
     font-weight: 200;
     margin: 10px 0;
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    /* Text shadow that adapts slightly */
+    text-shadow: 0 0 15px var(--card-border);
 }
+
+/* You can remove the .dark-glass class now, 
+   as .moon-card handles it automatically! */

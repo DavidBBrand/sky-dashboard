@@ -100,4 +100,5 @@ def get_moon():
     sun, moon = eph['sun'], eph['moon']
     m = earth.at(t).observe(moon).apparent()
     illumination = m.fraction_illuminated(sun)
-    return {"illumination": round(illumination * 100, 2)}
+    print(illumination)
+    return {"illumination": round(illumination * 100, 2)} 

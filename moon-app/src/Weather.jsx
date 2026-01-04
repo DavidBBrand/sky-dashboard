@@ -1,5 +1,4 @@
 import "./Weather.css";
-
 import React, { useState, useEffect } from "react";
 
 const Weather = () => {
@@ -25,14 +24,14 @@ const Weather = () => {
       });
   }, []);
 
-  // 1. If there's an error, show this instead of crashing
+  // Error State - kept simple but themed
   if (error)
-    return <p style={{ color: "#ff4444" }}>Weather currently unavailable</p>;
+    return <div className="weather-card" style={{ color: "#ff4444" }}>Weather currently unavailable</div>;
 
-  // 2. While waiting for Python, show nothing or a loader
-  if (!weather) return <p style={{ color: "#555" }}>Loading sky data...</p>;
+  // Loading State - uses theme colors
+  if (!weather) 
+    return <div className="weather-card" style={{ color: "var(--text-sub)" }}>Loading sky data...</div>;
 
-  // 3. Only if weather is NOT null, render the UI
   return (
     <div className="weather-card">
       <p
@@ -40,16 +39,34 @@ const Weather = () => {
           fontSize: "0.8rem",
           textTransform: "uppercase",
           letterSpacing: "2px",
-          opacity: 0.8
+          color: "var(--text-sub)" // Dynamic color
         }}
       >
         Current Weather
       </p>
-      <h2 style={{ fontSize: "3rem", margin: "10px 0" }}>{weather.temp}°</h2>
-      <p style={{ fontSize: "1.1rem", fontWeight: "500" }}>
+      
+      <h2 style={{ 
+        fontSize: "5rem", 
+        margin: "10px 0", 
+        color: "var(--text-main)", 
+        fontWeight: "200" 
+      }}>
+        {weather.temp}°F
+      </h2>
+      
+      <p style={{ 
+        fontSize: "1.1rem", 
+        fontWeight: "500", 
+        color: "var(--text-main)" 
+      }}>
         {weather.description}
       </p>
-      <div style={{ marginTop: "15px", fontSize: "0.9rem", opacity: 0.7 }}>
+      
+      <div style={{ 
+        marginTop: "15px", 
+        fontSize: "0.9rem", 
+        color: "var(--text-sub)" 
+      }}>
         Wind: {weather.windspeed} mph
       </div>
     </div>

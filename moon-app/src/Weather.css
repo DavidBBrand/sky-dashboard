@@ -1,28 +1,16 @@
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  /* A sophisticated mesh gradient using your tan base color */
-  background-color: #bdb5a9;
-  background-image: 
-    radial-gradient(at 0% 0%, hsla(36, 28%, 75%, 1) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(210, 30%, 85%, 1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, hsla(30, 20%, 60%, 1) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, hsla(180, 15%, 80%, 1) 0px, transparent 50%);
-  background-attachment: fixed; /* Keeps the gradient still while scrolling */
-  
-  /* Smooth font rendering is key for the "premium" look */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/* 1. Remove the body section entirely - it is now handled by index.css */
+
 .weather-card {
-    /* The "Glass" effect */
-    background: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
-    backdrop-filter: blur(12px);          /* Frosted blur effect */
-    -webkit-backdrop-filter: blur(12px);   /* Safari support */
+    /* Use variables for dynamic themes */
+    background: var(--card-bg);
+    color: var(--text-main);
+    border: 1px solid var(--card-border);
     
-    /* Border and Shadow */
-    border: 1px solid rgba(255, 255, 255, 0.2); 
+    /* The "Glass" effect */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    /* Shape and Shadow */
     border-radius: 24px;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
     
@@ -30,18 +18,37 @@ body {
     padding: 25px;
     min-width: 280px;
     min-height: 300px;
-    flex: 1; /* Allows it to grow/shrink in your horizontal row */
+    flex: 1;
     max-width: 350px;
     
-    /* Text styling */
-    color: #ffffff;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.8s ease;
 }
 
 /* Hover effect for interactivity */
 .weather-card:hover {
     transform: scale(1.06);
     box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid var(--text-sub);
 }
+
+/* Helper for sub-text inside the weather card */
+.weather-label {
+    color: var(--text-sub);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.weather-temp {
+    font-size: 3rem;
+    font-weight: 200;
+    margin: 10px 0;
+}
+
+/* You can remove .dark-glass as the variables now handle the switch! */
