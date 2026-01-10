@@ -23,6 +23,15 @@ const SkyDetails = ({ skyData }) => {
     Neptune: "🔵"
   };
 
+  const getAltitudeDescription = (alt) => {
+    const altitude = parseFloat(alt);
+    if (altitude <= 0) return "Below Horizon";
+    if (altitude < 10) return "Near Horizon";
+    if (altitude < 30) return "Low in Sky";
+    if (altitude < 60) return "Mid Sky";
+    return "High Overhead";
+  }
+
   return (
     <div className="sky-details-card">
       <div
@@ -184,7 +193,7 @@ const SkyDetails = ({ skyData }) => {
                     marginTop: "4px"
                   }}
                 >
-                  {info.altitude}°
+                 {getAltitudeDescription(info.altitude)} ({info.altitude}°)
                 </div>
               </div>
             ))}
