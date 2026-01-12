@@ -17,6 +17,19 @@ function App() {
     name: "Franklin, TN"
   });
 
+  const getLocalSolarTime = () => {
+    const now = new Date();
+    // Get UTC time in hours
+    const utcHours = now.getUTCHours() + now.getUTCMinutes() / 60;
+    // Every 15 degrees is 1 hour of offset
+    const solarOffset = location.lon / 15;
+    let localSolarHours = (utcHours + solarOffset + 24) % 24;
+
+    const h = Math.floor(localSolarHours);
+    const m = Math.floor((localSolarHours - h) * 60);
+
+    return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
+  };
   // UI THEME EFFECT
   useEffect(() => {
     document.documentElement.setAttribute(
@@ -65,31 +78,46 @@ function App() {
       </button>
 
       {/* 2. Header Section */}
-      <header
-        style={{
-          textAlign: "center",
-          marginBottom: "20px",
-          fontSize: "1.5rem"
-        }}
-      >
-        <h1 style={{ margin: 0, fontWeight: "200", color: "var(--text-main)" }}>
-          SKY DASHBOARD
-        </h1>
-       
-        <p
+      <header style={{ textAlign: "center", marginBottom: "30px" }}>
+        <h1
           style={{
-            color: "var(--text-sub)",
-            letterSpacing: "2px",
-            fontSize: "1.0rem",
+            margin: 0,
             fontWeight: "200",
-            marginTop: "10px",
-            textTransform: "uppercase"
+            color: "var(--text-main)",
+            fontSize: "2.5rem"
           }}
         >
-          FOR {location.name} ({Math.abs(location.lat).toFixed(2)}°
-          {location.lat >= 0 ? "N" : "S"},{Math.abs(location.lon).toFixed(2)}°
-          {location.lon >= 0 ? "E" : "W"})
-        </p>
+          SKY DASHBOARD
+        </h1>
+        <div
+          style={{
+            marginTop: "10px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "5px",
+            color: "var(--text-sub)",
+            letterSpacing: "2px",
+            fontSize: "0.9rem",
+            textTransform: "uppercase",
+            fontWeight: "300"
+          }}
+        >
+          <span>{location.name}</span>
+          <span>
+            {Math.abs(location.lat).toFixed(2)}°{location.lat >= 0 ? "N" : "S"}{" "}
+            //
+            {Math.abs(location.lon).toFixed(2)}°{location.lon >= 0 ? "E" : "W"}
+          </span>
+          <span
+            style={{
+              color: "var(--accent-color)",
+              fontSize: "0.8rem",
+              fontWeight: "500"
+            }}
+          >
+            Solar Time: {getLocalSolarTime()}
+          </span>
+        </div>
       </header>
 
       {/* 3. NEW: Location Search Bar */}
