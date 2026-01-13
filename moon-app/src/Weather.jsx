@@ -1,17 +1,15 @@
 import "./Weather.css";
 import React, { useState, useEffect } from "react";
 
-const Weather = ({ lat, lon }) => {
-  // 1. Accept props from App.jsx
+// 1. Accept onDataReceived from App.jsx
+const Weather = ({ lat, lon, onDataReceived }) => {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    // 2. Set weather to null to trigger a "Loading" state when coordinates change
     setWeather(null);
     setError(false);
 
-    // 3. Dynamic URL using template literals
     fetch(`http://127.0.0.1:8000/weather?lat=${lat}&lon=${lon}`)
       .then((res) => {
         if (!res.ok) throw new Error("Server error");
@@ -22,13 +20,18 @@ const Weather = ({ lat, lon }) => {
           setError(true);
         } else {
           setWeather(data);
+          // 2. Send the data back up to App.jsx so the header can see it
+          if (onDataReceived) {
+            onDataReceived(data);
+          }
         }
       })
       .catch((err) => {
         console.error(err);
         setError(true);
       });
-  }, [lat, lon]); // 4. This is the "Listener" that triggers the update
+    // 3. Add onDataReceived to the dependency array
+  }, [lat, lon, onDataReceived]);
 
   if (error)
     return (

@@ -9,6 +9,8 @@ function App() {
   const [isNight, setIsNight] = useState(true);
   const [skyData, setSkyData] = useState(null);
 
+  const [weatherData, setWeatherData] = useState(null);
+
   // 1. DYNAMIC LOCATION STATE
   // Initialized to your Franklin, TN coordinates
   const [location, setLocation] = useState({
@@ -29,6 +31,16 @@ function App() {
     const m = Math.floor((localSolarHours - h) * 60);
 
     return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
+  };
+
+  const formatTime = (isoString) => {
+    if (!isoString || isoString === "Unknown") return "--:--";
+    const date = new Date(isoString);
+    return date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true
+    });
   };
   // UI THEME EFFECT
   useEffect(() => {
@@ -105,8 +117,8 @@ function App() {
           <span>{location.name}</span>
           <span>
             {Math.abs(location.lat).toFixed(2)}°{location.lat >= 0 ? "N" : "S"}{" "}
-            /{" "}
-            {Math.abs(location.lon).toFixed(2)}°{location.lon >= 0 ? "E" : "W"}
+            / {Math.abs(location.lon).toFixed(2)}°
+            {location.lon >= 0 ? "E" : "W"}
           </span>
           <span
             style={{
@@ -118,6 +130,10 @@ function App() {
             Solar Time: {getLocalSolarTime()}
           </span>
           {/* Standard Time Offset */}
+          {/* Local Standard Time Section */}
+          <span className="time-display">
+            LOCAL: {weatherData ? formatTime(weatherData.local_time) : "--:--"}
+          </span>
           <span
             style={{ fontSize: "0.7rem", opacity: 0.6, letterSpacing: "1px" }}
           >
@@ -146,7 +162,11 @@ function App() {
       >
         {/* Pass location to these components so they can fetch their own weather/moon data too! */}
         <MoonTracker lat={location.lat} lon={location.lon} />
-        <Weather lat={location.lat} lon={location.lon} />
+        <Weather
+          lat={location.lat}
+          lon={location.lon}
+          onDataReceived={setWeatherData}
+        />
 
         {skyData ? (
           <SkyDetails skyData={skyData} />
