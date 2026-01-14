@@ -11,6 +11,20 @@ function App() {
 
   const [weatherData, setWeatherData] = useState(null);
 
+
+  // turn weather description into a css class name. IS not used right now need to set up css
+  const getWeatherClass = (description) => {
+    if (!description) return "clear";
+    const desc = description.toLowerCase();
+
+    if (desc.includes("rain") || desc.includes("drizzle")) return "rain";
+    if (desc.includes("cloud")) return "cloudy";
+    if (desc.includes("snow")) return "snow";
+    if (desc.includes("fog") || desc.includes("mist") || desc.includes("haze")) return "fog";
+    if (desc.includes("thunder")) return "thunderstorm";
+    return "clear";
+  }
+
   // 1. DYNAMIC LOCATION STATE
   // Initialized to your Franklin, TN coordinates
   const [location, setLocation] = useState({
@@ -71,6 +85,7 @@ function App() {
       .catch((err) => console.error("FETCH ERROR:", err));
   }, [location]); // Dependency array includes location
 
+  const weatherClass = weatherData ? getWeatherClass(weatherData.description) : "clear";
   return (
     <div
       style={{
