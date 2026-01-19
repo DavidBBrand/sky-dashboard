@@ -99,14 +99,15 @@ function App() {
       </button>
 
       {/* 2. Header Section */}
-      <header style={{ textAlign: "center", marginBottom: "30px" }}>
-        <h1
-          style={{
-            margin: 0,
-            fontWeight: "200",
-            color: "var(--text-main)",
-            fontSize: "3.5rem"
-          }}
+      <header className="rainbow-animated" style={{ textAlign: "center", marginBottom: "30px" }}>
+        <h1 
+          // className="rainbow-warm"
+          // style={{
+          //   margin: 0,
+          //   fontWeight: "200",
+          //   color: "var(--text-main)",
+          //   fontSize: "3.5rem"
+          // }}
         >
           SKY DASHBOARD
         </h1>
@@ -139,7 +140,7 @@ function App() {
             Solar Time: {getLocalSolarTime()}
           </span>
           <span
-            style={{ fontSize: "0.7rem", opacity: 0.6, letterSpacing: "1px" }}
+            // style={{ fontSize: "0.7rem", opacity: 0.6, letterSpacing: "1px" }}
           >
             UTC OFFSET: {location.lon >= 0 ? "+" : ""}
             {(location.lon / 15).toFixed(1)} HRS
