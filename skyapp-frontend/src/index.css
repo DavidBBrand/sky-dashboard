@@ -57,7 +57,7 @@ body::before {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
   
-  /* Bigger, layered stars */
+  /* night theme stars */
   background-image: 
     radial-gradient(2px 2px at 25px 35px, #fff, transparent),
     radial-gradient(2px 2px at 50px 100px, #fff, transparent),

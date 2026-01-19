@@ -63,8 +63,9 @@ const Weather = ({ lat, lon, onDataReceived }) => {
         style={{
           fontSize: "0.8rem",
           textTransform: "uppercase",
-          letterSpacing: "2px",
-          color: "var(--text-sub)"
+          letterSpacing: "3px",
+          color: "var(--text-sub)",
+          fontWeight: "500",
         }}
       >
         Current Weather

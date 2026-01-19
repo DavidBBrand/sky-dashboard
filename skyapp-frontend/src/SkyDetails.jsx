@@ -90,7 +90,7 @@ const SkyDetails = ({ skyData }) => {
               color: "#426fb7",
               fontSize: "1.2rem",
               textTransform: "uppercase",
-              letterSpacing: "1px",
+              letterSpacing: "4px",
               marginBottom: "10px"
             }}
           >
@@ -160,7 +160,7 @@ const SkyDetails = ({ skyData }) => {
           <div className="planet-grid">
             {Object.entries(planets).map(([name, info]) => (
               <div key={name} className="planet-item">
-                <div style={{ fontSize: "1.2rem", marginBottom: "5px" }}>
+                <div style={{ fontSize: "6.2rem", marginBottom: "5px" }}>
                   {planetIcons[name] || "✨"}
                 </div>
 

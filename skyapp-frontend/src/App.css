@@ -8,8 +8,8 @@
 /* 2. Theme Variables (Synchronized with index.css) */
 :root {
   --bg-color: #bdb5a9;
-  --mesh-1: hsla(36, 28%, 75%, 1);
-  --mesh-2: hsla(210, 30%, 85%, 1);
+  --mesh-1: rgb(208, 193, 171);
+  --mesh-2: rgb(223, 227, 231);
   --card-bg: rgba(255, 255, 255, 0.25);
   --card-border: rgba(255, 255, 255, 0.4);
   --text-main: #3e3323;

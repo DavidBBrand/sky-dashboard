@@ -119,12 +119,13 @@ const MoonGraphic = ({ percentage }) => {
     <div className="moon-card">
       <p
         style={{
-          fontSize: "0.7rem",
+          fontSize: "0.8rem",
           textTransform: "uppercase",
-          letterSpacing: "2px",
+          letterSpacing: "3px",
           color: "var(--text-sub)",
           marginBottom: "20px",
-          alignSelf: "flex-start"
+          alignSelf: "flex-start",
+          fontWeight: "500"
         }}
       >
         Lunar Phase
