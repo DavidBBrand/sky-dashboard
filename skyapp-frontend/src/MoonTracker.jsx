@@ -119,12 +119,12 @@ const MoonGraphic = ({ percentage }) => {
     <div className="moon-card">
       <p
         style={{
-          fontSize: "0.8rem",
+          fontSize: "1rem",
           textTransform: "uppercase",
           letterSpacing: "3px",
           color: "var(--text-sub)",
           marginBottom: "20px",
-          alignSelf: "flex-start",
+          alignSelf: "center",
           fontWeight: "500"
         }}
       >

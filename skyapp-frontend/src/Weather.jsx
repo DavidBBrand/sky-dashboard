@@ -85,7 +85,7 @@ const Weather = ({ lat, lon, onDataReceived }) => {
         </div>
         <hr></hr>
         <div className="weather-loader"></div>
-        <p className="loading-text">Synchronizing Weather...</p>
+        <p className="loading-text">Updating Weather...</p>
       </div>
     );
 
