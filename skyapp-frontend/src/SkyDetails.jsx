@@ -160,7 +160,7 @@ const SkyDetails = ({ skyData }) => {
           <div className="planet-grid">
             {Object.entries(planets).map(([name, info]) => (
               <div key={name} className="planet-item">
-                <div style={{ fontSize: "6.2rem", marginBottom: "5px" }}>
+                <div style={{ fontSize: "3.2rem", marginBottom: "5px" }}>
                   {planetIcons[name] || "✨"}
                 </div>
 
@@ -195,23 +195,24 @@ const SkyDetails = ({ skyData }) => {
                 </span>
                 <div
                   style={{
-                    fontSize: "0.8rem",
+                    fontSize: "1rem",
                     color: "var(--text-sub)",
-                    marginTop: "4px"
+                    marginTop: "4px", 
+                    opacity: 0.8
                   }}
                 >
-                  {getCompassDirection(info.azimuth)} -{" "}
-                  {getAltitudeDescription(info.altitude)} ({info.altitude}° Alt
-                  / {info.azimuth}° Az)
+                  {getCompassDirection(info.azimuth)} {" "}
+                  
+                  at {info.azimuth}° Azimuth
                 </div>
                 <div
                   style={{
-                    fontSize: "0.85rem",
+                    fontSize: "1rem",
                     color: "var(--text-sub)",
                     opacity: 0.8
                   }}
                 >
-                  {info.altitude}° Altitude / {info.azimuth}° Azimuth
+                  {info.altitude}° Altitude
                 </div>
               </div>
             ))}

@@ -33,6 +33,20 @@ const Weather = ({ lat, lon, onDataReceived }) => {
     // 3. Add onDataReceived to the dependency array
   }, [lat, lon, onDataReceived]);
 
+  const getWeatherEmoji = (description) => {
+  const desc = description.toLowerCase();
+  if (desc.includes("thunderstorm")) return "⛈️";
+  if (desc.includes("drizzle") || desc.includes("rain")) return "🌧️";
+  if (desc.includes("snow")) return "❄️";
+  if (desc.includes("clear")) return "☀️";
+  if (desc.includes("clouds")) {
+    if (desc.includes("few") || desc.includes("scattered")) return "🌤️";
+    return "☁️";
+  }
+  if (desc.includes("mist") || desc.includes("fog") || desc.includes("haze")) return "🌫️";
+  return "🌡️"; // Default emoji
+};
+
   if (error)
     return (
       <div className="weather-card" style={{ color: "#992323ff" }}>
@@ -52,6 +66,24 @@ const Weather = ({ lat, lon, onDataReceived }) => {
           justifyContent: "center"
         }}
       >
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          {/* THE PING DOT */}
+          <div className="ping-indicator"></div>
+
+          <p
+            style={{
+              fontSize: "0.8rem",
+              textTransform: "uppercase",
+              letterSpacing: "3px",
+              color: "var(--text-sub)",
+              fontWeight: "500",
+              margin: 0 // Ensure it aligns vertically with the dot
+            }}
+          >
+            Live Weather
+          </p>
+        </div>
+        <hr></hr>
         <div className="weather-loader"></div>
         <p className="loading-text">Synchronizing Weather...</p>
       </div>
@@ -65,7 +97,7 @@ const Weather = ({ lat, lon, onDataReceived }) => {
           textTransform: "uppercase",
           letterSpacing: "3px",
           color: "var(--text-sub)",
-          fontWeight: "500",
+          fontWeight: "500"
         }}
       >
         Current Weather
@@ -73,13 +105,14 @@ const Weather = ({ lat, lon, onDataReceived }) => {
 
       <h2
         style={{
-          fontSize: "4rem",
+          fontSize: "3rem",
           margin: "10px 0",
           color: "var(--text-main)",
           fontWeight: "200"
         }}
       >
         {weather.temp}°F
+        <span style={{ fontSize: "4rem" }}>{getWeatherEmoji(weather.description)}</span>
       </h2>
 
       <p

@@ -78,3 +78,36 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.ping-indicator {
+  width: 8px;
+  height: 8px;
+  background-color: #4ade80; /* "Live" Green */
+  border-radius: 50%;
+  position: relative;
+  display: inline-block;
+}
+
+/* The Ripple Effect */
+.ping-indicator::after {
+  content: '';
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  border-radius: 50%;
+  background-color: inherit;
+  animation: ping-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  70%, 100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}

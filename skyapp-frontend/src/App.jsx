@@ -111,9 +111,9 @@ function App() {
             gap: "5px",
             color: "var(--text-sub)",
             letterSpacing: "2px",
-            fontSize: "1rem",
+            fontSize: "1.0rem",
             textTransform: "uppercase",
-            fontWeight: "300"
+            fontWeight: "500"
           }}
         >
           <span>{location.name}</span>
@@ -125,7 +125,7 @@ function App() {
           <span
             style={{
               color: "var(--accent-color)",
-              fontSize: "0.8rem",
+              fontSize: "1rem",
               fontWeight: "500"
             }}
           >
@@ -173,7 +173,7 @@ function App() {
           lon={location.lon}
           onDataReceived={setWeatherData}
         />
-
+        <MapCard lat={location.lat} lon={location.lon} />
         {skyData ? (
           <SkyDetails skyData={skyData} />
         ) : (
@@ -191,7 +191,7 @@ function App() {
           </div>
         )}
 
-        <MapCard lat={location.lat} lon={location.lon} />
+        
       </div>
       <p style={{ fontSize: "0.6em", opacity: "0.4", marginTop: "40px" }}>
         Copyright © 2026 David Brand{" "}
