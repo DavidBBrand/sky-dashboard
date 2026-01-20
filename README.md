@@ -9,8 +9,8 @@ To run this application locally, you will need **two terminal windows** open (on
 You must have Node.js and Python 3.8+ installed
 
 ### Frontend Setup (React + Vite)
-Open your first terminal:
-```bash
+Open your first bash terminal:
+
 cd skyapp-frontend
 npm install
 npm run dev
