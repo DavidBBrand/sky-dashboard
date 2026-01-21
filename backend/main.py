@@ -144,10 +144,19 @@ def get_moon_details(lat: float = Query(35.92), lon: float = Query(-86.86)):
     user_location = Topos(latitude_degrees=lat, longitude_degrees=lon)
     observer = earth + user_location
 
-    # Calculate illumination
+    # 1. Calculate illumination
     sun_obj, moon = eph['sun'], eph['moon']
-    m = observer.at(t).observe(moon).apparent()
-    illumination = m.fraction_illuminated(sun_obj)
+    astrometric = observer.at(t).observe(moon)
+    apparent = astrometric.apparent()
+    
+    illumination = apparent.fraction_illuminated(sun_obj)
+
+    # 2. NEW: Calculate Altitude and Azimuth
+    alt, az, distance = apparent.altaz()
 
     # Return exactly what MoonTracker.jsx is looking for
-    return {"illumination": round(float(illumination * 100), 2)}
+    return {
+        "illumination": round(float(illumination * 100), 2),
+        "altitude": round(float(alt.degrees), 2),
+        "azimuth": round(float(az.degrees), 2)
+    }
