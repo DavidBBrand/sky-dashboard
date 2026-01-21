@@ -28,41 +28,69 @@ const MoonTracker = ({ lat, lon }) => {
       isMounted = false;
     };
   }, [lat, lon]);
-
+  const getCompassDirection = (az) => {
+    if (az === undefined) return "--";
+    const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+    // This math snaps the 360 degrees into one of the 8 buckets
+    const index = Math.round(az / 45) % 8;
+    return directions[index];
+  };
   // --- The Graphic Sub-Component ---
   const MoonGraphic = ({ percentage }) => {
-    const shadowMovement = percentage; 
+    const shadowMovement = percentage;
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', width: '100%' }}>
-        <div style={{
-          width: '120px',
-          height: '120px',
-          backgroundColor: '#fefcd7', 
-          borderRadius: '50%',
-          position: 'relative',
-          overflow: 'hidden',
-          boxShadow: '0 0 30px rgba(254, 252, 215, 0.2)',
-          border: '1px solid rgba(255,255,255,0.1)'
-        }}>
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: '#1a1a1a', 
-            borderRadius: '50%',
-            transform: `translateX(${shadowMovement}%)`, 
-            transition: 'transform 1.5s cubic-bezier(0.4, 0, 0.2, 1)',
-          }} />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "20px",
+          width: "100%"
+        }}
+      >
+        <div
+          style={{
+            width: "120px",
+            height: "120px",
+            backgroundColor: "#fefcd7",
+            borderRadius: "50%",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: "0 0 30px rgba(254, 252, 215, 0.2)",
+            border: "1px solid rgba(255,255,255,0.1)"
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "#1a1a1a",
+              borderRadius: "50%",
+              transform: `translateX(${shadowMovement}%)`,
+              transition: "transform 1.5s cubic-bezier(0.4, 0, 0.2, 1)"
+            }}
+          />
         </div>
 
-        <div style={{ textAlign: 'center' }}>
-          <h2 style={{ margin: 0, fontSize: '1.8rem', color: 'var(--text-main)' }}>
+        <div style={{ textAlign: "center" }}>
+          <h2
+            style={{ margin: 0, fontSize: "1.8rem", color: "var(--text-main)" }}
+          >
             {percentage}%
           </h2>
-          <p style={{ color: 'var(--text-sub)', textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.7rem', margin: 0 }}>
+          <p
+            style={{
+              color: "var(--text-sub)",
+              textTransform: "uppercase",
+              letterSpacing: "1px",
+              fontSize: "0.7rem",
+              margin: 0
+            }}
+          >
             Current Illumination
           </p>
         </div>
@@ -87,7 +115,14 @@ const MoonTracker = ({ lat, lon }) => {
       </p>
 
       {loading ? (
-        <p style={{ color: "var(--text-main)", fontSize: "0.8rem", opacity: 0.6, textAlign: 'center' }}>
+        <p
+          style={{
+            color: "var(--text-main)",
+            fontSize: "0.8rem",
+            opacity: 0.6,
+            textAlign: "center"
+          }}
+        >
           Updating Phase...
         </p>
       ) : moonData ? (
@@ -95,30 +130,77 @@ const MoonTracker = ({ lat, lon }) => {
           <MoonGraphic percentage={moonData.illumination} />
 
           {/* --- Technical Data Section --- */}
-          <div style={{
-            marginTop: '20px',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '10px',
-            padding: '10px 5px',
-            borderTop: '1px solid rgba(255,255,255,0.1)'
-          }}>
-            <div style={{ textAlign: 'left' }}>
-              <p style={{ color: 'var(--text-sub)', fontSize: '0.6rem', margin: 0, textTransform: 'uppercase' }}>Altitude</p>
-              <p style={{ color: moonData.altitude > 0 ? '#4ade80' : '#ff4444', fontFamily: 'monospace', margin: 0, fontSize: '0.9rem' }}>
+          <div
+            style={{
+              marginTop: "20px",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "10px",
+              padding: "10px 5px",
+              borderTop: "1px solid rgba(255,255,255,0.1)"
+            }}
+          >
+            <div style={{ textAlign: "left" }}>
+              <p
+                style={{
+                  color: "var(--text-sub)",
+                  fontSize: "0.6rem",
+                  margin: 0,
+                  textTransform: "uppercase"
+                }}
+              >
+                Altitude
+              </p>
+              <p
+                style={{
+                  color: moonData.altitude > 0 ? "#4ade80" : "#ff4444",
+                  fontFamily: "monospace",
+                  margin: 0,
+                  fontSize: "0.9rem"
+                }}
+              >
                 {moonData.altitude?.toFixed(1)}°
               </p>
             </div>
-            <div style={{ textAlign: 'right' }}>
-              <p style={{ color: 'var(--text-sub)', fontSize: '0.6rem', margin: 0, textTransform: 'uppercase' }}>Azimuth</p>
-              <p style={{ color: 'var(--text-main)', fontFamily: 'monospace', margin: 0, fontSize: '0.9rem' }}>
+            <div style={{ textAlign: "right" }}>
+              <p
+                style={{
+                  color: "var(--text-sub)",
+                  fontSize: "0.6rem",
+                  margin: 0,
+                  textTransform: "uppercase"
+                }}
+              >
+                Azimuth
+              </p>
+              <p
+                style={{
+                  color: "var(--text-main)",
+                  fontFamily: "monospace",
+                  margin: 0,
+                  fontSize: "0.9rem"
+                }}
+              >
                 {moonData.azimuth?.toFixed(1)}°
+                <span
+                  style={{
+                    color: "var(--accent-color)",
+                    marginLeft: "5px",
+                    fontWeight: "bold"
+                  }}
+                >
+                  ({getCompassDirection(moonData.azimuth)})
+                </span>
               </p>
             </div>
           </div>
         </>
       ) : (
-        <p style={{ color: "#ff4444", fontSize: "0.8rem", textAlign: 'center' }}>Data Unavailable</p>
+        <p
+          style={{ color: "#ff4444", fontSize: "0.8rem", textAlign: "center" }}
+        >
+          Data Unavailable
+        </p>
       )}
     </div>
   );
