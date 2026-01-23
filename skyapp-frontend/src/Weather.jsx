@@ -112,7 +112,7 @@ const Weather = ({ lat, lon, onDataReceived }) => {
         }}
       >
         {weather.temp}°F
-        <span style={{ fontSize: "4rem" }}>{getWeatherEmoji(weather.description)}</span>
+        <div style={{ fontSize: "4rem" }}>{getWeatherEmoji(weather.description)}</div>
       </h2>
 
       <p
