@@ -154,9 +154,10 @@ const MoonTracker = ({ lat, lon }) => {
               <p
                 style={{
                   color: moonData.altitude > 0 ? "#4ade80" : "#ff4444",
+                  textShadow: "brown 1px 1px 2px",
                   fontFamily: "monospace",
                   margin: 0,
-                  fontSize: "0.9rem"
+                  fontSize: "1.2rem"
                 }}
               >
                 {moonData.altitude?.toFixed(1)}°
@@ -178,7 +179,7 @@ const MoonTracker = ({ lat, lon }) => {
                   color: "var(--text-main)",
                   fontFamily: "monospace",
                   margin: 0,
-                  fontSize: "0.9rem"
+                  fontSize: "1.2rem"
                 }}
               >
                 {moonData.azimuth?.toFixed(1)}°
