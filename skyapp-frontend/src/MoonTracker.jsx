@@ -102,7 +102,7 @@ const MoonTracker = ({ lat, lon }) => {
     <div className="moon-card">
       <p
         style={{
-          fontSize: "0.8rem",
+          fontSize: "1.2rem",
           textTransform: "uppercase",
           letterSpacing: "3px",
           color: "var(--text-sub)",

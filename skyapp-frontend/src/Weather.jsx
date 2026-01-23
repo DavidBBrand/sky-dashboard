@@ -93,7 +93,7 @@ const Weather = ({ lat, lon, onDataReceived }) => {
     <div className="weather-card">
       <p
         style={{
-          fontSize: "0.8rem",
+          fontSize: "1.2rem",
           textTransform: "uppercase",
           letterSpacing: "3px",
           color: "var(--text-sub)",
@@ -128,7 +128,7 @@ const Weather = ({ lat, lon, onDataReceived }) => {
       <div
         style={{
           marginTop: "15px",
-          fontSize: "1.0rem",
+          fontSize: "1.4rem",
           color: "var(--text-sub)"
         }}
       >
