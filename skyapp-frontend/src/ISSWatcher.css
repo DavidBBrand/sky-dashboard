@@ -1,31 +1,86 @@
-/* This allows CSS to animate the 'angle' variable like a number */
+/* 1. Define the animateable angle for the conical sweep */
 @property --angle {
   syntax: '<angle>';
   initial-value: 0deg;
   inherits: false;
 }
 
+.iss-card {
+  background: var(--card-bg, rgba(20, 20, 25, 0.8));
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.8s ease, box-shadow 0.8s ease;
+  min-width: 200px;
+}
+
+/* 2. The Radar Sweep Text Effect */
 .iss-radar-text {
-  /* Create the radar sweep colors */
   background: conic-gradient(
     from var(--angle),
     #4ade80, 
-    #1a1a1a, 
-    #1a1a1a, 
+    var(--text-main, #ffffff), 
+    rgba(74, 222, 128, 0.2), 
     #4ade80
   );
-  
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent !important;
   display: inline-block;
-  
-  /* Animate the variable from 0 to 360 degrees */
-  animation: spin 3s linear infinite;
+  animation: radar-spin 4s linear infinite;
+  font-weight: 800;
 }
 
-@keyframes spin {
+@keyframes radar-spin {
   to {
     --angle: 360deg;
   }
+}
+
+/* 3. Proximity Alert Styling */
+.iss-card.nearby {
+  border-color: #4ade80;
+  box-shadow: 0 0 15px rgba(74, 222, 128, 0.3);
+}
+
+.proximity-alert {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #4ade80;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  animation: alert-blink 1s ease-in-out infinite;
+}
+
+@keyframes alert-blink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.98); }
+}
+
+/* 4. Connection Ping (Shared with your other components) */
+.ping-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.ping-indicator::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background-color: inherit;
+  animation: ping-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping-pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  70%, 100% { transform: scale(3.5); opacity: 0; }
 }
