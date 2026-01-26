@@ -169,7 +169,7 @@ function App() {
         }}
       >
         {/* Pass location to these components so they can fetch their own weather/moon data too! */}
-        <MoonTracker lat={location.lat} lon={location.lon} />
+        {/* <MoonTracker lat={location.lat} lon={location.lon} /> */}
         <Weather
           lat={location.lat}
           lon={location.lon}
