@@ -54,13 +54,13 @@
     rgb(236, 217, 217),
     rgb(226, 217, 169)
   );
-  text-shadow: rgb(59, 39, 39) .5px .5px .5px;
+  text-shadow: rgb(59, 48, 39) .5px .5px .5px;
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   animation: rainbow-shifty 4s linear infinite,
-    glow-pulse 4s ease-in-out infinite;
+    glow-pulse 8s ease-in-out infinite;
 }
 
 @keyframes rainbow-shifty {

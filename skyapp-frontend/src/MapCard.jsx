@@ -9,7 +9,7 @@ const MapCard = ({ lat, lon }) => {
   const zoom = 12;
   const width = 600;
   const height = 400;
-  const style = "satellite-v9"; // Matches the dark dashboard vibe
+  const style = "dark-v11"; // Matches the dark dashboard vibe
 
   // The Static API URL format:
   // https://api.mapbox.com/styles/v1/mapbox/{style}/static/{lon},{lat},{zoom}/{width}x{height}?access_token={token}
