@@ -6,8 +6,9 @@ import SkyDetails from "./SkyDetails.jsx";
 import LocationSearch from "./LocationSearch.jsx";
 import GoldenHour from "./GoldenHour.jsx";
 import MapCard from "./MapCard.jsx";
-
 import MoonGraphic2 from "./MoonGraphic2.jsx";
+import ISSWatcher from "./ISSWatcher.jsx";
+
 function App() {
   const [isNight, setIsNight] = useState(true);
   const [skyData, setSkyData] = useState(null);
@@ -176,6 +177,7 @@ function App() {
           onDataReceived={setWeatherData}
         />
         <MoonGraphic2 lat={location.lat} lon={location.lon} />
+        <ISSWatcher lat={location.lat} lon={location.lon} />
         <MapCard lat={location.lat} lon={location.lon} />
         {skyData ? (
           <SkyDetails skyData={skyData} />

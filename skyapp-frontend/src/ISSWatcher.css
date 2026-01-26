@@ -1,0 +1,31 @@
+/* This allows CSS to animate the 'angle' variable like a number */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.iss-radar-text {
+  /* Create the radar sweep colors */
+  background: conic-gradient(
+    from var(--angle),
+    #4ade80, 
+    #1a1a1a, 
+    #1a1a1a, 
+    #4ade80
+  );
+  
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  display: inline-block;
+  
+  /* Animate the variable from 0 to 360 degrees */
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    --angle: 360deg;
+  }
+}
