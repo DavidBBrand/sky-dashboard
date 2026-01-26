@@ -64,8 +64,8 @@
 
 /* 4. Connection Ping (Shared with your other components) */
 .ping-indicator {
-  width: 8px;
-  height: 8px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   position: relative;
 }
