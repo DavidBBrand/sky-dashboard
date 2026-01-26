@@ -107,7 +107,7 @@
   background-clip: text;
   color: transparent !important;
   display: inline-block;
-  animation: radar-spin2 .4s linear infinite;
+  animation: radar-spin2 2.4s linear infinite;
   font-weight: 800;
 }
 
