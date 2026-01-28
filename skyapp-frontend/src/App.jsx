@@ -104,10 +104,11 @@ function App() {
       </button>
 
       {/* 2. Header Section */}
-      <header className="rainbow-animated" style={{ textAlign: "center", marginBottom: "30px" }}>
-        <h1>
-          SKY DASHBOARD
-        </h1>
+      <header
+        className="rainbow-animated"
+        style={{ textAlign: "center", marginBottom: "30px" }}
+      >
+        <h1>SKY DASHBOARD</h1>
         <div
           style={{
             marginTop: "10px",
@@ -137,7 +138,7 @@ function App() {
             Solar Time: {getLocalSolarTime()}
           </span>
           <span
-            // style={{ fontSize: "0.7rem", opacity: 0.6, letterSpacing: "1px" }}
+          // style={{ fontSize: "0.7rem", opacity: 0.6, letterSpacing: "1px" }}
           >
             UTC OFFSET: {location.lon >= 0 ? "+" : ""}
             {(location.lon / 15).toFixed(1)} HRS
@@ -149,9 +150,7 @@ function App() {
           </span>
           {/* Only render GoldenHour if skyData actually has sun data */}
           {skyData?.sun?.phase && <GoldenHour sunData={skyData.sun} />}
-          
         </div>
-        
       </header>
 
       {/* 3. NEW: Location Search Bar */}
@@ -172,17 +171,21 @@ function App() {
         }}
       >
         {/* Pass location to these components so they can fetch their own weather/moon data too! */}
-        <MoonTracker lat={location.lat} lon={location.lon} />
+        {/* <MoonTracker lat={location.lat} lon={location.lon} /> */}
         <Weather
           lat={location.lat}
           lon={location.lon}
           onDataReceived={setWeatherData}
         />
-        <MoonGraphic2 lat={location.lat} lon={location.lon} />
+        {/* <MoonGraphic2 lat={location.lat} lon={location.lon} /> */}
         <MoonGraphic3 lat={location.lat} lon={location.lon} />
         <ISSWatcher lat={location.lat} lon={location.lon} />
         <StarlinkGrid lat={location.lat} lon={location.lon} />
-        <MapCard lat={location.lat} lon={location.lon} />
+        <MapCard
+          lat={location.lat}
+          lon={location.lon}
+          theme={isNight ? "night" : "day"}
+        />
         {skyData ? (
           <SkyDetails skyData={skyData} />
         ) : (
@@ -199,8 +202,6 @@ function App() {
             </p>
           </div>
         )}
-
-        
       </div>
       <p style={{ fontSize: "0.6em", opacity: "0.4", marginTop: "40px" }}>
         Copyright © 2026 David Brand{" "}

@@ -1,31 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./MoonGraphic2.css";
 
 const MoonGraphic3 = ({ lat, lon }) => {
   const [moonData, setMoonData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [trend, setTrend] = useState(null); // 'rising', 'setting', or null
+  const prevAlt = useRef(null);
 
   useEffect(() => {
     setLoading(true);
     let isMounted = true;
 
-    fetch(`http://127.0.0.1:8000/moon-details?lat=${lat}&lon=${lon}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (isMounted) {
-          setMoonData(data);
-          setLoading(false);
-        }
-      })
-      .catch((err) => {
-        if (isMounted) {
-          console.error("Error fetching moon data:", err);
-          setLoading(false);
-        }
-      });
+    const fetchMoonData = () => {
+      fetch(`http://127.0.0.1:8000/moon-details?lat=${lat}&lon=${lon}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (isMounted) {
+            // Calculate trend based on previous altitude
+            if (prevAlt.current !== null) {
+              setTrend(data.altitude > prevAlt.current ? "rising" : "setting");
+            }
+            prevAlt.current = data.altitude;
+            setMoonData(data);
+            setLoading(false);
+          }
+        })
+        .catch((err) => {
+          if (isMounted) {
+            console.error("Error fetching moon data:", err);
+            setLoading(false);
+          }
+        });
+    };
+
+    fetchMoonData();
+    const interval = setInterval(fetchMoonData, 30000); // Update every 30s for trend accuracy
 
     return () => {
       isMounted = false;
+      clearInterval(interval);
     };
   }, [lat, lon]);
 
@@ -36,10 +49,8 @@ const MoonGraphic3 = ({ lat, lon }) => {
     return directions[index];
   };
 
-  // --- Internal Visual Logic ---
   const LunarVisual = ({ percentage }) => {
     const isGibbous = percentage > 50;
-    // ratio: 1 at 50%, 0 at 0% or 100%
     const ratio = Math.abs(50 - percentage) / 50;
 
     return (
@@ -54,18 +65,7 @@ const MoonGraphic3 = ({ lat, lon }) => {
           boxShadow: '0 0 30px rgba(254, 252, 215, 0.15)',
           border: '1px solid rgba(255,255,255,0.05)'
         }}>
-          {/* Static Half-Shadow Layer */}
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '50%',
-            height: '100%',
-            backgroundColor: '#1a1a1a',
-            zIndex: isGibbous ? 0 : 2 
-          }} />
-
-          {/* Morphing Terminator (The "Curve") */}
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '50%', height: '100%', backgroundColor: '#1a1a1a', zIndex: isGibbous ? 0 : 2 }} />
           <div style={{
             position: 'absolute',
             top: 0,
@@ -78,17 +78,7 @@ const MoonGraphic3 = ({ lat, lon }) => {
             zIndex: isGibbous ? 2 : 1,
             transition: 'transform 1s ease-in-out'
           }} />
-          
-          {/* Static Light-Side Layer */}
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            width: '50%',
-            height: '100%',
-            backgroundColor: '#fefcd7',
-            zIndex: 1
-          }} />
+          <div style={{ position: 'absolute', top: 0, right: 0, width: '50%', height: '100%', backgroundColor: '#fefcd7', zIndex: 1 }} />
         </div>
 
         <div style={{ textAlign: 'center' }}>
@@ -137,7 +127,7 @@ const MoonGraphic3 = ({ lat, lon }) => {
             }}>
             <div style={{ textAlign: "left" }}>
               <p style={{ color: "var(--text-sub)", fontSize: "0.6rem", margin: 0, textTransform: "uppercase" }}>
-                Altitude
+                Altitude {trend === "rising" ? "↑" : trend === "setting" ? "↓" : ""}
               </p>
               <p style={{
                   color: moonData.altitude > 0 ? "#4ade80" : "#ff4444",
