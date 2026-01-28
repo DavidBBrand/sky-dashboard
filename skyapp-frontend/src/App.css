@@ -8,15 +8,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 2. Theme Variables (Synchronized with index.css) */
+/* 2. Theme Variables */
 :root {
   --bg-color: #bdb5a9;
   --mesh-1: rgb(208, 193, 171);
   --mesh-2: rgb(223, 227, 231);
   --card-bg: rgba(255, 255, 255, 0.25);
-  --card-border: rgba(255, 255, 255, 0.4);
+  --card-border: rgba(62, 51, 35, 0.2); /* Darker border for day mode visibility */
   --text-main: #3e3323;
   --text-sub: rgba(62, 51, 35, 0.7);
+  --accent-color: #008f11;
 }
 
 [data-theme="night"] {
@@ -27,10 +28,63 @@
   --card-border: rgba(255, 255, 255, 0.1);
   --text-main: #ffffff;
   --text-sub: rgba(255, 255, 255, 0.6);
+  --accent-color: #00ff2a;
 }
 
-/* 3. The Toggle Button Styling */
+/* 3. Layout Structure */
+.app-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 50px;
+}
+
+/* 4. Glassmorphism Header */
+.header-section {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  padding: 40px 0 20px 0;
+  background: transparent;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 90;
+  border-bottom: 1px solid var(--card-border);
+  margin-bottom: 30px;
+}
+
+/* 5. Dashboard Grid System */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Balanced 3-column setup */
+  gap: 25px;
+  width: 95%;
+  max-width: 1250px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+/* Span helpers for visual hierarchy */
+.grid-span-2 {
+  grid-column: span 2;
+}
+
+.grid-full-width {
+  grid-column: 1 / -1;
+}
+
+/* 6. Typography & UI Elements */
+.accent-text {
+  color: var(--accent-color);
+  transition: color 0.5s ease;
+}
+
 .theme-toggle-btn {
+  position: fixed; /* Keep it accessible while scrolling */
+  top: 20px;
+  right: 20px;
   padding: 10px 20px;
   border-radius: 30px;
   border: 1px solid var(--card-border);
@@ -38,14 +92,17 @@
   color: var(--text-main);
   cursor: pointer;
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: background 0.3s ease, color 0.3s ease;
-  font-weight: 500;
+  z-index: 100;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
 }
 
 .theme-toggle-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
+  background: var(--text-main);
+  color: var(--bg-color);
+  transform: translateY(-2px);
 }
 
 .rainbow-animated {
@@ -57,18 +114,25 @@
     rgb(236, 217, 217),
     rgb(226, 217, 169)
   );
-  text-shadow: rgb(59, 48, 39) .5px .5px .5px;
+  text-shadow: rgba(0, 0, 0, 0.1) 0.5px 0.5px 0.5px;
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: rainbow-shifty 4s linear infinite,
-    glow-pulse 8s ease-in-out infinite;
+  animation: rainbow-shifty 4s linear infinite;
 }
 
 @keyframes rainbow-shifty {
-  to {
-    background-position: 200% center;
-  }
+  to { background-position: 200% center; }
 }
 
+/* Responsive Breakpoints */
+@media (max-width: 1050px) {
+  .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+  .grid-span-2 { grid-column: span 1; }
+}
+
+@media (max-width: 700px) {
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .grid-full-width { grid-column: span 1; }
+}

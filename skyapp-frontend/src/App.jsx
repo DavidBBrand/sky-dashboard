@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import MoonTracker from "./MoonTracker.jsx";
 import Weather from "./Weather.jsx";
 import SkyDetails from "./SkyDetails.jsx";
 import LocationSearch from "./LocationSearch.jsx";
 import GoldenHour from "./GoldenHour.jsx";
 import MapCard from "./MapCard.jsx";
-import MoonGraphic2 from "./MoonGraphic2.jsx";
 import ISSWatcher from "./ISSWatcher.jsx";
 import StarlinkGrid from "./StarlinkGrid.jsx";
 import MoonGraphic3 from "./MoonGraphic3.jsx";
@@ -14,7 +12,6 @@ import MoonGraphic3 from "./MoonGraphic3.jsx";
 function App() {
   const [isNight, setIsNight] = useState(true);
   const [skyData, setSkyData] = useState(null);
-
   const [weatherData, setWeatherData] = useState(null);
 
   const [location, setLocation] = useState({
@@ -25,187 +22,85 @@ function App() {
 
   const getLocalSolarTime = () => {
     const now = new Date();
-    // Get UTC time in hours
     const utcHours = now.getUTCHours() + now.getUTCMinutes() / 60;
-    // Every 15 degrees is 1 hour of offset
     const solarOffset = location.lon / 15;
     let localSolarHours = (utcHours + solarOffset + 24) % 24;
-
     const h = Math.floor(localSolarHours);
     const m = Math.floor((localSolarHours - h) * 60);
-
     return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
   };
 
   const getLiveLocalTime = () => {
     if (!weatherData || !weatherData.utc_offset) return "--:--";
-
-    // 1. Get current UTC time from your computer
     const now = new Date();
     const utcTimestamp = now.getTime() + now.getTimezoneOffset() * 60000;
-
-    // 2. Apply the offset from the API (convert seconds to milliseconds)
     const remoteTime = new Date(utcTimestamp + weatherData.utc_offset * 1000);
-
-    return remoteTime.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true
-    });
+    return remoteTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true });
   };
-  // UI THEME EFFECT
+
   useEffect(() => {
-    document.documentElement.setAttribute(
-      "data-theme",
-      isNight ? "night" : "day"
-    );
+    document.documentElement.setAttribute("data-theme", isNight ? "night" : "day");
   }, [isNight]);
 
-  // 2. UPDATED DATA FETCH EFFECT
-  // This now runs whenever the 'location' state changes
   useEffect(() => {
-    // We clear old data so the user sees a "loading" state when switching cities
     setSkyData(null);
-
-    fetch(
-      `http://127.0.0.1:8000/sky-summary?lat=${location.lat}&lon=${location.lon}`
-    )
+    fetch(`http://127.0.0.1:8000/sky-summary?lat=${location.lat}&lon=${location.lon}`)
       .then((response) => response.json())
       .then((data) => setSkyData(data))
       .catch((err) => console.error("FETCH ERROR:", err));
-  }, [location]); // Dependency array includes location
+  }, [location]);
 
-  // const weatherClass = weatherData
-  //   ? getWeatherClass(weatherData.description)
-  //   : "clear";
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        paddingTop: "60px"
-      }}
-    >
-      {/* 1. Toggle Button */}
-      <button
-        onClick={() => setIsNight(!isNight)}
-        className="theme-toggle-btn"
-        style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          zIndex: 100
-        }}
-      >
+    <div className="app-container">
+      <button onClick={() => setIsNight(!isNight)} className="theme-toggle-btn">
         {isNight ? "🌙 Night Mode" : "☀️ Day Mode"}
       </button>
 
-      {/* 2. Header Section */}
-      <header
-        className="rainbow-animated"
-        style={{ textAlign: "center", marginBottom: "30px" }}
-      >
+      <header className="header-section">
         <h1>SKY DASHBOARD</h1>
-        <div
-          style={{
-            marginTop: "10px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "5px",
-            color: "var(--text-sub)",
-            letterSpacing: "2px",
-            fontSize: "1.0rem",
-            textTransform: "uppercase",
-            fontWeight: "500"
-          }}
-        >
+        <div className="telemetry-info">
           <span>{location.name}</span>
           <span>
-            {Math.abs(location.lat).toFixed(2)}°{location.lat >= 0 ? "N" : "S"}{" "}
-            / {Math.abs(location.lon).toFixed(2)}°
-            {location.lon >= 0 ? "E" : "W"}
+            {Math.abs(location.lat).toFixed(2)}°{location.lat >= 0 ? "N" : "S"} / {Math.abs(location.lon).toFixed(2)}°{location.lon >= 0 ? "E" : "W"}
           </span>
-          <span
-            style={{
-              color: "var(--accent-color)",
-              fontSize: "1rem",
-              fontWeight: "500"
-            }}
-          >
-            Solar Time: {getLocalSolarTime()}
-          </span>
-          <span
-          // style={{ fontSize: "0.7rem", opacity: 0.6, letterSpacing: "1px" }}
-          >
-            UTC OFFSET: {location.lon >= 0 ? "+" : ""}
-            {(location.lon / 15).toFixed(1)} HRS
-          </span>
-          {/* Standard Time Offset */}
-          {/* Local Standard Time Section */}
-          <span className="time-display">
-            LOCAL STANDARD TIME: {weatherData ? getLiveLocalTime() : "--:--"}
-          </span>
-          {/* Only render GoldenHour if skyData actually has sun data */}
+          <span className="accent-text">Solar Time: {getLocalSolarTime()}</span>
+          <span>UTC OFFSET: {location.lon >= 0 ? "+" : ""}{(location.lon / 15).toFixed(1)} HRS</span>
+          <span className="time-display">LOCAL STANDARD TIME: {weatherData ? getLiveLocalTime() : "--:--"}</span>
           {skyData?.sun?.phase && <GoldenHour sunData={skyData.sun} />}
         </div>
       </header>
 
-      {/* 3. NEW: Location Search Bar */}
       <LocationSearch onLocationChange={setLocation} />
 
-      {/* 4. Cards Container */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "start",
-          justifyContent: "center",
-          gap: "25px",
-          flexWrap: "wrap",
-          width: "100%",
-          maxWidth: "1200px",
-          padding: "20px"
-        }}
-      >
-        {/* Pass location to these components so they can fetch their own weather/moon data too! */}
-        {/* <MoonTracker lat={location.lat} lon={location.lon} /> */}
-        <Weather
-          lat={location.lat}
-          lon={location.lon}
-          onDataReceived={setWeatherData}
-        />
-        {/* <MoonGraphic2 lat={location.lat} lon={location.lon} /> */}
+      {/* --- REFACTORED GRID CONTAINER --- */}
+      <div className="dashboard-grid">
+        
+        {/* ROW 1 */}
         <MoonGraphic3 lat={location.lat} lon={location.lon} />
+        <Weather lat={location.lat} lon={location.lon} onDataReceived={setWeatherData} />
         <ISSWatcher lat={location.lat} lon={location.lon} />
-        <StarlinkGrid lat={location.lat} lon={location.lon} />
-        <MapCard
-          lat={location.lat}
-          lon={location.lon}
-          theme={isNight ? "night" : "day"}
-        />
+
+        {/* ROW 2 - Starlink spans 2 columns for a wide 'terminal' look */}
+        <div className="grid-span-2">
+          <StarlinkGrid lat={location.lat} lon={location.lon} />
+        </div>
+        
+        {/* ROW 2 - Right Column */}
         {skyData ? (
           <SkyDetails skyData={skyData} />
         ) : (
-          <div
-            className="sky-details-card"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-            <p style={{ opacity: 0.5, color: "var(--text-sub)" }}>
-              Synchronizing with {location.name}...
-            </p>
+          <div className="sky-details-card loading-card">
+             <p>Synchronizing with {location.name}...</p>
           </div>
         )}
+
+        {/* ROW 3 - Map spans full width for epic visual impact */}
+        <div className="grid-full-width">
+           <MapCard lat={location.lat} lon={location.lon} theme={isNight ? "night" : "day"} />
+        </div>
       </div>
-      <p style={{ fontSize: "0.6em", opacity: "0.4", marginTop: "40px" }}>
-        Copyright © 2026 David Brand{" "}
-      </p>
+
+      <p className="copyright">Copyright © 2026 David Brand</p>
     </div>
   );
 }
