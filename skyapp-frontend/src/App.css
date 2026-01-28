@@ -14,10 +14,11 @@
   --mesh-1: rgb(208, 193, 171);
   --mesh-2: rgb(223, 227, 231);
   --card-bg: rgba(255, 255, 255, 0.25);
-  --card-border: rgba(62, 51, 35, 0.2); /* Darker border for day mode visibility */
+  --card-border: rgba(62, 51, 35, 0.2); 
   --text-main: #3e3323;
   --text-sub: rgba(62, 51, 35, 0.7);
   --accent-color: #008f11;
+  --separator-glow: rgba(62, 51, 35, 0.1);
 }
 
 [data-theme="night"] {
@@ -29,6 +30,7 @@
   --text-main: #ffffff;
   --text-sub: rgba(255, 255, 255, 0.6);
   --accent-color: #00ff2a;
+  --separator-glow: rgba(0, 255, 42, 0.2);
 }
 
 /* 3. Layout Structure */
@@ -41,98 +43,63 @@
   padding-bottom: 50px;
 }
 
-/* 4. Glassmorphism Header */
+/* 4. Refined Header Section */
 .header-section {
-  position: sticky;
-  top: 0;
   width: 100%;
-  padding: 40px 0 20px 0;
+  padding: 80px 0 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: transparent;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 90;
-  border-bottom: 1px solid var(--card-border);
-  margin-bottom: 30px;
+  z-index: 50;
 }
 
-/* 5. Dashboard Grid System */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Balanced 3-column setup */
-  gap: 25px;
-  width: 95%;
-  max-width: 1250px;
-  padding: 20px;
-  margin: 0 auto;
+/* New Vertical Stack for Telemetry */
+.telemetry-info {
+  display: flex;
+  flex-direction: column; /* Puts each item on its own line */
+  gap: 12px;
+  margin: 25px 0;
+  text-align: center;
+  color: var(--text-sub);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
 }
+/* App.css */
 
-/* Span helpers for visual hierarchy */
-.grid-span-2 {
-  grid-column: span 2;
-}
-
-.grid-full-width {
-  grid-column: 1 / -1;
-}
-
-/* 6. Typography & UI Elements */
-.accent-text {
-  color: var(--accent-color);
-  transition: color 0.5s ease;
-}
-
-.theme-toggle-btn {
-  position: fixed; /* Keep it accessible while scrolling */
-  top: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  border-radius: 30px;
+.search-wrapper input {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px 20px;
+  border-radius: 25px;
   border: 1px solid var(--card-border);
   background: var(--card-bg);
   color: var(--text-main);
-  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
   backdrop-filter: blur(10px);
-  z-index: 100;
+  -webkit-backdrop-filter: blur(10px);
+  outline: none;
   transition: all 0.3s ease;
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.75rem;
+  text-align: center;
 }
 
-.theme-toggle-btn:hover {
-  background: var(--text-main);
-  color: var(--bg-color);
-  transform: translateY(-2px);
+.search-wrapper input::placeholder {
+  color: var(--text-sub);
+  opacity: 0.7;
 }
 
-.rainbow-animated {
-  background: linear-gradient(
-    to right,
-    rgb(221, 221, 174),
-    rgb(233, 213, 213),
-    rgb(191, 191, 228),
-    rgb(236, 217, 217),
-    rgb(226, 217, 169)
-  );
-  text-shadow: rgba(0, 0, 0, 0.1) 0.5px 0.5px 0.5px;
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: rainbow-shifty 4s linear infinite;
+.search-wrapper input:focus {
+  border-color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.3); /* Slightly brighter on focus */
+  box-shadow: 0 0 15px var(--separator-glow);
 }
 
-@keyframes rainbow-shifty {
-  to { background-position: 200% center; }
-}
-
-/* Responsive Breakpoints */
-@media (max-width: 1050px) {
-  .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
-  .grid-span-2 { grid-column: span 1; }
-}
-
-@media (max-width: 700px) {
-  .dashboard-grid { grid-template-columns: 1fr; }
-  .grid-full-width { grid-column: span 1; }
+/* If your LocationSearch has a results dropdown, style it too */
+.search-results-dropdown {
+  background: var(--card-bg);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  color: var(--text-main);
 }

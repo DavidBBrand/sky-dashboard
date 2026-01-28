@@ -6,9 +6,10 @@
   --mesh-2: hsla(210, 30%, 85%, 1);
   --mesh-3: hsla(40, 20%, 80%, 1);
   --card-bg: rgba(255, 255, 255, 0.25);
-  --card-border: rgba(255, 255, 255, 0.4);
+  --card-border: rgba(62, 51, 35, 0.2); 
   --text-main: #3e3323;
   --text-sub: rgba(62, 51, 35, 0.7);
+  --accent-color: #008f11;
   --star-opacity: 0; 
 }
 
@@ -22,7 +23,8 @@
   --card-border: rgba(255, 255, 255, 0.1);
   --text-main: #ffffff;
   --text-sub: rgba(255, 255, 255, 0.6);
-  --star-opacity: 0.6; /* Increased for your bigger stars */
+  --accent-color: #00ff2a;
+  --star-opacity: 0.6;
 }
 
 /* 2. Global Reset & Base Styles */
@@ -30,11 +32,10 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* Use the modern font stack from your App.css */
+  font-family: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', monospace;
   
-  /* Use containment to prevent layout recalculations from leaking */
-  contain: paint;
-  
+  /* Background Logic */
   background-color: var(--bg-color);
   background-image: 
     radial-gradient(at 0% 0%, var(--mesh-1) 0px, transparent 50%),
@@ -43,12 +44,13 @@ body {
   background-attachment: fixed;
   
   color: var(--text-main);
-  
-  /* OPTIMIZATION: Only transition specific colors, NOT 'all' */
   transition: background-color 0.8s ease, color 0.8s ease;
   
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+
+  /* Ensure body doesn't override grid behavior */
+  display: block; 
 }
 
 /* 3. Night Mode Stars (Hardware Accelerated) */
@@ -56,33 +58,25 @@ body::before {
   content: "";
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  
-  /* night theme stars */
   background-image: 
     radial-gradient(2px 2px at 25px 35px, #fff, transparent),
     radial-gradient(2px 2px at 50px 100px, #fff, transparent),
     radial-gradient(4px 4px at 100px 400px, #ffffff, rgba(255, 255, 255, 0.1) 40%, transparent 100%),
     radial-gradient(4px 5px at 85% 27%, #ffffff, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
-  
   background-size: 500px 500px;
   opacity: var(--star-opacity);
-  
-  /* GPU BOOST: Move rendering to the graphics card */
   will-change: opacity;
   transform: translateZ(0); 
-  
-  /* Hardware-friendly transition */
   transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: -1;
   pointer-events: none;
 }
 
-/* 4. Typography & Buttons */
+/* 4. Typography & Common Elements */
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
   letter-spacing: 4px;
-  /* Animating color is cheap; animating 'all' is expensive */
   transition: color 0.8s ease;
 }
 
@@ -91,13 +85,12 @@ button {
   border: 1px solid var(--card-border);
   padding: 0.6em 1.2em;
   font-size: 0.9em;
-  font-weight: 500;
+  font-weight: 600;
   background: var(--card-bg);
   color: var(--text-main);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   cursor: pointer;
-  
-  /* OPTIMIZATION: Specific properties only */
   transition: transform 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 

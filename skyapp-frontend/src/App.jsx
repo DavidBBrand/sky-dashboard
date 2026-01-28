@@ -57,7 +57,9 @@ function App() {
       </button>
 
       <header className="header-section">
-        <h1>SKY DASHBOARD</h1>
+        <h1 className="rainbow-animated">SKY DASHBOARD</h1>
+        
+        {/* Telemetry now uses a flex-column to put each item on a new line */}
         <div className="telemetry-info">
           <span>{location.name}</span>
           <span>
@@ -68,33 +70,30 @@ function App() {
           <span className="time-display">LOCAL STANDARD TIME: {weatherData ? getLiveLocalTime() : "--:--"}</span>
           {skyData?.sun?.phase && <GoldenHour sunData={skyData.sun} />}
         </div>
+
+        {/* Search bar is now part of the header vertical flow */}
+        <div className="search-wrapper">
+          <LocationSearch onLocationChange={setLocation} />
+        </div>
       </header>
 
-      <LocationSearch onLocationChange={setLocation} />
-
-      {/* --- REFACTORED GRID CONTAINER --- */}
       <div className="dashboard-grid">
-        
-        {/* ROW 1 */}
         <MoonGraphic3 lat={location.lat} lon={location.lon} />
         <Weather lat={location.lat} lon={location.lon} onDataReceived={setWeatherData} />
         <ISSWatcher lat={location.lat} lon={location.lon} />
 
-        {/* ROW 2 - Starlink spans 2 columns for a wide 'terminal' look */}
         <div className="grid-span-2">
           <StarlinkGrid lat={location.lat} lon={location.lon} />
         </div>
         
-        {/* ROW 2 - Right Column */}
         {skyData ? (
           <SkyDetails skyData={skyData} />
         ) : (
           <div className="sky-details-card loading-card">
-             <p>Synchronizing with {location.name}...</p>
+              <p>Synchronizing with {location.name}...</p>
           </div>
         )}
 
-        {/* ROW 3 - Map spans full width for epic visual impact */}
         <div className="grid-full-width">
            <MapCard lat={location.lat} lon={location.lon} theme={isNight ? "night" : "day"} />
         </div>
