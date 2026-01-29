@@ -150,7 +150,7 @@
 }
 
 .rainbow-animated {
-  background: linear-gradient(to right, #7b6440, #5e3720, #72624a);
+  background: linear-gradient(to right, #7b6440, #675144, #72624a);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
