@@ -19,12 +19,12 @@ const StarlinkGrid = () => {
         <p className="orbital-label">STARLINK MESH NETWORK</p>
         <div className="ping-indicator2" style={{ backgroundColor: "#00ff2a" }}></div>
       </div>
-<h2 className="iss-radar-text2" style={{ margin: "15px 0 5px 0", fontSize: "1.4rem" }}>
+<h2 className="" style={{ margin: "15px 0 5px 0", fontSize: "1.4rem" }}>
   ORBITAL_NODES <span style={{ opacity: 0.5 }}>//</span> SL-MESH
 </h2>
 
       <div className="sat-visual-grid">
-        {[...Array(12)].map((_, i) => (
+        {[...Array(24)].map((_, i) => (
           <div key={i} className="grid-node" style={{ animationDelay: `${i * 0.15}s` }} />
         ))}
       </div>

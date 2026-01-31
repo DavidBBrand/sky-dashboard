@@ -91,8 +91,14 @@ function App() {
         <div className="search-wrapper">
           <LocationSearch onLocationChange={setLocation} />
         </div>
+        <div className="grid-full-width">
+          <MapCard
+            lat={location.lat}
+            lon={location.lon}
+            theme={isNight ? "night" : "day"}
+          />
+        </div>
       </header>
-
 
       <div className="dashboard-grid">
         <MoonGraphic3 lat={location.lat} lon={location.lon} />
@@ -101,13 +107,7 @@ function App() {
           lon={location.lon}
           onDataReceived={setWeatherData}
         />
-              <div className="grid-full-width">
-        <MapCard
-          lat={location.lat}
-          lon={location.lon}
-          theme={isNight ? "night" : "day"}
-        />
-      </div>
+
         <ISSWatcher lat={location.lat} lon={location.lon} />
 
         <div className="grid-span-2">

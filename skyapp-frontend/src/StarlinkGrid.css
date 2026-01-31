@@ -38,7 +38,7 @@
 
 .grid-node {
   height: 3px;
-  background: #0ddf5a; /* Keeping the Starlink Teal signature */
+  background: #08682c; /* Keeping the Starlink Teal signature */
   border-radius: 2px;
   opacity: 0.2;
   animation: node-pulse 3.2s infinite ease-in-out;
@@ -83,6 +83,7 @@
   height: 22px;
   border-radius: 50%;
   position: relative;
+  
 }
 
 .ping-indicator2::after {
@@ -98,10 +99,10 @@
 .iss-radar-text2 {
   background: conic-gradient(
     from var(--angle),
-    rgb(16, 184, 16), 
+    rgb(7, 77, 7), 
     var(--text-white, #ffffff4c), 
     rgba(81, 222, 74, 0.2), 
-    rgb(16, 184, 16)
+    rgb(9, 100, 9)
   );
   -webkit-background-clip: text;
   background-clip: text;
