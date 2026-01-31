@@ -152,12 +152,12 @@
 }
 
 .rainbow-animated {
-  background: linear-gradient(to right, #7b6440, #744428, #72624a);
+  background: linear-gradient(to right, #806439, #744428, #7a623f);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: rainbow-shifty 4s linear infinite;
+  animation: rainbow-shifty .8s linear infinite;
   
 }
 

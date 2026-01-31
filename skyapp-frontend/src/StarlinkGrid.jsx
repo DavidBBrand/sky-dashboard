@@ -24,7 +24,7 @@ const StarlinkGrid = () => {
 </h2>
 
       <div className="sat-visual-grid">
-        {[...Array(24)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <div key={i} className="grid-node" style={{ animationDelay: `${i * 0.15}s` }} />
         ))}
       </div>
