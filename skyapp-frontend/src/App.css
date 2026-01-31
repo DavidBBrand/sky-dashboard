@@ -29,7 +29,7 @@
   --card-border: rgba(255, 255, 255, 0.1);
   --text-main: #ffffff;
   --text-sub: rgba(255, 255, 255, 0.6);
-  --accent-color: #00ff2a;
+  --accent-color: #9ed144;
   --separator-glow: rgba(0, 255, 42, 0.2);
 }
 
@@ -52,6 +52,8 @@
   align-items: center; /* Ensures content stays centered horizontally */
   position: relative;
   z-index: 10;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 /* Vertical Stack for Telemetry - Isolated to Header */
