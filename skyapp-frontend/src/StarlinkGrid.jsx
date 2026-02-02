@@ -17,7 +17,7 @@ const StarlinkGrid = () => {
     <div className="starlink-card">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <p className="orbital-label">STARLINK MESH NETWORK</p>
-        <div className="ping-indicator2" style={{ backgroundColor: "#00ff2a" }}></div>
+        {/* <div className="ping-indicator2" style={{ backgroundColor: "#ccd2cd" }}></div> */}
       </div>
 <h2 className="" style={{ margin: "15px 0 5px 0", fontSize: "1.4rem" }}>
   ORBITAL_NODES <span style={{ opacity: 0.5 }}>//</span> SL-MESH

@@ -16,14 +16,8 @@ const MapCard = ({ lat, lon, theme }) => {
   const mapUrl = `https://api.mapbox.com/styles/v1/mapbox/${currentStyle}/static/pin-s+ff4444(${lon},${lat})/${lon},${lat},${zoom},0/600x400@2x?access_token=${MAPBOX_TOKEN}`;
 
   return (
-    <div className="map-card" style={{ 
-      background: "var(--card-bg)", 
-      border: "1px solid var(--card-border)",
-      padding: "10px",
-      borderRadius: "15px",
-      backdropFilter: "blur(10px)",
-      transition: "background 0.8s ease" // Matches your index.css transition speed
-    }}>
+    <div className="map-card" // Matches your index.css transition speed
+    >
       <img
         src={mapUrl}
         alt="Regional Telemetry Map"
