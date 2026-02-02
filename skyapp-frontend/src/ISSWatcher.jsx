@@ -58,7 +58,7 @@ const ISSWatcher = ({ lat, lon }) => {
     return () => clearInterval(interval);
   }, [lat, lon]);
 
-  const isNearby = distance < 500;
+  const isNearby = distance !== null && distance < 500;
 
   return (
     <div className={`iss-card ${isNearby ? "nearby" : ""}`}>
@@ -82,6 +82,18 @@ const ISSWatcher = ({ lat, lon }) => {
         </p>
       </div>
       {/* --- Ping Section --- */}
+
+
+      <h2
+        className="iss-radar-text"
+        style={{
+          margin: "15px 0 5px 0",
+          fontSize: "1.4rem",
+          animationDuration: isNearby ? "1.5s" : "4s"
+        }}
+      >
+        INT'L SPACE STATION
+      </h2>
       <div
         style={{
           display: "flex",
@@ -97,18 +109,6 @@ const ISSWatcher = ({ lat, lon }) => {
           }}
         ></div>
       </div>
-
-      <h2
-        className="iss-radar-text"
-        style={{
-          margin: "15px 0 5px 0",
-          fontSize: "1.4rem",
-          animationDuration: isNearby ? "1.5s" : "4s"
-        }}
-      >
-        INT'L SPACE STATION
-      </h2>
-
     <svg 
     className="iss-favicon" 
     viewBox="0 0 24 24" 
