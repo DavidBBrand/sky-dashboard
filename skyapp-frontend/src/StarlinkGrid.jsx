@@ -1,44 +1,87 @@
 import React, { useState, useEffect } from "react";
+import * as satellite from "satellite.js";
 import "./StarlinkGrid.css";
 
 const StarlinkGrid = ({ lat, lon }) => {
-  const [satCount, setSatCount] = useState(0); 
-  const [health, setHealth] = useState(99.1);
+  const [visibleCount, setVisibleCount] = useState(0);
+  const [totalInOrbit, setTotalInOrbit] = useState(0);
+  const [health, setHealth] = useState(99.4);
   const [loading, setLoading] = useState(true);
+  const [cityName, setCityName] = useState("Scanning Location...");
 
+  // 1. Reverse Geocoding Effect (Get City Name)
   useEffect(() => {
-    const fetchStarlink = async () => {
+    const getLocalName = async () => {
       try {
-        // Fetching the General Perturbations data for the Starlink group
         const res = await fetch(
-          "https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=json"
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
         );
         const data = await res.json();
-        
-        // setSatCount(data.length); // Total active satellites in orbit
-        
-        // Simulation logic: Total satellites is data.length, 
-        // but we simulate 'visible' nodes as a fraction of that.
-        const totalInOrbit = data.length;
-        setSatCount(Math.floor(totalInOrbit / 100) + Math.floor(Math.random() * 10));
-        
-        setLoading(false);
+        const city = data.address.city || data.address.town || data.address.village || data.address.suburb || "Ground Station";
+        const state = data.address.state || "";
+        setCityName(`${city}${state ? ", " + state : ""}`);
       } catch (e) {
-        console.error("Starlink API Offline", e);
-        setSatCount(6000); // Fallback to estimated total
-        setLoading(false);
+        setCityName("Orbital Uplink Established");
       }
     };
 
-    fetchStarlink();
-    
-    // Refresh the "Health" jitter every 5 seconds
-    const interval = setInterval(() => {
-      setHealth(prev => parseFloat((98 + Math.random() * 1.8).toFixed(1)));
-    }, 5000);
+    if (lat && lon) getLocalName();
+  }, [lat, lon]);
 
+  // 2. Orbital Calculation Effect
+  useEffect(() => {
+    let tles = [];
+
+    const fetchData = async () => {
+      try {
+        const res = await fetch("https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=json");
+        tles = await res.json();
+        setTotalInOrbit(tles.length);
+        setLoading(false);
+      } catch (e) {
+        console.error("Orbital Data Timeout", e);
+      }
+    };
+
+    fetchData();
+
+    const calculateVisible = () => {
+      if (!tles.length || !lat || !lon) return;
+
+      let count = 0;
+      const now = new Date();
+      
+      const observerGd = {
+        longitude: satellite.degreesToRadians(lon),
+        latitude: satellite.degreesToRadians(lat),
+        height: 0.1 
+      };
+
+      tles.forEach(sat => {
+        try {
+          const satrec = satellite.twoline2satrec(sat.TLE_LINE1, sat.TLE_LINE2);
+          const positionAndVelocity = satellite.propagate(satrec, now);
+          const positionEci = positionAndVelocity.position;
+          
+          if (positionEci) {
+            const gmst = satellite.gstime(now);
+            const lookAngles = satellite.ecfToLookAngles(
+              satellite.eciToEcf(positionEci, gmst), 
+              observerGd
+            );
+            
+            if (lookAngles.elevation > 0) count++;
+          }
+        } catch (e) { /* Skip malformed TLEs */ }
+      });
+
+      setVisibleCount(count);
+      setHealth(parseFloat((98 + Math.random() * 1.5).toFixed(1)));
+    };
+
+    const interval = setInterval(calculateVisible, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [lat, lon]);
 
   return (
     <div className="glass-card starlink-card">
@@ -51,36 +94,40 @@ const StarlinkGrid = ({ lat, lon }) => {
       </div>
 
       <h2 style={{ margin: "15px 0 5px 0", fontSize: "1.4rem", letterSpacing: "1px" }}>
-        ORBITAL_NODES <span style={{ opacity: 0.5 }}>//</span> SL-LIVE
+        LOCAL_NODES <span style={{ opacity: 0.5 }}>//</span> OVERHEAD
       </h2>
 
       <div className="sat-visual-grid">
         {[...Array(8)].map((_, i) => (
-          <div 
-            key={i} 
-            className="grid-node" 
-            style={{ 
-              animationDelay: `${i * 0.15}s`,
-              backgroundColor: !loading && health > 99 ? "var(--accent-color)" : "" 
-            }} 
-          />
+          <div key={i} className="grid-node" style={{ animationDelay: `${i * 0.15}s` }} />
         ))}
       </div>
 
       <div className="stats-row">
         <div className="stat-group">
-          <p className="stat-caption">LOCAL NODES</p>
-          <p className="stat-value">{loading ? "..." : satCount}</p>
+          <p className="stat-caption">VISIBLE NODES</p>
+          <p className="stat-value">{loading ? "SCANNING" : visibleCount}</p>
         </div>
         <div className="stat-group">
-          <p className="stat-caption">LINK HEALTH</p>
-          <p className="stat-value">{health}%</p>
+          <p className="stat-caption">CONSTELLATION</p>
+          <p className="stat-value">{totalInOrbit}</p>
         </div>
       </div>
       
-      <p className="sector-tag">
-        {loading ? "SYNCHRONIZING..." : `ACTIVE CONSTELLATION MESH // ${lat?.toFixed(2)}N`}
-      </p>
+      <div className="sector-tag-container" style={{ marginTop: "15px", borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "10px" }}>
+        <p className="sector-tag" style={{ margin: 0, fontSize: "1.1rem" }}>
+          {loading ? "INITIALIZING SGP4..." : `COORD: ${lat?.toFixed(2)}N / ${lon?.toFixed(2)}W`}
+        </p>
+        <p style={{ 
+          fontSize: "0.8rem", 
+          color: "var(--text-sub)", 
+          textTransform: "uppercase", 
+          letterSpacing: "1px", 
+          marginTop: "4px" 
+        }}>
+          REGION: {cityName}
+        </p>
+      </div>
     </div>
   );
 };
