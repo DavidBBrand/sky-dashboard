@@ -1,80 +1,93 @@
 .starlink-card {
-  /* Add a robust font stack */
   font-family: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', 'Courier New', monospace;
-  
-  /* The rest of your styles... */
-  background: var(--card-bg, rgba(15, 15, 20, 0.8));
+  background: var(--card-bg);
   backdrop-filter: blur(10px);
-  padding: 20px;
+  -webkit-backdrop-filter: blur(10px);
+  padding: 25px; /* Increased slightly for better breathability */
   border-radius: 15px;
-  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
+  border: 1px solid var(--card-border);
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.8s ease;
   color: var(--text-main);
+  position: relative;
+  overflow: hidden;
 }
+
 .starlink-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.2);
-    border: 1px solid var(--text-sub);
+  transform: translateY(-5px); /* Changed to translateY for a "lift" effect */
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.2);
+  border-color: var(--accent-color);
 }
+
 .orbital-label {
   letter-spacing: 2px;
-  font-size: 1.2rem;
+  font-size: 0.9rem; /* Reduced to match the ISS tracker's "standard" header size */
   color: var(--text-sub);
   margin: 0;
   font-weight: 600;
-  padding: 6px;
+  text-transform: uppercase;
 }
 
 .sat-visual-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 12px;
   margin: 20px 0;
-  padding: 12px;
-  background: rgba(0, 255, 157, 0.03);
+  padding: 15px;
+  /* Use the accent color with very low opacity for the background */
+  background: color-mix(in srgb, var(--accent-color), transparent 95%);
   border-radius: 8px;
-  border: 1px solid rgba(0, 255, 157, 0.05);
+  border: 1px solid var(--card-border);
 }
 
 .grid-node {
   height: 3px;
-  background: #0ddf5a; /* Keeping the Starlink Teal signature */
+  background: var(--accent-color); /* Now reacts to the Day/Night accent */
   border-radius: 2px;
   opacity: 0.2;
-  animation: node-pulse 1.2s infinite ease-in-out;
+  animation: node-pulse 1.5s infinite ease-in-out;
 }
 
 @keyframes node-pulse {
-  0%, 100% { opacity: 0.1; transform: scaleX(0.8); }
-  50% { opacity: 0.8; transform: scaleX(1.1); box-shadow: 0 0 10px #00ff9d; }
+  0%, 100% { 
+    opacity: 0.2; 
+    transform: scaleX(0.8); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scaleX(1.1); 
+    box-shadow: 0 0 12px var(--accent-color); 
+  }
 }
 
 .stats-row {
   display: flex;
   justify-content: space-between;
   margin-top: 15px;
+  padding: 0 5px;
 }
 
 .stat-caption {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   color: var(--text-sub);
   margin: 0;
   text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .stat-value {
   color: var(--text-main);
-  font-size: 1.4rem;
-  font-weight: bold;
+  font-size: 1.6rem;
+  font-weight: 800;
   margin: 5px 0 0 0;
+  font-variant-numeric: tabular-nums; /* Prevents numbers from jumping when they change */
 }
 
 .sector-tag {
-  font-size: 1.2rem;
+  font-size: 0.85rem;
   color: var(--text-sub);
-  margin-top: 15px;
-  opacity: 0.6;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  padding-top: 10px;
+  margin-top: 20px;
+  opacity: 0.7;
+  border-top: 1px solid var(--card-border);
+  padding-top: 15px;
+  font-weight: 500;
 }
-
