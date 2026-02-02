@@ -159,7 +159,7 @@ const ISSWatcher = ({ lat, lon }) => {
 
       <p
         style={{
-          fontSize: "0.7rem",
+          fontSize: "1.2rem",
           color: "var(--text-sub)",
           marginTop: "15px",
           fontFamily: "monospace",
