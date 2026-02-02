@@ -67,9 +67,7 @@ const Weather = ({ lat, lon, onDataReceived }) => {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          {/* THE PING DOT */}
-          <div className="ping-indicator"></div>
-
+          
           <p
             style={{
               fontSize: "0.8rem",
