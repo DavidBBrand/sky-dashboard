@@ -91,7 +91,7 @@ const Weather = ({ lat, lon, onDataReceived }) => {
     <div className="weather-card">
       <p
         style={{
-          fontSize: "1.2rem",
+          fontSize: "1.0rem",
           textTransform: "uppercase",
           letterSpacing: "3px",
           color: "var(--text-sub)",
@@ -103,13 +103,13 @@ const Weather = ({ lat, lon, onDataReceived }) => {
 
       <h2
         style={{
-          fontSize: "3rem",
+          fontSize: "1rem",
           margin: "2px 0",
           color: "var(--text-main)",
           fontWeight: "200"
         }}
       >
-        <div style={{ fontSize: "8rem" }}>{getWeatherEmoji(weather.description)}</div>
+        <div style={{ fontSize: "6rem" }}>{getWeatherEmoji(weather.description)}</div>
         {weather.temp}°F
         
       </h2>
@@ -126,7 +126,7 @@ const Weather = ({ lat, lon, onDataReceived }) => {
 
       <div
         style={{
-          marginTop: "15px",
+          marginTop: "1rem",
           fontSize: "1.4rem",
           color: "var(--text-sub)"
         }}

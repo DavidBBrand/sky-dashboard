@@ -158,7 +158,8 @@
   background-clip: text;
   color: transparent;
   animation: rainbow-shifty 2.5s linear infinite;
-  
+  font-family: 'Comfortaa';
+  letter-spacing: 20px
 }
 
 @keyframes rainbow-shifty {

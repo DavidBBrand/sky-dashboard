@@ -69,46 +69,12 @@ const ISSWatcher = ({ lat, lon }) => {
           alignItems: "center"
         }}
       >
-        <p
-          style={{
-            letterSpacing: "2px",
-            fontSize: "1.2rem",
-            color: "var(--text-sub)",
-            marginBottom: "25px",
-            fontWeight: "600"
-          }}
-        >
-          ORBITAL TRACKER
-        </p>
+
       </div>
       {/* --- Ping Section --- */}
 
 
-      <h2
-        className="iss-radar-text"
-        style={{
-          margin: "15px 0 5px 0",
-          fontSize: "1.4rem",
-          animationDuration: isNearby ? "1.5s" : "4s"
-        }}
-      >
-        INT'L SPACE STATION
-      </h2>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          width: "100%",
-          margin: "40px 0"
-        }}
-      >
-        <div
-          className="ping-indicator"
-          style={{
-            backgroundColor: isNearby ? "#aade4a" : "#16e782"
-          }}
-        ></div>
-      </div>
+
     <svg 
     className="iss-favicon-small" 
     viewBox="0 0 24 24" 
@@ -124,7 +90,22 @@ const ISSWatcher = ({ lat, lon }) => {
     {/* Connecting Truss */}
     <rect x="6" y="11.5" width="12" height="1" />
   </svg>
-  <h3>ISS Tracker</h3>
+        <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+          margin: "40px 0"
+        }}
+      >
+        <div
+          className="ping-indicator"
+          style={{
+            backgroundColor: isNearby ? "#aade4a" : "#16e782"
+          }}
+        ></div>
+      </div>
+  <h3 style={{ fontSize: "1.2rem", color: "var(--text-sub)", margin: "10px 0 0 0" }}>ISS Tracker</h3>
 
       <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
         <div

@@ -36,8 +36,8 @@
 /* 3. The Radar System */
 .radar-container {
   position: relative;
-  width: 180px; 
-  height: 180px;
+  width: 360px; 
+  height: 360px;
   margin: 20px auto;
   border: 1px solid color-mix(in srgb, var(--accent-color), transparent 70%);
   border-radius: 50%;

@@ -66,7 +66,8 @@ function App() {
       </button>
 
       <header className="header-section">
-        <h1 className="rainbow-animated">SKY DASHBOARD</h1>
+        <h2 className="rainbow-animated">SKY DASHBOARD</h2>
+       
 
         <div className="telemetry-info">
           <span>{location.name}</span>
