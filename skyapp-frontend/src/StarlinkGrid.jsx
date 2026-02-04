@@ -102,4 +102,4 @@ const StarlinkGrid = ({ lat, lon }) => {
   );
 };
 
-export default StarlinkGrid;
+export default StarlinkGrid;  
