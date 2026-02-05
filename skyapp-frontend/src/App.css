@@ -142,6 +142,7 @@
   font-size: 0.75rem;
   transition: all 0.3s ease;
   margin: 5px;
+  min-width: 160px;
 }
 
 .accent-text {
