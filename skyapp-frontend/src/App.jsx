@@ -67,7 +67,10 @@ function App() {
 
       <header className="header-section">
         <h2 className="rainbow-animated">SKY DASHBOARD</h2>
-       
+
+        <div className="search-wrapper">
+          <LocationSearch onLocationChange={setLocation} />
+        </div>
 
         <div className="telemetry-info">
           <span>{location.name}</span>
@@ -86,15 +89,11 @@ function App() {
           </span>
           {skyData?.sun?.phase && <GoldenHour sunData={skyData.sun} />}
         </div>
-
-        <div className="search-wrapper">
-          <LocationSearch onLocationChange={setLocation} />
-        </div>
       </header>
 
       <div className="dashboard-grid">
         <MoonGraphic3 lat={location.lat} lon={location.lon} />
-        
+
         <Weather
           lat={location.lat}
           lon={location.lon}

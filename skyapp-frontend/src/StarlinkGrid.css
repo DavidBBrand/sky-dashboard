@@ -20,7 +20,7 @@
 .starlink-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.2);
-  border-color: var(--accent-color);
+  border: 1px solid var(--text-sub);
 }
 
 /* 2. Header & Labels */
