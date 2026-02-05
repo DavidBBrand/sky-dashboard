@@ -129,7 +129,7 @@ const MoonGraphic3 = ({ lat, lon }) => {
                 Altitude {trend === "rising" ? "↑" : trend === "setting" ? "↓" : ""}
               </p>
               <p style={{
-                  color: moonData.altitude > 0 ? "#4ade80" : "#ff4444",
+                  color: moonData.altitude > 0 ? "#4ade80" : "var(--accent-color2)",
                   fontFamily: "monospace",
                   margin: 0,
                   fontSize: "1.2rem",
@@ -144,7 +144,7 @@ const MoonGraphic3 = ({ lat, lon }) => {
               </p>
               <p style={{ color: "var(--text-main)", fontFamily: "monospace", margin: 0, fontSize: "1.2rem" }}>
                 {moonData.azimuth?.toFixed(1)}°
-                <span style={{ color: "#00ff2a", marginLeft: "5px", fontSize: "0.9rem" }}>
+                <span style={{ color: "var(--accent-color)", marginLeft: "5px", fontSize: "0.9rem" }}>
                   ({getCompassDirection(moonData.azimuth)})
                 </span>
               </p>
@@ -152,7 +152,7 @@ const MoonGraphic3 = ({ lat, lon }) => {
           </div>
         </>
       ) : (
-        <p style={{ color: "#ff4444", fontSize: "0.8rem", textAlign: "center" }}>
+        <p style={{ color: "var(--accent-color2)", fontSize: "0.8rem", textAlign: "center" }}>
           SIGNAL LOST
         </p>
       )}
