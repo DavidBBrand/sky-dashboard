@@ -10,6 +10,8 @@
   --text-main: #3e3323;
   --text-sub: rgba(62, 51, 35, 0.7);
   --accent-color: #008f11;
+  --accent-color2: rgb(155, 54, 18);
+  --accent-color3: #FB8500;
   --star-opacity: 0; 
 }
 
@@ -24,6 +26,8 @@
   --text-main: #ffffff;
   --text-sub: rgba(255, 255, 255, 0.6);
   --accent-color: #00ff2a;
+  --accent-color2: rgb(228, 73, 17);
+  --accent-color3: #FFB703;
   --star-opacity: 0.6;
 }
 
@@ -74,8 +78,8 @@ body::before {
 
 /* 4. Typography & Common Elements */
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 2.2em;
+  line-height: 1.0;
   letter-spacing: 4px;
   transition: color 0.8s ease;
 }
