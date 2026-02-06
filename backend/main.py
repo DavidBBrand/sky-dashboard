@@ -60,14 +60,14 @@ def get_sky_summary(lat: float = Query(35.92), lon: float = Query(-86.86)):
 
     # 2. SUNRISE/SUNSET (Dynamic Location)
     t0 = ts.utc(t.utc_datetime().year,
-            t.utc_datetime().month, t.utc_datetime().day)
+                t.utc_datetime().month, t.utc_datetime().day)
     t1 = ts.utc(t0.utc_datetime() + timedelta(days=1))
     times, events = almanac.find_discrete(
-         t0, t1, almanac.sunrise_sunset(eph, user_location))
+        t0, t1, almanac.sunrise_sunset(eph, user_location))
     # 3. PLANET VISIBILITY
     target_planets = {
-      "Venus": eph['venus'],
-      "Mars": eph['mars'],
+        "Venus": eph['venus'],
+        "Mars": eph['mars'],
         "Jupiter": eph['jupiter_barycenter'],
         "Saturn": eph['saturn_barycenter']
     }
@@ -92,24 +92,6 @@ def get_sky_summary(lat: float = Query(35.92), lon: float = Query(-86.86)):
         },
         "planets": planet_data
     }
-
-# @app.get("/weather")
-# def get_weather(lat: float = Query(35.92), lon: float = Query(-86.86)):
-#     # Added &timezone=auto to the URL
-#     url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=auto"
-#     try:
-#         response = requests.get(url)
-#         data = response.json()
-#         current = data["current_weather"]
-#         return {
-#             "temp": round(current["temperature"]),
-#             "windspeed": current["windspeed"],
-#             "description": get_weather_description(current["weathercode"]),
-#             "timezone": data.get("timezone"), # Return the timezone name (e.g., "America/Chicago")
-#             "local_time": current["time"]      # Return the formatted local time string
-#         }
-#     except Exception as e:
-#         return {"error": str(e)}
 
 
 @app.get("/weather")
@@ -148,7 +130,7 @@ def get_moon_details(lat: float = Query(35.92), lon: float = Query(-86.86)):
     sun_obj, moon = eph['sun'], eph['moon']
     astrometric = observer.at(t).observe(moon)
     apparent = astrometric.apparent()
-    
+
     illumination = apparent.fraction_illuminated(sun_obj)
 
     # 2. NEW: Calculate Altitude and Azimuth
