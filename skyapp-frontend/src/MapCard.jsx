@@ -1,27 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react"; // Added hooks
 import "./MapCard.css";
-const MapCard = ({ lat, lon, theme }) => {
+import SolarCycle from "./SolarCycle";
+
+const MapCard = ({ lat, lon, theme, skyData, location }) => {
+  console.log("PROPS CHECK:", { location, skyData }); // Debugging line to check received props
+  // 1. Pass skyData in as a prop
   const MAPBOX_TOKEN = "pk.eyJ1IjoiZGF2aWRiNTY3OCIsImEiOiJjbGxncHFqcWoweHV3M3JxaGxna2FqNHZmIn0.A4Yc2EE-9W2yKvn1C6S9TQ";
 
-  // 1. Map Constants (Defining these FIRST is critical)
   const zoom = 12;
   const darkStyle = "dark-v11";
   const lightStyle = "light-v11";
-
-  // 2. Logic to match your App.jsx theme strings
-  // If theme is "night", use dark. Otherwise (day), use light.
   const currentStyle = theme === "night" ? darkStyle : lightStyle;
 
-  // 3. The Static API URL
   const mapUrl = `https://api.mapbox.com/styles/v1/mapbox/${currentStyle}/static/pin-s+ff4444(${lon},${lat})/${lon},${lat},${zoom},0/600x400@2x?access_token=${MAPBOX_TOKEN}`;
 
   return (
-    <div className="map-card" // Matches your index.css transition speed
-    >
+    <div className="map-card">
+      <h1 className="map-card-title"> {location?.name}</h1>
+        
+      <SolarCycle sun={skyData?.sun} />
+
       <img
         src={mapUrl}
         alt="Regional Telemetry Map"
-        key={currentStyle} // FORCE React to re-render the image when the style changes
+        key={currentStyle} 
         style={{ 
           width: "100%", 
           borderRadius: "8px",

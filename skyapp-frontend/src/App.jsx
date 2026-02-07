@@ -112,6 +112,8 @@ function App() {
             lat={location.lat}
             lon={location.lon}
             theme={isNight ? "night" : "day"}
+            skyData={skyData}
+            location={location}
           />
         </div>
 

@@ -62,12 +62,13 @@
   display: flex;
   flex-direction: row;
   gap: 12px;
-  margin: 12px 0;
+  margin: 12px 10px;
   text-align: center;
   color: var(--text-sub);
   letter-spacing: 1px;
   text-transform: uppercase;
   font-size: 1rem;
+  padding: 10px;
 }
 .derp {
   color: var(--accent-color3);
