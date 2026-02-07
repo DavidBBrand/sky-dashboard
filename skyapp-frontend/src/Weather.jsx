@@ -109,8 +109,8 @@ const Weather = ({ lat, lon, onDataReceived }) => {
           fontWeight: "200"
         }}
       >
-        <div style={{ fontSize: "6rem" }}>{getWeatherEmoji(weather.description)}</div>
-        {weather.temp}°F
+        <div style={{ fontSize: "8rem" }}>{getWeatherEmoji(weather.description)}</div>
+        <h4 style={{ fontSize: "1.8rem", fontWeight: "400", margin: 0 }}>{weather.temp}°F</h4>
         
       </h2>
 

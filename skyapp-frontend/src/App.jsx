@@ -79,7 +79,7 @@ function App() {
             / {Math.abs(location.lon).toFixed(2)}°
             {location.lon >= 0 ? "E" : "W"}
           </span>
-          <span className="accent-text">Solar Time: {getLocalSolarTime()}</span>
+          <span className="time-display">Solar Time: {getLocalSolarTime()}</span>
           <span>
             UTC OFFSET: {location.lon >= 0 ? "+" : ""}
             {(location.lon / 15).toFixed(1)} HRS

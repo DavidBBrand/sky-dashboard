@@ -18,6 +18,7 @@
     justify-content: center;
     min-height: 500px;
     border-radius: 24px;
+    gap:20px;
     
     /* Interactive shadow - adjusted to be subtle in light, deep in dark */
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1); 
@@ -31,4 +32,32 @@
     box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.2);
     border: 1px solid var(--text-sub);
     
+}
+
+.map-card-title {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 15px;
+    color: var(--text-sub);
+}
+
+.rainbow-shwarma {
+  /* Warm Spectrum: Deep Red -> Orange -> Gold -> Amber -> Pinkish Red */
+  background: linear-gradient(
+    to right,
+    #ff4e50,
+    #988d51,
+    #24a533,
+    #e02d30,
+    #4327e1,
+    #f96e23
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  animation: 
+    rainbow-shift 1.2s linear infinite,
+    glow-pulse .2s ease-in-out infinite; /* Slightly slower for a "glow" effect */
+  
 }

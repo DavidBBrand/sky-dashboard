@@ -86,8 +86,8 @@
   background: linear-gradient(
     to right,
     #ff4e50,
-    #c0b167,
-    #fc913a,
+    #988d51,
+    #a55e24,
     #e02d30,
     #e12727,
     #f96e23
@@ -99,7 +99,6 @@
   animation: 
     rainbow-shift 10.2s linear infinite,
     glow-pulse 3.2s ease-in-out infinite; /* Slightly slower for a "glow" effect */
-  display: inline-block;
 }
 
 /* We can reuse the same animation keyframes you already have */
@@ -119,4 +118,9 @@
   }
 }
 
-
+.solar-cycle-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+}

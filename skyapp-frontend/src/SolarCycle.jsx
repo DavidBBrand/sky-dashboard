@@ -1,4 +1,5 @@
 import React from "react";
+import "./SkyDetails.css";
 
 const SolarCycle = ({ sun }) => {
   // Guard clause in case data hasn't loaded yet
@@ -18,19 +19,21 @@ const SolarCycle = ({ sun }) => {
       <h3
         className="rainbow-warm"
         style={{
-          fontSize: "1.2rem",
+        //   fontSize: "1.2rem",
           textTransform: "uppercase",
-          letterSpacing: "4px",
-          marginBottom: "10px"
+          letterSpacing: "8px",
+        //   marginBottom: "20px",
+        //   padding: "5px"
+          
         }}
       >
-        Solar Cycle
+        <i>Solar Cycle</i>
       </h3>
       
-      <div style={{ display: "flex", gap: "10px" }}>
+      <div style={{ display: "flex", gap: "20px" }}>
         {/* Sunrise Section */}
         <div className="planet-item" style={{ flex: 1 }}>
-          <span style={{ fontSize: "2.0rem" }}>🌅</span>
+          <span style={{ fontSize: "5.0rem" }}>🌅</span>
           <p
             style={{
               fontSize: "0.8rem",
@@ -54,7 +57,7 @@ const SolarCycle = ({ sun }) => {
 
         {/* Sunset Section */}
         <div className="planet-item" style={{ flex: 1 }}>
-          <span style={{ fontSize: "2.0rem" }}>🌇</span>
+          <span style={{ fontSize: "5.0rem" }}>🌇</span>
           <p
             style={{
               fontSize: "0.8rem",
@@ -77,6 +80,7 @@ const SolarCycle = ({ sun }) => {
         </div>
       </div>
     </div>
+
   );
 };
 
