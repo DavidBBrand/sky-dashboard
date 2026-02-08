@@ -71,23 +71,23 @@ const ISSWatcher = ({ lat, lon }) => {
           }}
         ></div>
 
-       <div className="svg-container">
-        <svg
-          className="iss-favicon-small"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-        >
-          {/* Central Module */}
-          <rect x="10" y="8" width="4" height="8" rx="1" />
-          <rect x="7" y="11" width="10" height="2" rx="0.5" />
-          {/* Left Solar Arrays */}
-          <rect x="2" y="5" width="4" height="14" rx="1" opacity="0.8" />
-          {/* Right Solar Arrays */}
-          <rect x="18" y="5" width="4" height="14" rx="1" opacity="0.8" />
-          {/* Connecting Truss */}
-          <rect x="6" y="11.5" width="12" height="1" />
-        </svg>
-       </div> 
+        <div className="svg-container">
+          <svg
+            className="iss-favicon-small"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            {/* Central Module */}
+            <rect x="10" y="8" width="4" height="8" rx="1" />
+            <rect x="7" y="11" width="10" height="2" rx="0.5" />
+            {/* Left Solar Arrays */}
+            <rect x="2" y="5" width="4" height="14" rx="1" opacity="0.8" />
+            {/* Right Solar Arrays */}
+            <rect x="18" y="5" width="4" height="14" rx="1" opacity="0.8" />
+            {/* Connecting Truss */}
+            <rect x="6" y="11.5" width="12" height="1" />
+          </svg>
+        </div>
         <div
           style={{
             display: "flex",
@@ -156,6 +156,7 @@ const ISSWatcher = ({ lat, lon }) => {
           {parseFloat(issPos.lon).toFixed(2)}
         </p>
 
+        <iframe src="https://isstracker.pl/en/widget/map?disableInfoBox=1&lang=en"></iframe>
         {isNearby && (
           <div className="proximity-alert">LOW ORBIT PROXIMITY ALERT</div>
         )}
