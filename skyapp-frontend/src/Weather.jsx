@@ -1,7 +1,6 @@
 import "./Weather.css";
 import React, { useState, useEffect } from "react";
 
-// 1. Accept onDataReceived from App.jsx
 const Weather = ({ lat, lon, onDataReceived }) => {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(false);
@@ -20,7 +19,6 @@ const Weather = ({ lat, lon, onDataReceived }) => {
           setError(true);
         } else {
           setWeather(data);
-          // 2. Send the data back up to App.jsx so the header can see it
           if (onDataReceived) {
             onDataReceived(data);
           }
@@ -30,7 +28,6 @@ const Weather = ({ lat, lon, onDataReceived }) => {
         console.error(err);
         setError(true);
       });
-    // 3. Add onDataReceived to the dependency array
   }, [lat, lon, onDataReceived]);
 
   const getWeatherEmoji = (description) => {
@@ -45,8 +42,11 @@ const Weather = ({ lat, lon, onDataReceived }) => {
     }
     if (desc.includes("mist") || desc.includes("fog") || desc.includes("haze"))
       return "🌫️";
-    return "🌡️"; // Default emoji
+    return "🌡️"; 
   };
+
+  // Immediate placeholder based on current hour to prevent visual pop-in
+  const placeholderEmoji = new Date().getHours() > 18 || new Date().getHours() < 6 ? "🌙" : "☀️";
 
   if (error)
     return (
@@ -55,87 +55,52 @@ const Weather = ({ lat, lon, onDataReceived }) => {
       </div>
     );
 
-  // Find this part in your file:
-  if (!weather)
-    return (
-      <div
-        className="weather-card"
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <p
         style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center"
+          fontSize: "1.0rem",
+          textTransform: "uppercase",
+          letterSpacing: "3px",
+          color: "var(--text-sub)",
+          fontWeight: "500",
+          margin: "0 0 10px 0"
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <p
-            style={{
-              fontSize: "0.8rem",
-              textTransform: "uppercase",
-              letterSpacing: "3px",
-              color: "var(--text-sub)",
-              fontWeight: "500",
-              margin: 0 // Ensure it aligns vertically with the dot
-            }}
-          >
-            Live Weather
-          </p>
-        </div>
-        <hr></hr>
-        <div className="weather-loader"></div>
-        <p className="loading-text">Updating Weather...</p>
+        {weather ? "Current Weather" : "Live Weather"}
+      </p>
+
+      {/* FIXED LCP ELEMENT: Always renders at the same size and position */}
+      <div 
+        className={!weather ? "weather-loading-pulse" : ""} 
+        style={{ fontSize: "4rem", lineHeight: "1", margin: "10px 0" }}
+      >
+        {weather ? getWeatherEmoji(weather.description) : placeholderEmoji}
       </div>
-    );
 
-  return (
-    <div>
-      <div>
-        <p
-          style={{
-            fontSize: "1.0rem",
-            textTransform: "uppercase",
-            letterSpacing: "3px",
-            color: "var(--text-sub)",
-            fontWeight: "500"
-          }}
-        >
-          Current Weather
-        </p>
+      <h4 style={{ fontSize: "1.8rem", fontWeight: "400", margin: 0 }}>
+        {weather ? `${weather.temp}°F` : "--°F"}
+      </h4>
 
-        <h2
-          style={{
-            fontSize: "1rem",
-            margin: "2px 0",
-            color: "var(--text-main)",
-            fontWeight: "200"
-          }}
-        ></h2>
-        <div style={{ fontSize: "8rem" }}>
-          {getWeatherEmoji(weather.description)}
-        </div>
-        <h4 style={{ fontSize: "1.8rem", fontWeight: "400", margin: 0 }}>
-          {weather.temp}°F
-        </h4>
+      <p
+        style={{
+          fontSize: "1.2rem",
+          fontWeight: "500",
+          color: "var(--text-main)",
+          margin: "5px 0"
+        }}
+      >
+        {weather ? weather.description : "Synchronizing..."}
+      </p>
 
-        <p
-          style={{
-            fontSize: "1.2rem",
-            fontWeight: "500",
-            color: "var(--text-main)"
-          }}
-        >
-          {weather.description}
-        </p>
-
-        <div
-          style={{
-            marginTop: "1rem",
-            fontSize: "1.4rem",
-            color: "var(--text-sub)"
-          }}
-        >
-          Wind: {weather.windspeed} mph
-        </div>
+      <div
+        style={{
+          marginTop: "1rem",
+          fontSize: "1.4rem",
+          color: "var(--text-sub)"
+        }}
+      >
+        Wind: {weather ? `${weather.windspeed} mph` : "-- mph"}
       </div>
     </div>
   );
