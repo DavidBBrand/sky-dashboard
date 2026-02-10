@@ -14,6 +14,7 @@
   --accent-color3: #be6806;
   --star-opacity: 0; 
   --glass-blur: blur(10px);
+  --logo-url: url('/SkyDashDay.PNG');
 }
 
 [data-theme='night'] {
@@ -30,8 +31,18 @@
   --accent-color2: rgb(228, 73, 17);
   --accent-color3: #FFB703;
   --star-opacity: 0.6;
+  --logo-url: url('/SkyDash2.PNG');
 }
 
+.logo-container {
+  width: 120px;
+  height: 120px;
+  background-image: var(--logo-url);
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: background-image 0.3s ease-in-out; /* Smooth cross-fade */
+  border-radius: 50%;
+}
 /* 2. Global Reset & Base Styles */
 body {
   margin: 0;
@@ -83,7 +94,7 @@ body::before {
   pointer-events: none;
 }
 
-/* 4. Typography & Common Elements */
+
 h1 {
   font-size: 2.2em;
   line-height: 1.0;
@@ -99,13 +110,10 @@ button {
   font-weight: 600;
   background: var(--card-bg);
   color: var(--text-main);
-  // backdrop-filter: var(--glass-blur);
-  // -webkit-backdrop-filter: var(--glass-blur);
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 button:hover {
-  // transform: translateY(-2px);
   background: rgba(255, 255, 255, 0.2);
 }

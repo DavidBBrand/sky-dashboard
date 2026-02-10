@@ -67,7 +67,7 @@ function App() {
 
       <header className="header-section">
         <h1 className="rainbow-animated">SKY DASHBOARD</h1>
-        <img
+         {/* <img
           src="/skyDash2.PNG"
           alt="Sky Dashboard Preview"
           style={{
@@ -76,8 +76,10 @@ function App() {
             borderRadius: "50%",
             border: "1px solid var(--card-border)",
             boxShadow: "0 8px 32px rgba(0,0,0,0.3)"
-          }}
-        />
+          }} 
+          /> */}
+          <div className="logo-container" role="img" aria-label="Sky Dashboard Logo" />
+        
 
         <div className="search-wrapper">
           <LocationSearch onLocationChange={setLocation} />
