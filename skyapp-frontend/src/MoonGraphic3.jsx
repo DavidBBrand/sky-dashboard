@@ -48,26 +48,22 @@ const MoonGraphic3 = ({ lat, lon }) => {
     const index = Math.round(az / 45) % 8;
     return directions[index];
   };
-
   const LunarVisual = ({ percentage }) => {
+    // 0-50% is Crescent, 50-100% is Gibbous
     const isGibbous = percentage > 50;
-    const ratio = Math.abs(50 - percentage) / 50;
+    
+    // Calculate the width of the middle "terminator" oval.
+    // At 50% (Quarter), scale is 0 (straight line).
+    // At 0% or 100%, scale is 1 (full circle).
+    const scale = Math.abs(50 - percentage) / 50;
 
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "20px",
-          width: "100%"
-        }}
-      >
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "20px", width: "100%" }}>
         <div
           style={{
             width: "140px",
             height: "140px",
-            backgroundColor: isGibbous ? "#fefcd7" : "#1a1a1a",
+            backgroundColor: "#1a1a1a", // The "Space" background
             borderRadius: "50%",
             position: "relative",
             overflow: "hidden",
@@ -75,31 +71,7 @@ const MoonGraphic3 = ({ lat, lon }) => {
             border: "1px solid rgba(255,255,255,0.05)"
           }}
         >
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "50%",
-              height: "100%",
-              backgroundColor: "#1a1a1a",
-              zIndex: isGibbous ? 0 : 2
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: "25%",
-              width: "50%",
-              height: "100%",
-              backgroundColor: isGibbous ? "#fefcd7" : "#1a1a1a",
-              borderRadius: "50%",
-              transform: `scaleX(${ratio * 2})`,
-              zIndex: isGibbous ? 2 : 1,
-              transition: "transform 1s ease-in-out"
-            }}
-          />
+          {/* Base Layer: The lit half of the moon */}
           <div
             style={{
               position: "absolute",
@@ -111,23 +83,29 @@ const MoonGraphic3 = ({ lat, lon }) => {
               zIndex: 1
             }}
           />
+
+          {/* The Terminator: This oval creates the crescent or gibbous curve */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: isGibbous ? "0%" : "25%", // Shift based on phase
+              width: isGibbous ? "100%" : "50%",
+              height: "100%",
+              backgroundColor: isGibbous ? "#fefcd7" : "#1a1a1a",
+              borderRadius: "50%",
+              transform: `scaleX(${scale})`,
+              zIndex: 2,
+              transition: "transform 1s ease-in-out, background-color 0.5s"
+            }}
+          />
         </div>
 
         <div style={{ textAlign: "center" }}>
-          <h2
-            style={{ margin: 0, fontSize: "1.8rem", color: "var(--text-main)" }}
-          >
+          <h2 style={{ margin: 0, fontSize: "1.8rem", color: "var(--text-main)" }}>
             {percentage}%
           </h2>
-          <p
-            style={{
-              color: "var(--text-sub)",
-              textTransform: "uppercase",
-              letterSpacing: "1px",
-              fontSize: "0.7rem",
-              margin: 0
-            }}
-          >
+          <p style={{ color: "var(--text-sub)", textTransform: "uppercase", letterSpacing: "1px", fontSize: "0.7rem", margin: 0 }}>
             Lunar Illumination
           </p>
         </div>
