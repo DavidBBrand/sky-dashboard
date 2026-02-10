@@ -157,7 +157,7 @@ const ISSWatcher = ({ lat, lon }) => {
         </p>
 
         <div className="iframe-container">
-          {" "}
+          
           <iframe
             className="responsive-iframe"
             src="https://isstracker.pl/en/widget/map?disableInfoBox=1&lang=en"

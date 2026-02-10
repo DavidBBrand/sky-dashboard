@@ -49,13 +49,14 @@
 /* 3. The Radar System */
 .radar-container {
   position: relative;
-  width: 360px; 
-  height: 360px;
+  width: 100%;
+  /* CRITICAL: This keeps the radar a square no matter the width */
+  aspect-ratio: 1 / 1; 
   margin: 20px auto;
-  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 70%);
+  background: rgba(0, 255, 42, 0.05);
   border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--accent-color), transparent 90%) 0%, transparent 80%);
-  box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+  border: 1px solid var(--accent-color);
+  overflow: hidden; /* Keeps the scanner and nodes inside the circle */
 }
 
 .radar-ring {
@@ -83,14 +84,14 @@
   transform-origin: bottom right;
   animation: scan 4s linear infinite;
   pointer-events: none;
-  /* clip scanner to shape of the radar dish circle */
   clip-path: circle(100% at bottom right);
 }
 
 /* 4. The Nodes (The actual Satellites) */
 .radar-node {
   position: absolute;
-  width: 5px; height: 5px;
+  width: 4px; 
+  height: 4px;
   background: var(--accent-color);
   border-radius: 50%;
   box-shadow: 0 0 8px var(--accent-color);
