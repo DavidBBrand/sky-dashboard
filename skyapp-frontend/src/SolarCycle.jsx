@@ -37,7 +37,7 @@ const SolarCycle = ({ sun }) => {
           <p
             style={{
               fontSize: "0.8rem",
-              margin: "5px 0 0 0",
+              margin: "12px 0 0 0",
               fontWeight: "500",
               color: "var(--text-main)"
             }}
@@ -61,7 +61,7 @@ const SolarCycle = ({ sun }) => {
           <p
             style={{
               fontSize: "0.8rem",
-              margin: "5px 0 0 0",
+              margin: "12px 0 0 0",
               fontWeight: "500",
               color: "var(--text-main)"
             }}
