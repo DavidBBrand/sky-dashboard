@@ -57,25 +57,45 @@
   margin: 20px;
 }
 
-/* Vertical Stack for Telemetry - Isolated to Header */
 .telemetry-info {
   display: flex;
   flex-wrap: wrap;
-  justify-content:center;
-  gap: 15px;
+  justify-content: center;
+  gap: 20px; /* Increased slightly for better visual breathing room */
   margin: 15px;
   text-align: center;
   color: var(--text-sub);
-  letter-spacing: 1px;
+  letter-spacing: 2px; /* Slight bump for that high-tech look */
   text-transform: uppercase;
-  font-size: 0.85rem;
-  padding: 10px;
+  font-size: 1rem; /* Slightly smaller text usually looks "sharper" when etched */
+  padding: 15px;
+  margin-top: 20px;
+  
+  /* The Secret Sauce: The Etch */
+  text-shadow: 
+    0.5px 0.5px 0px rgba(0, 0, 0, 0.7),      /* Bottom-right: Deep cutout shadow */
+    -0.5px -0.5px 0px rgba(255, 255, 255, 0.15); /* Top-left: Subtle light catch */
+    
+  /* Optional: Adds a very subtle container glow to separate the telemetry from the background */
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 50px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* Individual spans inside the telemetry info */
 .telemetry-info span {
-  white-space: nowrap;
+  font-weight: 600;
+  transition: color 0.3s ease;
 }
 
+/* Hover effect to make it feel interactive */
+.telemetry-info span:hover {
+  color: var(--text-main);
+  text-shadow: 
+    1px 1px 0px rgba(0, 0, 0, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.2);
+}
 .derp {
   color: var(--accent-color3);
   
@@ -138,7 +158,7 @@
 /* 7. UI Components & Typography */
 .theme-toggle-btn {
   position: fixed; /* Keep it pinned to the screen */
-  top: 50px;
+  top: 10px;
   right: 20px;
   z-index: 1000; /* Highest priority to stay above everything */
   padding: 10px 20px;
@@ -171,15 +191,31 @@
 }
 
 .rainbow-animated {
-  background: linear-gradient(to right, #806439, #744428, #7a623f);
+  /* A palette of Solar Gold, Starlight, and Deep Space Blue */
+  background: linear-gradient(
+    to right, 
+    #bf953f, /* Gold */
+    #fcf6ba, /* Highlight */
+    #b38728, /* Shadow Gold */
+    #131034, /* Deep Space */
+    #bf953f
+  );
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: rainbow-shifty 2.5s linear infinite;
-  font-family: 'Comfortaa';
-  letter-spacing: 10px;
-  margin: 5px 5px;
+  animation: rainbow-shifty 3s linear infinite;
+  font-family: 'Comfortaa', cursive;
+  font-weight: 900;
+  letter-spacing: 12px;
+  text-transform: uppercase;
+  font-size: 3rem;
+  
+  /* Glassmorphic 3D Etch */
+  filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.8));
+  
+  /* Subtle glow to simulate starlight */
+  text-shadow: 0 0 15px rgba(191, 149, 63, 0.3);
 }
 
 @keyframes rainbow-shifty {
