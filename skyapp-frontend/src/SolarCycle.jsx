@@ -16,19 +16,19 @@ const SolarCycle = ({ sun }) => {
 
   return (
     <div className="solar-cycle-container">
-      <h3
-        className="rainbow-warm"
+      <h4
+        className="sky-details"
         style={{
         //   fontSize: "1.2rem",
           textTransform: "uppercase",
-          letterSpacing: "8px",
+          letterSpacing: "2px",
         //   marginBottom: "20px",
         //   padding: "5px"
           
         }}
       >
         <i>Solar Cycle</i>
-      </h3>
+      </h4>
       
       <div style={{ display: "flex", gap: "20px" }}>
         {/* Sunrise Section */}

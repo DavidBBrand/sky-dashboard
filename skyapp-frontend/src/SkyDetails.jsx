@@ -56,48 +56,13 @@ const SkyDetails = ({ skyData }) => {
   return (
     
       <div >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            marginBottom: "20px"
-          }}
-        >
-          <div>
-            <p
-              style={{
-                fontSize: "1rem",
-                textTransform: "uppercase",
-                letterSpacing: "2px",
-                color: "var(--text-sub)",
-                margin: 0
-              }}
-            ></p>
-            <h2
-              style={{
-                fontSize: "1.0rem",
-                margin: "5px 0 0 0",
-                fontWeight: "300",
-                color: "var(--text-main)"
-              }}
-            ></h2>
-          </div>
-        </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           <div>
-            <h3
-              style={{
-                color: "#854dbb",
-                fontSize: "1.2rem",
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                marginBottom: "5px"
-              }}
+            <h2 className="sky-details"
             >
               Planets
-            </h3>
+            </h2>
             <div className="planet-grid">
               {Object.entries(planets).map(([name, info]) => (
                 <div key={name} className="planet-item">

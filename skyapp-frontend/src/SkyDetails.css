@@ -1,9 +1,17 @@
+.sky-details {
+      color:var(--text-sub);
+    font-size: 1.2rem;
+    font-weight:600;
+    margin-top: 24px;
+    text-transform: uppercase;
+}
+
 /* The Grid Container */
 .planet-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
-    margin-top: 15px;
+    
 }
 
 /* Individual Planet Boxes */
@@ -88,10 +96,4 @@
   }
 }
 
-.solar-cycle-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 24px;
-  margin-bottom: 24px;
-}
+

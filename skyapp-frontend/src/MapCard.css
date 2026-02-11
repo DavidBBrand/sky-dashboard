@@ -1,52 +1,3 @@
-.map-card {
-    background: var(--card-bg);
-    color: var(--text-main);
-    border: 1px solid var(--card-border);
-    
-    /* Keep the glass effects */
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    
-    /* Layout */
-    padding: 20px;
-    min-width: 280px;
-    flex: 1;
-    max-width: 350px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 500px;
-    border-radius: 24px;
-    gap:20px;
-    
-//     /* Interactive shadow - adjusted to be subtle in light, deep in dark */
-//     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1); 
-    
-//     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-// }
-
-/* Hover effect for interactivity */
-// .map-card:hover {
-//     transform: scale(1.02);
-//     box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.2);
-//     border: 1px solid var(--text-sub);
-    
-// }
-
-
-// .card-container {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-    
-//     /* Change this: */
-//     min-height: auto;        /* Let the content define the height */
-//     padding: 20px 20px;      /* Vertical gap / Horizontal gap */
-    
-//     width: 100%;             /* Ensure it spans the full width */
-//     box-sizing: border-box;  /* Prevents padding from causing horizontal scroll */
-// }
 
 /* Mobile Tweak for your Card */
 @media (max-width: 350px) {
@@ -57,11 +8,18 @@
     }
 }
 
-.map-card-title {
+
+    
+.map-card {
+    color:var(--text-sub);
     font-size: 1.2rem;
-    font-weight: 400;
-    margin-bottom: 15px;
-    color: var(--text-sub);
+    font-weight:600;
+    margin-top: 24px;
+    text-transform: uppercase;
+}
+
+    
+    
 }
 
 .rainbow-shwarma {
@@ -73,14 +31,13 @@
     #bca740,
     #fc913a,
     #a68a3d
-
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent !important;
   animation: 
-    rainbow-shift 2.5s linear infinite,
+    rainbow-shift 1.5s linear infinite,
     glow-pulse 2.19s ease-in-out infinite; 
   text-shadow: rgba(201, 38, 92, 0.644) 4px 4px 3px;
   font-size: 2em;

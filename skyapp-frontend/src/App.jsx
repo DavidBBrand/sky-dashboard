@@ -113,7 +113,7 @@ function App() {
         </div>
 
         <div
-          className={`glass-card ${issDistance < 1000 ? "proximity-alert-active" : ""}`}
+          className={`glass-card ${issDistance < 500 ? "proximity-alert-active" : ""}`}
         >
           <ISSWatcher
             lat={location.lat}

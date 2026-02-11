@@ -18,7 +18,7 @@ const MapCard = ({ lat, lon, theme, skyData, location }) => {
   return (
     
       <div>
-        <h1 className="map-card-title"> {location?.name}</h1>
+        <h1 className="map-card"> {location?.name}</h1>
 
         <SolarCycle sun={skyData?.sun} />
 

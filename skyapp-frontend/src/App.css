@@ -3,7 +3,7 @@
   width: 100%;
   margin: 0 auto;
   text-align: center;
-  font-family:  'Roboto Mono', 'Courier New', monospace;
+  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -11,8 +11,8 @@
 /* 2. Theme Variables */
 :root {
   --bg-color: #bdb5a9;
-  --mesh-1: rgb(208, 193, 171);
-  --mesh-2: rgb(183, 203, 222);
+  --mesh-2: rgb(208, 195, 177);
+  --mesh-1: rgb(166, 196, 223);
   --card-bg: rgba(255, 255, 255, 0.25);
   --card-border: rgba(62, 51, 35, 0.2); 
   --text-main: #3e3323;
@@ -243,7 +243,7 @@
   border: none;
 }
 
-/* Add this to Section 7 in your App.css */
+/* uniform glass-card for all card components */
 .glass-card {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
@@ -259,22 +259,24 @@
   
   transition: all 0.5s ease;
 }
-/* The base card stays normal */
 
 
-/* The active state adds the tactical red/green pulse to the whole card */
+
+/*  active state adds  tactical red pulse to the entire card */
 .glass-card.proximity-alert-active {
-  border-color: rgba(11, 97, 43, 0.8);
-  box-shadow: 0 0 20px rgba(11, 97, 43, 0.4);
-  animation: card-alert-pulse 2s infinite;
+  border-color: rgb(181, 23, 5);
+  box-shadow: 0 0 20px rgba(226, 55, 2, 0.788);
+  animation: card-alert-pulse 1s infinite;
+  border: 1px solid rgb(112, 2, 2);
   
 }
 
 @keyframes card-alert-pulse {
-  0%, 100% { box-shadow: 0 0 15px rgba(11, 97, 43, 0.3); }
-  50% { box-shadow: 0 0 30px rgba(11, 97, 43, 0.6); }
+  0%, 100% { box-shadow: 0 0 15px rgba(248, 25, 0, 0.677); }
+  50% { box-shadow: 0 0 30px rgb(217, 2, 2); }
 }
 .glass-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px var(--separator-glow);
 }
+

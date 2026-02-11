@@ -45,7 +45,7 @@
 .proximity-alert {
   font-size: 2rem;
   font-weight: bold;
-  color: #ce7b06;
+  color: #c92706;
   text-transform: uppercase;
   letter-spacing: 5px;
   margin-top: 10px;
@@ -53,13 +53,13 @@
 
   animation:
     alert-blink 1s ease-in-out infinite,
-    alert-pulse 2s ease-in-out infinite,
-    alert-shake .1s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+    alert-pulse 2s ease-in-out infinite;
+    // alert-shake .9s cubic-bezier(0.016, 0.018, 0.016, .2) infinite;
 
   /* Your 3D Etched Shadow */
   text-shadow:
-    1px 1px 0.25px rgba(0, 0, 0, 0.583),
-    -0.5px -0.5px 0px rgba(255, 255, 255, 0.2);
+    1px 1px 0.25px rgba(0, 0, 0, 0.702),
+    -0.5px -0.5px 0px rgba(255, 255, 255, 0.419);
 }
 
 /* The New Shake/Wiggle Keyframe */
@@ -99,7 +99,7 @@
     text-shadow:
       1px 1px 0.25px rgba(0, 0, 0, 0.583),
       -0.5px -0.5px 0px rgba(255, 255, 255, 0.2);
-    transform: scale(1);
+    transform: scale(1.0);
   }
   50% {
     /* 3D Etched + Radiant Glow */
@@ -107,7 +107,7 @@
       1px 1px 0.25px rgba(0, 0, 0, 0.583),
       -0.5px -0.5px 0px rgba(255, 255, 255, 0.2),
       0 0 15px rgba(170, 50, 10, 0.925);
-    transform: scale(1.05);
+    transform: scale(1.2);
   }
 }
 

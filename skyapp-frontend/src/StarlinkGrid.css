@@ -1,41 +1,10 @@
-/* 1. Base Card Styling (Dashboard Standard) */
-.starlink-card {
-  font-family: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', 'Courier New', monospace;
-  background: var(--card-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 25px;
-  border-radius: 15px;
-  border: 1px solid var(--card-border);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: var(--text-main);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 500px; /* Ensures consistent height with other cards */
-}
-.card-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    /* Change this: */
-    min-height: auto;        /* Let the content define the height */
-    padding: 20px 20px;      /* Vertical gap / Horizontal gap */
-    
-    width: 100%;             /* Ensure it spans the full width */
-    box-sizing: border-box;  /* Prevents padding from causing horizontal scroll */
-}
 
-
-.starlink-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--text-sub);
+.starlink {
+    color:var(--text-sub);
+    font-size: 1.2rem;
+    font-weight:600;
+    margin-top: 24px;
 }
-
 /* 2. Header & Labels */
 .orbital-label {
   letter-spacing: 2px;

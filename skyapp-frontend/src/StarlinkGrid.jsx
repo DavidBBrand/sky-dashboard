@@ -84,7 +84,7 @@ const StarlinkGrid = ({ lat, lon }) => {
   return (
     
       <div>
-        <div className="starlink-card-title">STARLINK SATELLITE RADAR</div>
+        <div className="starlink">STARLINK SATELLITE RADAR</div>
 
         <div className="radar-container">
           <div className="radar-scanner"></div>

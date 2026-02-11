@@ -57,36 +57,33 @@ const Weather = ({ lat, lon, onDataReceived }) => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <p
+      <h2
         style={{
-          fontSize: "1.0rem",
+          fontSize: "1.2rem",
           textTransform: "uppercase",
           letterSpacing: "3px",
           color: "var(--text-sub)",
-          fontWeight: "500",
-          margin: "0 0 10px 0"
+          fontWeight: "600",
+          margin: "20px 0 10px"
         }}
       >
         {weather ? "Current Weather" : "Live Weather"}
-      </p>
-
-      {/* FIXED LCP ELEMENT: Always renders at the same size and position */}
+      </h2>
       <div 
         className={!weather ? "weather-loading-pulse" : ""} 
-        style={{ fontSize: "4rem", lineHeight: "1", margin: "10px 0" }}
+        style={{ fontSize: "6rem", lineHeight: "1", margin: "20px 10px 10px 10px" }}
       >
         {weather ? getWeatherEmoji(weather.description) : placeholderEmoji}
       </div>
 
-      <h4 style={{ fontSize: "1.8rem", fontWeight: "400", margin: 0 }}>
+      <h4 style={{ fontSize: "1.8rem", fontWeight: "400", margin: "16px" }}>
         {weather ? `${weather.temp}°F` : "--°F"}
       </h4>
-
       <p
         style={{
           fontSize: "1.2rem",
-          fontWeight: "500",
-          color: "var(--text-main)",
+          fontWeight: "400",
+          color: "var(--text-sub)",
           margin: "5px 0"
         }}
       >

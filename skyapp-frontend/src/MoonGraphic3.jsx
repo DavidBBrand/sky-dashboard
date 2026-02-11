@@ -105,7 +105,7 @@ const MoonGraphic3 = ({ lat, lon }) => {
           <h2 style={{ margin: 0, fontSize: "1.8rem", color: "var(--text-main)" }}>
             {percentage}%
           </h2>
-          <p style={{ color: "var(--text-sub)", textTransform: "uppercase", letterSpacing: "1px", fontSize: "0.7rem", margin: 0 }}>
+          <p style={{ color: "var(--text-sub)", textTransform: "uppercase", letterSpacing: "1.6px", fontSize: "1rem", margin: 0 }}>
             Lunar Illumination
           </p>
         </div>
@@ -116,7 +116,7 @@ const MoonGraphic3 = ({ lat, lon }) => {
   return (
     <div>
       <div>
-        <p
+        <h2
           style={{
             fontSize: "1.2rem",
             textTransform: "uppercase",
@@ -128,7 +128,7 @@ const MoonGraphic3 = ({ lat, lon }) => {
           }}
         >
           LUNAR OBSERVATION
-        </p>
+        </h2>
 
         {loading ? (
           <div
