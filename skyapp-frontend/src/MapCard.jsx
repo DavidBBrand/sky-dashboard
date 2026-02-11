@@ -16,25 +16,50 @@ const MapCard = ({ lat, lon, theme, skyData, location }) => {
   const mapUrl = `https://api.mapbox.com/styles/v1/mapbox/${currentStyle}/static/pin-s+ff4444(${lon},${lat})/${lon},${lat},${zoom},0/600x400@2x?access_token=${MAPBOX_TOKEN}`;
 
   return (
-    
-      <div>
-        <h1 className="map-card"> {location?.name}</h1>
-
-        <SolarCycle sun={skyData?.sun} />
-
-        <img
-          src={mapUrl}
-          alt="Regional Telemetry Map"
-          key={currentStyle}
-          style={{
-            width: "100%",
-            borderRadius: "8px",
-            display: "block",
-            transition: "opacity 0.5s ease"
-          }}
-        />
+    <div>
+      <h1 className="map-card-title"> {location?.name || "Initializing..."}</h1>
+      {/* 1. Reserve the space for SolarCycle */}
+      <div
+        style={{
+          minHeight: "120px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        {skyData?.sun ? (
+          <SolarCycle sun={skyData.sun} />
+        ) : (
+          <div className="solar-loader">
+            <div className="scanning-line"></div>
+            <p
+              style={{
+                fontSize: "0.7rem",
+                letterSpacing: "3px",
+                color: "var(--text-sub)",
+                opacity: 0.5
+              }}
+            >
+              CALCULATING SOLAR ARC...
+            </p>
+          </div>
+        )}
       </div>
-    
+      
+
+      <img
+        src={mapUrl}
+        alt="Regional Telemetry Map"
+        key={currentStyle}
+        style={{
+          width: "100%",
+          borderRadius: "12px",
+          display: "block",
+          transition: "opacity 0.5s ease",
+          marginTop: "20px"
+        }}
+      />
+    </div>
   );
 };
 
