@@ -139,11 +139,11 @@ const ISSWatcher = ({ lat, lon, onDistanceUpdate }) => {
           fontSize: "1.2rem",
           color: "var(--text-sub)",
           marginTop: "15px",
-          fontFamily: "monospace",
-          opacity: 0.8
+          opacity: 0.8,
+          fontFamily: "Calibri",
         }}
       >
-        LAT: {parseFloat(issPos.lat).toFixed(2)} | LON:{" "}
+        LAT: {parseFloat(issPos.lat).toFixed(2)} |  LON:{" "}
         {parseFloat(issPos.lon).toFixed(2)}
       </p>
 
