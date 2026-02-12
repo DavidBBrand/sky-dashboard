@@ -99,7 +99,7 @@
 
 /* Individual spans inside the telemetry info */
 .telemetry-info span {
-  font-weight: 600;
+  font-weight: 400;
   transition: color 0.3s ease;
 }
 
