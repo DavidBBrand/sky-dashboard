@@ -43,20 +43,18 @@
   padding-bottom: 50px;
 }
 
-/* 4. Refined Header Section */
+
 .header-section {
   width: 100%;
-  padding: 5px 0 5px 0; /* Increased top padding to clear the fixed button */
+  max-width: 1300px; 
+  margin: 0 auto;    /* CENTERS THE HEADER BOX  */
+  padding: 5px 0; 
   display: flex;
   flex-direction: column;
-  align-items: center; /* Ensures content stays centered horizontally */
+  align-items: center; 
   position: relative;
   z-index: 10;
-  font-size: 1.0rem;
-  font-weight: 200;
-  margin: 20px;
 }
-
 .telemetry-info {
   display: flex;
   flex-wrap: wrap;
@@ -101,20 +99,23 @@
   color: var(--accent-color3);
   
 }
-/* 5. Blended Search Input */
+
 .search-wrapper {
   width: 100%;
-  max-width: 600px; /* Constraints the wrapper area */
+  max-width: 600px; 
   display: flex;
-  justify-content: center; /* Centers the search bar */
-  margin: 0px auto 0 auto; /* Centers the wrapper itself */
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto; /* Changed 0 to auto to ensure the wrapper centers in the header */
 }
 
 .search-wrapper input {
-  position: relative;
+  display: block;
+  position:relative;
   width: 100%;
   max-width: 300px;
-  padding: 12px 12px;
+  margin-left: auto;
+  margin-right: auto;
   border-radius: 25px;
   border: 1px solid var(--card-border);
   background: var(--card-bg);
@@ -177,8 +178,6 @@
   min-width: 160px;
 }
 
-
-
 .copyright {
   font-size: 0.6em;
   opacity: 0.6;
@@ -187,7 +186,6 @@
   letter-spacing: 2px;
   text-transform: uppercase;
 }
-
 
 .rainbow-animated {
   /* A palette of Solar Gold, Starlight, and Deep Space Blue */
@@ -229,7 +227,6 @@
 @media (max-width: 700px) {
   .dashboard-grid { grid-template-columns: 1fr; }
 }
-
 
 .map-layer {
   position: absolute;
@@ -294,8 +291,6 @@
   
   transition: all 0.5s ease;
 }
-
-
 
 /*  active state adds  tactical red pulse to the entire card */
 .glass-card.proximity-alert-active {
