@@ -7,41 +7,14 @@
         padding: 15px;      /* Slightly tighter padding for small screens */
     }
 }
-
-
-    
+ 
 .map-card-title {
     color:var(--text-main);
     font-size: 1.2rem;
     font-weight:600;
     margin-top: 24px;
     text-transform: uppercase;
-    letter-spacing: 0px;
-}
-
-    
-    
-}
-
-.rainbow-shwarma {
-  /* Warm Spectrum: Deep Red -> Orange -> Gold -> Amber -> Pinkish Red */
-  background: linear-gradient(
-    to right,
-    #a98c3a,
-    #fc913a,    
-    #bca740,
-    #fc913a,
-    #a68a3d
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent !important;
-  animation: 
-    rainbow-shift 1.5s linear infinite,
-    glow-pulse 2.19s ease-in-out infinite; 
-  text-shadow: rgba(201, 38, 92, 0.644) 4px 4px 3px;
-  font-size: 2em; 
+    letter-spacing: 1px;
 }
 
 .solar-loader {

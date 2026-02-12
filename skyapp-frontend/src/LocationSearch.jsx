@@ -60,12 +60,12 @@ const LocationSearch = ({ onLocationChange }) => {
   };
 
 return (
-  <div className="location-container" style={{ 
+  <div style={{ 
     display: 'flex', 
     justifyContent: 'center', 
     width: '100%' 
   }}>
-    <form onSubmit={handleSearch} style={{ display: 'flex', gap: '10px' }}>
+    <form onSubmit={handleSearch} style={{ display: 'flex',  }}>
       <input
         type="text"
         placeholder="SEARCH CITY..."
@@ -74,21 +74,12 @@ return (
         className="theme-toggle-btn"
         style={{
           width: '250px',
-          padding: '10px 15px',
           textAlign: 'center', /* Text starts in the middle */
           outline: 'none',
           fontSize: '0.8rem',
           letterSpacing: '1px'
         }}
       />
-      <button 
-        type="submit" 
-        className="theme-toggle-btn"
-        disabled={loading}
-        style={{ padding: '10px 20px' }}
-      >
-        {loading ? "..." : "SCAN"}
-      </button>
     </form>
   </div>
 );

@@ -57,15 +57,14 @@
 .header-section {
   width: 100%;
   max-width: 1300px; 
-  margin: 0 auto;    /* CENTERS THE HEADER BOX  */
+  margin: 0 auto;   
   padding: 5px 0; 
   display: flex;
   flex-direction: column;
   align-items: center; 
   position: relative;
   z-index: 10;
-  // border-left: 5px solid red;
-  // border-right: 5px solid blue;
+
 }
 .telemetry-info {
   display: flex;
@@ -208,36 +207,7 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
   text-transform: uppercase;
 }
 
-.rainbow-animated {
-  /* A palette of Solar Gold, Starlight, and Deep Space Blue */
-  background: linear-gradient(
-    to right, 
-    #bf953f, /* Gold */
-    #fcf6ba, /* Highlight */
-    #b38728, /* Shadow Gold */
-    #131034, /* Deep Space */
-    #bf953f
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: rainbow-shifty 3s linear infinite;
-  font-family: 'Comfortaa', cursive;
-  font-weight: 900;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  font-size: 3rem;
-  padding-right: -12px; 
-  text-indent: 12px;
 
-  
-  /* Glassmorphic 3D Etch */
-  filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.8));
-  
-  /* Subtle glow to simulate starlight */
-  text-shadow: 0 0 15px rgba(191, 149, 63, 0.3);
-}
 
 @keyframes rainbow-shifty {
   to { background-position: 200% center; }
@@ -333,4 +303,6 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px var(--separator-glow);
 }
+
+
 
