@@ -49,63 +49,91 @@ const MoonGraphic3 = ({ lat, lon }) => {
     return directions[index];
   };
   const LunarVisual = ({ percentage }) => {
-    // 0-50% is Crescent, 50-100% is Gibbous
+    // 0 to 100 illumination
     const isGibbous = percentage > 50;
-    
-    // Calculate the width of the middle "terminator" oval.
-    // At 50% (Quarter), scale is 0 (straight line).
-    // At 0% or 100%, scale is 1 (full circle).
-    const scale = Math.abs(50 - percentage) / 50;
+
+    // Calculate the horizontal radius of the shadow ellipse
+    // At 50% rx is 0 (straight line). At 0% or 100%, rx is 50 (full circle).
+    const rx = Math.abs(50 - percentage) * (50 / 50);
 
     return (
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "20px", width: "100%" }}>
-        <div
-          style={{
-            width: "140px",
-            height: "140px",
-            backgroundColor: "#1a1a1a", // The "Space" background
-            borderRadius: "50%",
-            position: "relative",
-            overflow: "hidden",
-            boxShadow: "0 0 30px rgba(254, 252, 215, 0.15)",
-            border: "1px solid rgba(255,255,255,0.05)"
-          }}
-        >
-          {/* Base Layer: The lit half of the moon */}
-          <div
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "20px",
+          width: "100%"
+        }}
+      >
+        <div style={{ width: "140px", height: "140px", position: "relative" }}>
+          <svg
+            viewBox="0 0 100 100"
             style={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              width: "50%",
+              width: "100%",
               height: "100%",
-              backgroundColor: "#fefcd7",
-              zIndex: 1
+              transform: "rotate(-15deg)"
             }}
-          />
+          >
+            <defs>
+              {/* This mask defines what is VISIBLE */}
+              <mask id="moonMask">
+                {/* Start with a black canvas (invisible) */}
+                <rect x="0" y="0" width="100" height="100" fill="black" />
 
-          {/* The Terminator: This oval creates the crescent or gibbous curve */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: isGibbous ? "0%" : "25%", // Shift based on phase
-              width: isGibbous ? "100%" : "50%",
-              height: "100%",
-              backgroundColor: isGibbous ? "#fefcd7" : "#1a1a1a",
-              borderRadius: "50%",
-              transform: `scaleX(${scale})`,
-              zIndex: 2,
-              transition: "transform 1s ease-in-out, background-color 0.5s"
-            }}
-          />
+                {/* The "Base" Half: Light up the right side */}
+                <rect x="50" y="0" width="50" height="100" fill="white" />
+
+                {/* The "Terminator" Ellipse: 
+                  If Crescent: Subtract this from the base (fill black)
+                  If Gibbous: Add this to the base (fill white) */}
+                <ellipse
+                  cx="50"
+                  cy="50"
+                  rx={rx}
+                  ry="50"
+                  fill={isGibbous ? "white" : "black"}
+                />
+              </mask>
+            </defs>
+
+            {/* Background Circle (The "Dark" part of the moon) */}
+            <circle cx="50" cy="50" r="48" fill="#1a1a1a" />
+            {/* Add this inside your SVG, behind the lit part */}
+            <circle cx="50" cy="50" r="48" fill="#1a1a1a" />
+            <circle
+              cx="50"
+              cy="50"
+              r="48"
+              fill="rgba(254, 252, 215, 0.05)" // Very faint "Earthshine"
+            />
+            {/* The Lit Part (The part we see) */}
+            <circle
+              cx="50"
+              cy="50"
+              r="48"
+              fill="#fefcd7"
+              mask="url(#moonMask)"
+              style={{ transition: "all 0.5s ease-in-out" }}
+            />
+          </svg>
         </div>
 
         <div style={{ textAlign: "center" }}>
-          <h2 style={{ margin: 0, fontSize: "1.8rem", color: "var(--text-main)" }}>
-            {percentage}%
+          <h2
+            style={{ margin: 0, fontSize: "1.8rem", color: "var(--text-main)" }}
+          >
+            {percentage?.toFixed(1)}%
           </h2>
-          <p style={{ color: "var(--text-sub)", textTransform: "uppercase", letterSpacing: "1.6px", fontSize: "1rem", margin: 0 }}>
+          <p
+            style={{
+              color: "var(--text-sub)",
+              textTransform: "uppercase",
+              letterSpacing: "1.6px",
+              fontSize: "1rem",
+              margin: 0
+            }}
+          >
             Lunar Illumination
           </p>
         </div>
