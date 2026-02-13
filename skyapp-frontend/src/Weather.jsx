@@ -1,7 +1,7 @@
 import "./Weather.css";
 import React, { useState, useEffect } from "react";
 
-const Weather = ({ lat, lon, onDataReceived }) => {
+const Weather = ({ lat, lon, sun, onDataReceived }) => {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(false);
 
@@ -30,56 +30,47 @@ const Weather = ({ lat, lon, onDataReceived }) => {
       });
   }, [lat, lon, onDataReceived]);
 
-
-
-  // ... (useEffect remains the same)
-
   const getWeatherIcon = (description) => {
+    if (!description) return "🌡️";
     const desc = description.toLowerCase();
 
-    // Check if current time is between sunrise and sunset
-    // We use weather.sunrise/sunset if available, otherwise fall back to 6am/6pm
-    const now = Math.floor(Date.now() / 1000);
-    const isDaylight = weather 
-      ? (now > weather.sunrise && now < weather.sunset)
-      : (new Date().getHours() >= 6 && new Date().getHours() <= 18);
+    // 1. Get current time
+    const now = new Date();
 
-    // ONLY show SunBaby if it's "clear" AND it's currently daylight hours
-    if (desc.includes("clear") && isDaylight) {
-      return (
-        <img
-          src="/SunBaby.jpg"
-          alt="Sun Baby"
-          className="sun-baby-icon"
-          style={{
-            width: "1.1em",
-            height: "1.1em",
-            objectFit: "cover",
-            borderRadius: "50%",
-            verticalAlign: "middle",
-            display: "block"
-          }}
-        />
-      );
+    // 2. Use the exact sunrise/sunset times from your sun data
+    // We convert them to Date objects so we can compare them easily
+    const sunriseTime = sun?.sunrise ? new Date(sun.sunrise) : null;
+    const sunsetTime = sun?.sunset ? new Date(sun.sunset) : null;
+
+    // 3. Logic: If we have sun data, compare 'now' to sunrise/sunset.
+    // Otherwise, fallback to 6am-6pm.
+    let isDaylight = false;
+    if (sunriseTime && sunsetTime) {
+      isDaylight = now >= sunriseTime && now <= sunsetTime;
+    } else {
+      isDaylight = now.getHours() >= 6 && now.getHours() < 18;
     }
 
-    // If it's "clear" but NIGHT time, show the Moon
-    if (desc.includes("clear") && !isDaylight) return "🌙";
+    // 4. Return the correct icon
+    if (desc.includes("clear")) {
+      return isDaylight ? "☀️" : "🌙";
+    }
 
-    // Standard condition returns
     if (desc.includes("thunderstorm")) return "⛈️";
     if (desc.includes("drizzle") || desc.includes("rain")) return "🌧️";
     if (desc.includes("snow")) return "❄️";
     if (desc.includes("clouds")) {
-      return (desc.includes("few") || desc.includes("scattered")) ? "🌤️" : "☁️";
+      return desc.includes("few") || desc.includes("scattered") ? "🌤️" : "☁️";
     }
     return "🌡️";
   };
 
-  // ... (rest of the component)
-  // Determine placeholder based on time
-  const isDaytime = new Date().getHours() >= 6 && new Date().getHours() <= 18;
-  const placeholderIcon = isDaytime ? getWeatherIcon("clear") : "🌙";
+  // Update your placeholder as well
+  const isCurrentlyDay =
+    new Date().getHours() >= 6 && new Date().getHours() < 18;
+  const placeholderIcon = isCurrentlyDay ? "☀️" : "🌙";
+
+  // ... (useEffect remains the same)
 
   if (error)
     return (

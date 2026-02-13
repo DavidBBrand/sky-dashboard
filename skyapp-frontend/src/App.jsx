@@ -114,6 +114,7 @@ function App() {
             lat={location.lat}
             lon={location.lon}
             onDataReceived={setWeatherData}
+            sun={skyData?.sun}
           />
         </div>
 

@@ -293,23 +293,23 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
 
 .wow-bg-gif {
   position: fixed;
-  top: 20px;
-  left: 60px; /* Opposite side of the Sun Baby */
-  width: 250px;
+  top: 60px;
+  left: 80px; /* Opposite side of the Sun Baby */
+  width: 190px;
   height: auto;
   z-index: -1;
   pointer-events: none;
   
   /* Circular mask to blend the GIF into your starfield */
   -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
-  mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%);
+  mask-image: radial-gradient(circle, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 70%);
 
   /* Smooth transition for the Night Mode flip */
   transition: filter 1.5s ease-in-out, opacity 1.5s ease-in-out;
   filter: brightness(0.9) contrast(1.1);
 }
 
-/* Apply the "Lunar Wraith" inversion when night mode is active */
-// [data-theme="night"] .wow-bg-gif {
-//   filter: invert(1) hue-rotate(180deg) brightness(0.7) contrast(1.2) drop-shadow(0 0 20px rgba(100, 0, 255, 0.4)) !important;
-// }
+
+[data-theme="day"] .wow-bg-gif {
+  filter: invert(1) hue-rotate(180deg) brightness(0.7) contrast(1.2) drop-shadow(0 0 20px rgba(100, 0, 255, 0.4)) !important;
+}
