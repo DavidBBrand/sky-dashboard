@@ -98,25 +98,35 @@ def get_sky_summary(lat: float = Query(35.92), lon: float = Query(-86.86)):
 
 @app.get("/weather")
 async def get_weather(lat: float = Query(35.92), lon: float = Query(-86.86)):
-    url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=auto"
+    # We added: &current=relative_humidity_2m,surface_pressure,visibility
+    url = (
+        f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}"
+        f"&current=temperature_2m,relative_humidity_2m,weather_code,surface_pressure,wind_speed_10m,visibility"
+        f"&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=auto"
+    )
 
     async with httpx.AsyncClient() as client:
         try:
-            response = await client.get(url, timeout=5.0)  # Set a timeout
+            response = await client.get(url, timeout=5.0)
             data = response.json()
-
-            current = data.get("current_weather", {})
+            
+            # Open-Meteo puts these in the 'current' object now
+            current = data.get("current", {})
+            
             return {
-                "temp": round(current.get("temperature", 0)),
-                "windspeed": current.get("windspeed", 0),
-                "description": get_weather_description(current.get("weathercode", 0)),
+                "temp": round(current.get("temperature_2m", 0)),
+                "windspeed": current.get("wind_speed_10m", 0),
+                "humidity": current.get("relative_humidity_2m", 0),
+                "pressure": current.get("surface_pressure", 0),
+                "visibility": current.get("visibility", 0), # Returns in meters
+                "description": get_weather_description(current.get("weather_code", 0)),
                 "timezone": data.get("timezone", "UTC"),
-                # Return UTC offset in seconds
                 "utc_offset": data.get("utc_offset_seconds", 0),
                 "local_time": current.get("time", "Unknown")
             }
         except Exception as e:
-            return {"error": "Weather service timeout"}
+            print(f"Error: {e}")
+            return {"error": "Weather service unavailable"}
 
 
 @app.get("/moon-details")
