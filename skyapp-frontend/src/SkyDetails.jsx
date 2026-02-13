@@ -63,11 +63,11 @@ const SkyDetails = ({ skyData }) => {
           style={{
             fontSize: "1.2rem",
             textTransform: "uppercase",
-            letterSpacing: "3px",
+            letterSpacing: "1px",
             color: "var(--text-main)",
             marginBottom: "40px",
             textAlign: "center",
-            fontWeight: "600"
+            fontWeight: "400"
           }}
         >
           Visible Planets

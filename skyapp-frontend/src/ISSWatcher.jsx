@@ -70,15 +70,19 @@ const ISSWatcher = ({ lat, lon, onDistanceUpdate }) => {
 
   return (
     <div className={`iss-card-internal ${isNearby ? "nearby" : ""}`}>
-      <h3
-        style={{
-          fontSize: "1.2rem",
-          color: "var(--text-main)",
-          margin: "20px 24px 24px 24px"
-        }}
+        <h2
+          style={{
+            fontSize: "1.2rem",
+            textTransform: "uppercase",
+            letterSpacing: "1px",
+            color: "var(--text-main)",
+            marginBottom: "40px",
+            textAlign: "center",
+            fontWeight: "500"
+          }}
       >
         ISS TRACKER
-      </h3>
+      </h2>
         
       <div className="svg-container">
         <svg
@@ -112,11 +116,12 @@ const ISSWatcher = ({ lat, lon, onDistanceUpdate }) => {
             color: isNearby ? "transparent" : "var(--accent-color)",
             lineHeight: "2",
             marginBottom: "12px",
-            marginTop: "25px"
+            marginTop: "25px",
+            textTransform: "lowercase"
           }}
         >
           {distance
-            ? `${Math.round(distance).toLocaleString()}mi`
+            ? `${Math.round(distance).toLocaleString()} mi`
             : "SCANNING..."}
         </div>
 

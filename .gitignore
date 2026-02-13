@@ -14,9 +14,20 @@ Thumbs.db
 backend/*.bsp
 de421.bsp
 
-# Ignore React dependencies
+# Ignore React dependencies and .env file
 skyapp-frontend/node_modules/
 skyapp-frontend/dist/
+skyapp-frontend/env
 
 # System files
 .DS_Store
+
+# Ignore .env files everywhere in the project
+.env
+.env.local
+.env.development
+.env.production
+
+# Specific path for your React app
+skyapp-frontend/.env
+skyapp-frontend/.env.local

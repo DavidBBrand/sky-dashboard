@@ -18,7 +18,7 @@
   --text-main: #3e3323;
   --text-sub: rgba(62, 51, 35, 0.7);
   --accent-color: #066310;
-  --separator-glow: rgba(62, 51, 35, 0.1);
+  --separator-glow: rgba(76, 57, 28, 0.1);
 }
 
 [data-theme="night"] {
@@ -30,7 +30,7 @@
   --text-main: #ffffff;
   --text-sub: rgba(255, 255, 255, 0.6);
   --accent-color: #7da439;
-  --separator-glow: rgba(0, 255, 42, 0.2);
+  --separator-glow: rgba(8, 169, 35, 0.739);
 }
 
 /* 3. Layout Structure */
@@ -110,10 +110,6 @@
     1px 1px 0px rgba(0, 0, 0, 0.8),
     0 0 10px rgba(255, 255, 255, 0.2);
 }
-.derp {
-  color: var(--accent-color3);
-  
-}
 
 .search-wrapper {
   width: 100%;
@@ -150,7 +146,7 @@
 
 .search-wrapper input::placeholder {
   color: var(--text-sub);
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .search-wrapper input:focus {
@@ -162,7 +158,7 @@
 .dashboard-grid {
   display: grid;
   gap: 24px;
-  padding: 20px; 
+  padding: 10px; 
   
   /* Switching to auto-fill keeps cards from stretching to fill the whole screen */
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -260,33 +256,60 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
   border-radius: 16px;
   padding: 12px;
   backdrop-filter: blur(.95px);
-  -webkit-backdrop-filter: blur(.95px);
+  -webkit-backdrop-filter: blur(2px);
   display: flex;
   flex-direction: column;
   justify-content: space-between; 
   height: 100%;
   box-sizing: border-box;
-  
   transition: all 0.5s ease;
 }
 
 /*  active state adds  tactical red pulse to the entire card */
 .glass-card.proximity-alert-active {
-  border-color: rgb(181, 23, 5);
-  box-shadow: 0 0 20px rgba(226, 55, 2, 0.788);
+  border-color: rgb(181, 73, 5);
+  box-shadow: 0 0 20px rgba(226, 103, 2, 0.788);
   animation: card-alert-pulse 1s infinite;
-  border: 1px solid rgb(112, 2, 2);
+  border: 1px solid rgb(112, 44, 2);
   
 }
 
 @keyframes card-alert-pulse {
-  0%, 100% { box-shadow: 0 0 15px rgba(248, 25, 0, 0.677); }
-  50% { box-shadow: 0 0 30px rgb(217, 2, 2); }
+  0%, 100% { box-shadow: 0 0 15px rgba(248, 120, 0, 0.677); }
+  50% { box-shadow: 0 0 30px rgb(217, 127, 2); }
 }
 .glass-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px var(--separator-glow);
 }
 
+[data-theme="night"] .sun-baby-icon {
+  /* Inversion + Hue Rotate turns yellow/orange into eerie neon blue/violet */
+  filter: invert(1) hue-rotate(190deg) brightness(0.9) contrast(1.2) drop-shadow(0 0 20px rgba(0, 180, 255, 0.7)) !important;
+  
+  /* Slower bounce for the night mode's "heavy" atmosphere */
+  animation-duration: 3s;
+}
 
+.wow-bg-gif {
+  position: fixed;
+  top: 20px;
+  left: 60px; /* Opposite side of the Sun Baby */
+  width: 250px;
+  height: auto;
+  z-index: -1;
+  pointer-events: none;
+  
+  /* Circular mask to blend the GIF into your starfield */
+  -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
+  mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%);
 
+  /* Smooth transition for the Night Mode flip */
+  transition: filter 1.5s ease-in-out, opacity 1.5s ease-in-out;
+  filter: brightness(0.9) contrast(1.1);
+}
+
+/* Apply the "Lunar Wraith" inversion when night mode is active */
+// [data-theme="night"] .wow-bg-gif {
+//   filter: invert(1) hue-rotate(180deg) brightness(0.7) contrast(1.2) drop-shadow(0 0 20px rgba(100, 0, 255, 0.4)) !important;
+// }

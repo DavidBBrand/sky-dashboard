@@ -120,11 +120,11 @@ const MoonGraphic3 = ({ lat, lon }) => {
           style={{
             fontSize: "1.2rem",
             textTransform: "uppercase",
-            letterSpacing: "3px",
+            letterSpacing: "2px",
             color: "var(--text-main)",
             marginBottom: "40px",
             textAlign: "center",
-            fontWeight: "600"
+            fontWeight: "500"
           }}
         >
           LUNAR OBSERVATION
@@ -179,7 +179,7 @@ const MoonGraphic3 = ({ lat, lon }) => {
                   style={{
                     color:
                       moonData.altitude > 0
-                        ? "#4ade80"
+                        ? "#17ae4e"
                         : "var(--accent-color2)",
                     fontFamily: "monospace",
                     margin: 0,

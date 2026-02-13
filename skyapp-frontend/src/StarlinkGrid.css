@@ -2,8 +2,8 @@
 .starlink {
     color:var(--text-main);
     font-size: 1.2rem;
-    font-weight:600;
-    margin-top: 24px;
+    font-weight:500;
+    margin-top: 20px;
 }
 /* 2. Header & Labels */
 .orbital-label {

@@ -41,7 +41,11 @@
     opacity: 0.8;
   }
 }
-
+.iss-card-internal {
+      color:var(--text-main);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
 /* 2. Proximity Alert Text (The Amber Alert) */
 .proximity-alert {
   font-size: 1rem;

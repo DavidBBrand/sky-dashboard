@@ -73,3 +73,40 @@
     opacity: 0;
   }
 }
+/* Replace the old sun-rotate with this */
+@keyframes sun-bounce {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 15px rgba(255, 200, 0, 0.4));
+  }
+  50% {
+    transform: scale(1.15); /* Zooms in 15% */
+    filter: drop-shadow(0 0 25px rgba(255, 200, 0, 0.7)); /* Glow intensifies */
+  }
+}
+
+.sun-baby-icon {
+  animation: sun-bounce 2s ease-in-out infinite;
+  display: block;
+  transform-origin: center; /* Ensures it zooms from the middle */
+}
+
+@keyframes sun-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Optional: Keep your loading pulse smooth */
+.weather-loading-pulse {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}

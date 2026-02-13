@@ -30,23 +30,56 @@ const Weather = ({ lat, lon, onDataReceived }) => {
       });
   }, [lat, lon, onDataReceived]);
 
-  const getWeatherEmoji = (description) => {
+
+
+  // ... (useEffect remains the same)
+
+  const getWeatherIcon = (description) => {
     const desc = description.toLowerCase();
+
+    // Check if current time is between sunrise and sunset
+    // We use weather.sunrise/sunset if available, otherwise fall back to 6am/6pm
+    const now = Math.floor(Date.now() / 1000);
+    const isDaylight = weather 
+      ? (now > weather.sunrise && now < weather.sunset)
+      : (new Date().getHours() >= 6 && new Date().getHours() <= 18);
+
+    // ONLY show SunBaby if it's "clear" AND it's currently daylight hours
+    if (desc.includes("clear") && isDaylight) {
+      return (
+        <img
+          src="/SunBaby.jpg"
+          alt="Sun Baby"
+          className="sun-baby-icon"
+          style={{
+            width: "1.1em",
+            height: "1.1em",
+            objectFit: "cover",
+            borderRadius: "50%",
+            verticalAlign: "middle",
+            display: "block"
+          }}
+        />
+      );
+    }
+
+    // If it's "clear" but NIGHT time, show the Moon
+    if (desc.includes("clear") && !isDaylight) return "🌙";
+
+    // Standard condition returns
     if (desc.includes("thunderstorm")) return "⛈️";
     if (desc.includes("drizzle") || desc.includes("rain")) return "🌧️";
     if (desc.includes("snow")) return "❄️";
-    if (desc.includes("clear")) return "☀️";
     if (desc.includes("clouds")) {
-      if (desc.includes("few") || desc.includes("scattered")) return "🌤️";
-      return "☁️";
+      return (desc.includes("few") || desc.includes("scattered")) ? "🌤️" : "☁️";
     }
-    if (desc.includes("mist") || desc.includes("fog") || desc.includes("haze"))
-      return "🌫️";
-    return "🌡️"; 
+    return "🌡️";
   };
 
-  // Immediate placeholder based on current hour to prevent visual pop-in
-  const placeholderEmoji = new Date().getHours() > 18 || new Date().getHours() < 6 ? "🌙" : "☀️";
+  // ... (rest of the component)
+  // Determine placeholder based on time
+  const isDaytime = new Date().getHours() >= 6 && new Date().getHours() <= 18;
+  const placeholderIcon = isDaytime ? getWeatherIcon("clear") : "🌙";
 
   if (error)
     return (
@@ -56,24 +89,35 @@ const Weather = ({ lat, lon, onDataReceived }) => {
     );
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <h2
         style={{
           fontSize: "1.2rem",
           textTransform: "uppercase",
-          letterSpacing: "3px",
+          letterSpacing: "2px",
           color: "var(--text-main)",
-          fontWeight: "600",
+          fontWeight: "500",
           margin: "20px 0 10px"
         }}
       >
         {weather ? "Current Weather" : "Live Weather"}
       </h2>
-      <div 
-        className={!weather ? "weather-loading-pulse" : ""} 
-        style={{ fontSize: "4rem", lineHeight: "1", margin: "20px 10px 10px 10px" }}
+
+      <div
+        className={!weather ? "weather-loading-pulse" : ""}
+        style={{
+          fontSize: "6rem",
+          lineHeight: "1",
+          margin: "20px 10px 10px 10px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
       >
-        {weather ? getWeatherEmoji(weather.description) : placeholderEmoji}
+        {/* Render the icon or the placeholder */}
+        {weather ? getWeatherIcon(weather.description) : placeholderIcon}
       </div>
 
       <h4 style={{ fontSize: "1.8rem", fontWeight: "400", margin: "16px" }}>
