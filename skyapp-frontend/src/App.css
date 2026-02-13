@@ -17,7 +17,7 @@
   --card-border: rgba(62, 51, 35, 0.2); 
   --text-main: #3e3323;
   --text-sub: rgba(62, 51, 35, 0.7);
-  --accent-color: #066310;
+  --accent-color: #1f4222;
   --separator-glow: rgba(76, 57, 28, 0.1);
 }
 
@@ -325,33 +325,4 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
   box-shadow: 0 8px 24px var(--separator-glow);
 }
 
-[data-theme="night"] .sun-baby-icon {
-  /* Inversion + Hue Rotate turns yellow/orange into eerie neon blue/violet */
-  filter: invert(1) hue-rotate(190deg) brightness(0.9) contrast(1.2) drop-shadow(0 0 20px rgba(0, 180, 255, 0.7)) !important;
-  
-  /* Slower bounce for the night mode's "heavy" atmosphere */
-  animation-duration: 3s;
-}
 
-.wow-bg-gif {
-  position: fixed;
-  top: 60px;
-  left: 80px; /* Opposite side of the Sun Baby */
-  width: 280px;
-  height: auto;
-  z-index: -1;
-  pointer-events: none;
-  
-  /* Circular mask to blend the GIF into your starfield */
-  -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
-  mask-image: radial-gradient(circle, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 70%);
-
-  /* Smooth transition for the Night Mode flip */
-  transition: filter 1.5s ease-in-out, opacity 1.5s ease-in-out;
-  filter: brightness(0.9) contrast(1.1);
-}
-
-
-[data-theme="day"] .wow-bg-gif {
-  filter: invert(1) hue-rotate(180deg) brightness(0.7) contrast(1.2) drop-shadow(0 0 20px rgba(100, 0, 255, 0.4)) !important;
-}
