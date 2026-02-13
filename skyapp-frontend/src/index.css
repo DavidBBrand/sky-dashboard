@@ -105,43 +105,7 @@ body::before {
   z-index: -1;
   pointer-events: none;
 }
-body::after {
-  content: "";
-  position: fixed;
-  /* Top right placement */
-  top: 50px; 
-  right: 50px;
-  width: 250px;
-  height: 250px;
-  
-  /* Reference the file in your public folder */
-  background: url('/SunBaby.jpg') no-repeat center center;
-  background-size: cover;
-  
-  /* Make it a circle and fade the edges */
-  border-radius: 50%;
-  -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
-  mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
-  
-  /* Glow effect to match your mesh-1 or mesh-2 colors */
-  filter: brightness(1.1) contrast(1.1);
-  box-shadow: 0 0 60px 20px rgba(255, 200, 50, 0.3);
 
-  /* Day mode only logic (assuming var is 0 in day) */
-  opacity: calc(1 - var(--star-opacity));
-  
-  /* Behind the UI, above the stars */
-  z-index: -1; 
-  pointer-events: none;
-  transition: opacity 1.5s ease-in-out;
-}
-[data-theme="night"] .sun-baby-icon {
-  /* Inversion + Hue Rotate turns yellow/orange into eerie neon blue/violet */
-  filter: invert(1) hue-rotate(190deg) brightness(0.9) contrast(1.2) drop-shadow(0 0 20px rgba(0, 180, 255, 0.7)) !important;
-  
-  /* Slower bounce for the night mode's "heavy" atmosphere */
-  animation-duration: 5s;
-}
 
 button {
   border-radius: 30px;
