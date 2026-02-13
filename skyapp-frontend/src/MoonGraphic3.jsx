@@ -63,7 +63,8 @@ const MoonGraphic3 = ({ lat, lon }) => {
           flexDirection: "column",
           alignItems: "center",
           gap: "20px",
-          width: "100%"
+          width: "100%",
+          marginTop: "10px"
         }}
       >
         <div style={{ width: "140px", height: "140px", position: "relative" }}>
@@ -129,12 +130,12 @@ const MoonGraphic3 = ({ lat, lon }) => {
             style={{
               color: "var(--text-sub)",
               textTransform: "uppercase",
-              letterSpacing: "1.6px",
+              letterSpacing: "2.5px",
               fontSize: "1rem",
               margin: 0
             }}
           >
-            Lunar Illumination
+            Illumination
           </p>
         </div>
       </div>
