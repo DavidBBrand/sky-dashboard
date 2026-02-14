@@ -21,6 +21,10 @@ const WindMap = ({ lat, lon }) => {
   const baseMapUrl =
     "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png";
 
+  // clouds url for testing:
+  // Test this URL in WindMap.jsx
+  const testUrl = `https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${OPENWEATHER_API_KEY}`;
+
   return (
     <div className="wind-map-wrapper">
       <MapContainer
@@ -35,7 +39,7 @@ const WindMap = ({ lat, lon }) => {
         <TileLayer url={baseMapUrl} />
 
         {/* Wind Layer - Matches the Blue/Teal accent of a dashboard */}
-        <TileLayer url={windUrl} opacity={0.7} />
+        <TileLayer url={testUrl} opacity={0.7} />
 
         {/* Syncs map center when location changes */}
         <RecenterMap lat={lat} lon={lon} />

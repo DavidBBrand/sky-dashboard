@@ -161,7 +161,7 @@
   margin-top: 25px;
   border-radius: 12px;
   overflow: hidden;
-  border: .5px solid var(--text-sub);
+  border: .5px solid var(--te);
   position: relative;
   
   /* THE SECRET SAUCE: Invert the colors of the map tiles */
