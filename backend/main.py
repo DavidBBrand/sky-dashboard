@@ -29,7 +29,25 @@ def get_weather_description(code):
         73: "Moderate snow", 75: "Heavy snow", 95: "Thunderstorm"
     }
     return mapping.get(code, "Cloudy")
-
+# --- NEW HELPER FOR MOON PHASES ---
+def get_upcoming_moon_phases():
+    ts = load.timescale()
+    t0 = ts.now()
+    t1 = ts.utc(t0.utc_datetime() + timedelta(days=31))
+    
+    # Find the times and phase IDs (0=New, 1=First Quarter, 2=Full, 3=Last Quarter)
+    times, phases = almanac.find_discrete(t0, t1, almanac.moon_phases(eph))
+    
+    phase_names = ["New Moon", "First Quarter", "Full Moon", "Last Quarter"]
+    
+    milestones = []
+    for time, phase_id in zip(times, phases):
+        milestones.append({
+            "phase": phase_names[phase_id],
+            "date": time.utc_datetime().strftime("%b %d")
+        })
+    
+    return milestones
 # --- UPDATED ENDPOINTS ---
 
 
@@ -147,10 +165,13 @@ def get_moon_details(lat: float = Query(35.92), lon: float = Query(-86.86)):
 
     # 2. NEW: Calculate Altitude and Azimuth
     alt, az, distance = apparent.altaz()
+    # Get the 4 major upcoming phases
+    milestones = get_upcoming_moon_phases()
 
     # Return exactly what MoonTracker.jsx is looking for
     return {
         "illumination": round(float(illumination * 100), 2),
         "altitude": round(float(alt.degrees), 2),
-        "azimuth": round(float(az.degrees), 2)
+        "azimuth": round(float(az.degrees), 2),
+        "milestones": milestones
     }
