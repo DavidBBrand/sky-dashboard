@@ -39,6 +39,7 @@ const WindMap = ({ lat, lon }) => {
         <TileLayer url={baseMapUrl} />
 
         {/* Wind Layer - Matches the Blue/Teal accent of a dashboard */}
+        <TileLayer url={windUrl} opacity={0.7} />
         <TileLayer url={testUrl} opacity={0.7} />
 
         {/* Syncs map center when location changes */}
