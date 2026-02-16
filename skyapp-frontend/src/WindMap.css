@@ -1,0 +1,38 @@
+// /* Remove all filters from the wrapper itself to prevent inversion */
+// .wind-map-wrapper {
+//   height: 220px;
+//   width: 100%;
+//   border-radius: 12px;
+//   overflow: hidden;
+//   position: relative;
+//   background: #222; /* Fallback background */
+// }
+
+// /* target the cloud layer specifically */
+// .clouds-layer {
+//   transition: all 0.5s ease;
+//   pointer-events: none;
+// }
+
+/* Target the Cloud Layer (The 2nd layer in your MapContainer) */
+.wind-map-wrapper .leaflet-tile-pane .leaflet-layer:nth-child(2) {
+  /* This ensures the clouds aren't being hidden by previous blend modes */
+  mix-blend-mode: normal !important; 
+  transition: all 0.3s ease;
+}
+
+/* NIGHT MODE: High Visibility */
+.mode-night .leaflet-tile-pane .leaflet-layer:nth-child(2) {
+  /* Increase brightness to make the grey pixels white */
+  /* Increase contrast to make them look sharp against the black */
+  filter: brightness(1.8) contrast(1.4) saturate(0) !important;
+  opacity: 1 !important;
+
+}
+
+/* DAY MODE: Subtle and Realistic */
+.mode-day .leaflet-tile-pane .leaflet-layer:nth-child(2) {
+  filter: brightness(1) contrast(1.1) !important;
+  opacity: 0.7 !important;
+  
+}

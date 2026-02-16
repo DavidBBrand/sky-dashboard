@@ -2,7 +2,7 @@ import "./Weather.css";
 import React, { useState, useEffect, useRef } from "react";
 import WindMap from "./WindMap";
 
-const Weather = ({ lat, lon, sun, onDataReceived }) => {
+const Weather = ({ lat, lon, sun, onDataReceived, theme }) => {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(false);
   const onDataReceivedRef = useRef(onDataReceived);
@@ -102,7 +102,7 @@ const Weather = ({ lat, lon, sun, onDataReceived }) => {
         </div>
         
         <div className="separator-line" />
-          <WindMap lat={lat} lon={lon} />
+          <WindMap lat={lat} lon={lon} theme={theme} />
     
         </>
       )}
