@@ -129,8 +129,8 @@
   
   /* The Secret Sauce: The Etch */
   text-shadow: 
-    0.5px 0.5px 0px rgba(0, 0, 0, 0.7),      /* Bottom-right: Deep cutout shadow */
-    -0.5px -0.5px 0px rgba(255, 255, 255, 0.15); /* Top-left: Subtle light catch */
+    0.5px 0.5px 0px rgba(0, 0, 0, 0.07),      /* Bottom-right: Deep cutout shadow */
+    -0.5px -0.5px 0px rgba(255, 255, 255, 0.05); /* Top-left: Subtle light catch */
     
   /* Optional: Adds a very subtle container glow to separate the telemetry from the background */
   background: rgba(255, 255, 255, 0.03);
@@ -149,8 +149,8 @@
 .telemetry-info span:hover {
   color: var(--text-main);
   text-shadow: 
-    1px 1px 0px rgba(0, 0, 0, 0.8),
-    0 0 10px rgba(255, 255, 255, 0.2);
+    1px 1px 0px rgba(0, 0, 0, 0.04),
+    0 0 10px rgba(255, 255, 255, 0.06);
 }
 
 .search-wrapper {
