@@ -71,7 +71,7 @@
   font-size: 4.2rem; /* Slightly larger for the new name */
   letter-spacing: 10px;
   text-transform: uppercase;
-  margin: 20px 0;
+  margin: 10px 0;
   
   /* 1. Dynamic Color: Adapts to your --text-main variable */
   color: var(--text-main);
