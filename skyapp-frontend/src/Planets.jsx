@@ -1,7 +1,7 @@
 import React from "react";
 import "./SkyDetails.css";
 
-const SkyDetails = ({ skyData }) => {
+const Planets = ({ skyData }) => {
   if (!skyData) return null;
 
   const { sun, planets } = skyData;
@@ -143,4 +143,4 @@ const SkyDetails = ({ skyData }) => {
   );
 };
 
-export default SkyDetails;
+export default Planets;

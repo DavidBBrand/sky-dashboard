@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import Weather from "./Weather.jsx";
-import SkyDetails from "./SkyDetails.jsx";
+import Planets from "./Planets.jsx";
 import LocationSearch from "./LocationSearch.jsx";
 import GoldenHour from "./GoldenHour.jsx";
 import MapCard from "./MapCard.jsx";
 import ISSWatcher from "./ISSWatcher.jsx";
-import StarlinkGrid from "./StarlinkGrid.jsx";
+import Starlink from "./Starlink.jsx";
 import Moon from "./Moon.jsx";
 
 function App() {
@@ -150,7 +150,7 @@ useEffect(() => {
         </div>
 
         <div className="glass-card">
-          <StarlinkGrid lat={location.lat} lon={location.lon} />
+          <Starlink lat={location.lat} lon={location.lon} />
         </div>
 
         <div className="glass-card">
@@ -165,7 +165,7 @@ useEffect(() => {
 
         <div className="glass-card">
           {skyData ? (
-            <SkyDetails skyData={skyData} />
+            <Planets skyData={skyData} />
           ) : (
             <div className="loading-card">
               <p>Synchronizing with {location.name}...</p>

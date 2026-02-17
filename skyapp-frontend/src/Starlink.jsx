@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import * as satellite from "satellite.js";
-import "./StarlinkGrid.css";
+import "./Starlink.css";
 
-const StarlinkGrid = ({ lat, lon }) => {
+const Starlink = ({ lat, lon }) => {
   const [nodes, setNodes] = useState([]);
   const [tles, setTles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -115,4 +115,4 @@ const StarlinkGrid = ({ lat, lon }) => {
   );
 };
 
-export default StarlinkGrid;
+export default Starlink;
