@@ -10,7 +10,7 @@
    /* Container for the milestones */
 .moon-details {
   margin-top: 15px;
-  padding: 18px;
+  padding: 12px;
   border-radius: 12px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -20,7 +20,7 @@
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(10px) brightness(1.1);
   -webkit-backdrop-filter: blur(10px) brightness(1.1); /* Safari support */
-  
+  gap: 24px;
   /* The Glow & Border */
   border: .8px solid var(--card-border);
   box-shadow: 
