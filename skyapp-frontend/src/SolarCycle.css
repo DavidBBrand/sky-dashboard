@@ -1,0 +1,47 @@
+.solar-cycle-container {
+  padding: 20px;
+  border-radius: 12px;
+//   background: rgba(255, 255, 255, 0.03);
+  
+  /* The Glass Effect from your Title */
+  backdrop-filter: blur(10px) brightness(1.1);
+  -webkit-backdrop-filter: blur(10px) brightness(1.1);
+  
+  /* The Base Border */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s ease-in-out;
+ 
+}
+
+/* Specific Night Mode Hover using your exact Title variables */
+[data-theme="night"] .solar-cycle-container:hover {
+  border: 1px solid var(--separator-glow);
+  
+  /* Layered shadow: Top highlight + Theme-based green glow */
+  box-shadow: 
+    0 1px 1px rgba(255, 255, 255, 0.3), 
+    0 0 20px var(--separator-glow2);
+    
+  /* The Night Mode Polish drop-shadow you provided */
+  filter: drop-shadow(0 0 10px var(--separator-glow2));
+  
+  transform: translateY(-2px);
+}
+
+.solar-title {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent-color4);
+  margin-bottom: 20px;
+}
+
+.solar-flex {
+  display: flex;
+  gap: 36px;
+}
+
+.solar-time {
+    font-size: 1.2rem;
+    font-weight: 200;
+    color: var(--accent-color2);
+}

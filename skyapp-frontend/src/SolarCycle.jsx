@@ -1,11 +1,9 @@
 import React from "react";
-import "./Planets.css";
+import "./SolarCycle.css";
 
 const SolarCycle = ({ sun }) => {
-  // Guard clause in case data hasn't loaded yet
   if (!sun) return null;
 
-  // Helper to format the ISO string from Skyfield/Python
   const formatTime = (isoString) => {
     if (!isoString) return "--:--";
     return new Date(isoString).toLocaleTimeString([], {
@@ -16,66 +14,24 @@ const SolarCycle = ({ sun }) => {
 
   return (
     <div className="solar-cycle-container">
-      <h4
-        style={{
-          textTransform: "uppercase",
-          letterSpacing: "2px",
-          color: "var(--accent-color4)",         
-        }}
-      >
-        Solar Cycle
-      </h4>     
-      <div style={{ display: "flex", gap: "36px" }}>
+      <h4 className="solar-title">Solar Cycle</h4> 
+      
+      <div className="solar-flex">
         {/* Sunrise Section */}
         <div className="planet-item" style={{ flex: 1 }}>
-          <span style={{ fontSize: "5.0rem" }}>🌅</span>
-          <p
-            style={{
-              fontSize: "1rem",
-              margin: "12px 0 0 0",
-              fontWeight: "500",
-              color: "var(--text-main)"
-            }}
-          >
-            {formatTime(sun.sunrise)}
-          </p>
-          <p
-            style={{
-              fontSize: "0.8rem",
-              color: "var(--text-sub)",
-              margin: 0
-            }}
-          >
-            SUNRISE
-          </p>
+          <span style={{ fontSize: "4.0rem" }}>🌅</span>
+          <p className="solar-time">{formatTime(sun.sunrise)}</p>
+          <p className="solar-label">SUNRISE</p>
         </div>
 
         {/* Sunset Section */}
         <div className="planet-item" style={{ flex: 1 }}>
-          <span style={{ fontSize: "5.0rem" }}>🌇</span>
-          <p
-            style={{
-              fontSize: "1rem",
-              margin: "12px 0 0 0",
-              fontWeight: "500",
-              color: "var(--text-main)"
-            }}
-          >
-            {formatTime(sun.sunset)}
-          </p>
-          <p
-            style={{
-              fontSize: "0.8rem",
-              color: "var(--text-sub)",
-              margin: 0
-            }}
-          >
-            SUNSET
-          </p>
+          <span style={{ fontSize: "4.0rem" }}>🌇</span>
+          <p className="solar-time">{formatTime(sun.sunset)}</p>
+          <p className="solar-label">SUNSET</p>
         </div>
       </div>
     </div>
-
   );
 };
 
