@@ -1,5 +1,5 @@
 import React from "react";
-import "./SkyDetails.css";
+import "./Planets.css";
 
 const SolarCycle = ({ sun }) => {
   // Guard clause in case data hasn't loaded yet

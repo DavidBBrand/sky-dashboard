@@ -1,5 +1,5 @@
 import React from "react";
-import "./SkyDetails.css";
+import "./Planets.css";
 
 const Planets = ({ skyData }) => {
   if (!skyData) return null;

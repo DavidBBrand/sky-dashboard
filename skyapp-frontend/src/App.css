@@ -30,7 +30,8 @@
   --text-main: #ffffff;
   --text-sub: rgba(255, 255, 255, 0.6);
   --accent-color: #7da439;
-  --separator-glow: rgba(8, 169, 35, 0.739);
+  --separator-glow: rgba(8, 169, 35, 0.819);
+  --separator-glow2: rgba(136, 232, 150, 0.453);
 }
 
 /* 3. Layout Structure */
@@ -322,7 +323,7 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
 }
 .glass-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px var(--separator-glow);
+  box-shadow: 0 8px 24px var(--separator-glow2);
 }
 
 
