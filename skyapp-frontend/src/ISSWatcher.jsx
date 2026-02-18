@@ -81,7 +81,7 @@ const ISSWatcher = ({ lat, lon, onDistanceUpdate }) => {
         </div>
 
         <p className="location-subtext glow-sub">
-          from <i>{cityName}</i>
+          from {cityName}
         </p>
       </div>
 

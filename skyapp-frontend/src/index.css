@@ -9,9 +9,9 @@
   --card-border: rgba(62, 51, 35, 0.2); 
   --text-main: #3e3323;
   --text-sub: color-mix(in srgb, var(--text-main), transparent 30%);
-  --accent-color: #024e0b;
-  --accent-color2: rgb(98, 65, 15);
-  --accent-color3: #2c1c08;
+  --accent-color: #023508;
+  --accent-color2: rgb(155, 54, 18);
+  --accent-color3: #be6e06;
   --accent-color4: #154490c2;
   --star-opacity: 0; 
   --glass-blur: blur(4px);

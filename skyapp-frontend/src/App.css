@@ -13,13 +13,13 @@
   --bg-color: #bdb5a9;
   --mesh-2: rgb(208, 195, 177);
   --mesh-1: rgb(166, 196, 223);
-  --card-bg: rgba(130, 125, 120, 0.317);
+  --card-bg: rgba(130, 125, 120, 0.117);
   --card-border: rgba(62, 51, 35, 0.2); 
   --text-main: #3e3323;
   --text-sub: rgba(62, 51, 35, 0.7);
   --accent-color: #1f4222;
   --separator-glow: rgba(76, 57, 28, 0.1);
-  --separator-glow2: rgba(11, 72, 67, 0.53);
+  --separator-glow2: rgba(8, 48, 44, 0.53);
 }
 
 [data-theme="night"] {
@@ -374,10 +374,10 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
 /* uniform glass-card for all card components */
 .glass-card {
   background: var(--card-bg);
-  border: 1px solid var(--separator-glow2);
+  border: .7px solid var(--card-border);
   border-radius: 16px;
   padding: 12px;
-  backdrop-filter: blur(.95px);
+  backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(2px);
   display: flex;
   flex-direction: column;
@@ -403,7 +403,7 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
 }
 .glass-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px var(--separator-glow2);
+  box-shadow: 0 6px 12px var(--separator-glow2);
 }
 
 

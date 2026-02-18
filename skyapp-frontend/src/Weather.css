@@ -43,7 +43,7 @@
 }
 
 .weather-desc {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: var(--text-sub);
     margin: px 0;
     font-family: "Share Tech Mono", monospace;
@@ -85,6 +85,7 @@
     inset 0 0 15px rgba(255, 255, 255, 0.03); /* Subtle inner bloom */
     
   transition: all 0.3s ease-in-out;
+  font-family: 'Share Tech Mono', monospace;
 }
 .weather-details-grid:hover {
   background: rgba(165, 147, 9, 0.066);
@@ -104,7 +105,7 @@
     flex-direction: column;
 }
 .detail-item .label {
-    font-size: 1rem; /* Smaller for hierarchy */
+    font-size: 1.2rem; /* Smaller for hierarchy */
     text-transform: uppercase;
     // letter-spacing: 1px;
     color: var(--accent-color2);
@@ -114,9 +115,9 @@
   font-size: 6rem;
 }
 .detail-item .value {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: var(--text-main);
-    font-weight: 600;
+    font-weight: 500;
     margin-top: 4px;
 }
 .weather-loading-pulse {

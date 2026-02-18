@@ -122,15 +122,15 @@
 
 /* 5. Telemetry & Subtext */
 .location-subtext {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--text-sub);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0px;
   margin: 0;
 }
 
 .telemetry-coords {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: var(--accent-color2);
   font-weight: 500;
   margin-top: 12px;

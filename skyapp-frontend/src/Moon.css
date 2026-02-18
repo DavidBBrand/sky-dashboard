@@ -49,7 +49,7 @@
 /* Milestone Phase Label (e.g., FULL MOON) */
 .milestone-phase {
   color: var(--accent-color2);
-  font-size: 1.0rem;
+  font-size: 1.2rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight:500;
@@ -58,9 +58,9 @@
 /* Milestone Date Value (e.g., Feb. 16) */
 .milestone-date {
   color: var(--text-main);
-  font-size: 1rem;
-  font-weight: 400;
-  font-family: monospace;
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-family: 'Share Tech Mono', monospace;
 }
 .moon-container {
   display: flex;
