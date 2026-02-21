@@ -10,7 +10,7 @@ const GoldenHour = ({ sunData }) => {
 
   // 2. Component-specific styles to ensure it doesn't "mess up" the header
   const badgeStyle = {
-    backgroundColor: isGolden ? "#ffb347" : "#5b63b7",
+    backgroundColor: isGolden ? "#e29e3e9c" : "#5b63b7",
     color: "#fff",
     padding: "6px 16px",
     borderRadius: "20px",

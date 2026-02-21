@@ -74,7 +74,7 @@ const Moon = ({ lat, lon, date }) => {
 
   return (
     <div className="moon-container">
-      <h2 className="card-title">LUNAR OBSERVATION for <div>{date}</div></h2>
+      <h2 className="card-title">The Moon on <div>{date}</div></h2>
 
       {loading ? (
         <div className="moon-loading-box">

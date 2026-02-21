@@ -43,12 +43,12 @@
 }
 
 .weather-desc {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: var(--text-sub);
     margin: px 0;
     font-family: "Share Tech Mono", monospace;
     color: var(--text-main);
-    opacity: 0.85;
+    opacity: 0.89;
     /* 2. Glass  Effect */
     text-shadow: 
       0 1px 1px rgba(255, 255, 255, 0.3), /* Top highlight */

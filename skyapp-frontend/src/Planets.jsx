@@ -73,14 +73,15 @@ const Planets = ({ skyData }) => {
 
                   <div
                     style={{
-                      fontSize: "0.8rem",
-                      fontWeight: "600",
+                      fontSize: "1rem",
+                      fontWeight: "400",
                       color: "var(--text-main)"
                     }}
                   >
                     <span
+                      className="glow-sub2"
                       style={{
-                        fontSize: "1.0rem",
+                        fontSize: "1.9rem",
                         fontFamily: "serif",
                         fontWeight: "400"
                       }}
@@ -89,10 +90,11 @@ const Planets = ({ skyData }) => {
                     </span>
                   </div>
                   <div
+                    className="glow-sub2"
                     style={{
                       fontSize: "1.2rem",
                       fontWeight: "400",
-                      marginBottom: "4px",
+                      marginBottom: "2px",
                       color: "var(--text-main)"
                     }}
                   >
@@ -105,11 +107,11 @@ const Planets = ({ skyData }) => {
                   >
                     {info.is_visible ? "Visible" : "Set"}
                   </span>
-                  <div
+                  <div className="glow-sub2"
                     style={{
-                      fontSize: "0.8rem",
+                      fontSize: "1rem",
                       color: "var(--text-sub)",
-                      marginTop: "4px",
+                      marginTop: "2px",
                       opacity: 0.8
                     }}
                   >
@@ -117,8 +119,9 @@ const Planets = ({ skyData }) => {
                     Azimuth
                   </div>
                   <div
+                    className="glow-sub2"
                     style={{
-                      fontSize: "0.8rem",
+                      fontSize: "1rem",
                       color: "var(--text-sub)",
                       opacity: 0.8
                     }}

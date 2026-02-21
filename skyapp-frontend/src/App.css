@@ -159,9 +159,7 @@
     transition: all 0.5s ease-in-out;
 }
 .glow-sub2 {
-    // font-size: 1rem;
-    // text-transform: uppercase;
-    // letter-spacing: 1px;
+
     font-weight: 400;
     font-family: 'Share Tech Mono', monospace;
     margin: 10px 0 10px;
@@ -170,7 +168,7 @@
     /* 2. Glass  Effect */
     text-shadow: 
       0 1px 1px rgba(255, 255, 255, 0.3), /* Top highlight */
-      0 0 15px var(--separator-glow);      /* Theme-based glow */
+      0 0 8px var(--separator-glow);      /* Theme-based glow */
     /* 3. Glass Depth */
     background: linear-gradient(
       to bottom, 
