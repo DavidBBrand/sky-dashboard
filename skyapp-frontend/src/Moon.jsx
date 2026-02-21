@@ -33,7 +33,7 @@ const Moon = ({ lat, lon, date }) => {
     };
 
     fetchMoonData();
-    const interval = setInterval(fetchMoonData, 30000);
+    const interval = setInterval(fetchMoonData, 120000);
     return () => { isMounted = false; clearInterval(interval); };
   }, [lat, lon]);
 
