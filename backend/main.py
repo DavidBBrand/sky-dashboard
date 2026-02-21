@@ -118,7 +118,7 @@ def get_sky_summary(lat: float = Query(35.92), lon: float = Query(-86.86)):
 
 
 @app.get("/weather")
-# @cache_sky_data(ttl_seconds=120)  # Caches for 2 minutes
+@cache_sky_data(ttl_seconds=120)  # Caches for 2 minutes
 async def get_weather(lat: float = Query(35.92), lon: float = Query(-86.86)):
     # We added: &current=relative_humidity_2m,surface_pressure,visibility
     url = (
