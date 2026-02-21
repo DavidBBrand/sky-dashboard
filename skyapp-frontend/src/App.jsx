@@ -44,29 +44,37 @@ function App() {
     });
   };
 
-useEffect(() => {
-  // Use the timezone from weatherData if available, otherwise default to Chicago/Franklin
-  const targetTimeZone = weatherData?.timezone || "America/Chicago"; 
+  useEffect(() => {
+    // Use the timezone from weatherData if available, otherwise default to Chicago/Franklin
+    const targetTimeZone = weatherData?.timezone || "America/Chicago";
 
-  try {
-    const dateString = new Date()
-      .toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-        timeZone: targetTimeZone
-      })
-      .replace(/(\w+)/, "$1.");
+    try {
+      const dateString = new Date()
+        .toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+          timeZone: targetTimeZone
+        })
+        .replace(/(\w+)/, "$1.");
 
-    setLocationDate(dateString);
-  } catch (e) {
-    // Fallback in case the API returns an invalid timezone string
-    console.error("Timezone Error:", e);
-    setLocationDate(new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }).replace(/(\w+)/, "$1."));
-  }
+      setLocationDate(dateString);
+    } catch (e) {
+      // Fallback in case the API returns an invalid timezone string
+      console.error("Timezone Error:", e);
+      setLocationDate(
+        new Date()
+          .toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+          })
+          .replace(/(\w+)/, "$1.")
+      );
+    }
 
-  // CORRECTED DEPENDENCIES: Using location object and weatherData for timezone sync
-}, [location.lat, location.lon, weatherData?.timezone]); // Recalculate if location changes
+    // CORRECTED DEPENDENCIES: Using location object and weatherData for timezone sync
+  }, [location.lat, location.lon, weatherData?.timezone]); // Recalculate if location changes
 
   useEffect(() => {
     document.documentElement.setAttribute(
@@ -75,19 +83,34 @@ useEffect(() => {
     );
   }, [isNight]);
 
-  useEffect(() => {
-    setSkyData(null);
-    fetch(
-      `http://127.0.0.1:8000/sky-summary?lat=${location.lat}&lon=${location.lon}`
-    )
-      .then((response) => response.json())
-      .then((data) => setSkyData(data))
-      .catch((err) => console.error("FETCH ERROR:", err));
-  }, [location]);
+useEffect(() => {
+    // 1. Define the fetch function so we can call it repeatedly
+    const fetchSkyData = () => {
+      fetch(
+        `http://127.0.0.1:8000/sky-summary?lat=${location.lat}&lon=${location.lon}`
+      )
+        .then((response) => response.json())
+        .then((data) => setSkyData(data))
+        .catch((err) => console.error("FETCH ERROR:", err));
+    };
+
+    // 2. Initial fetch on mount/location change
+    setSkyData(null); 
+    fetchSkyData();
+
+    // 3. Set interval to match Redis TTL (120 seconds)
+    const skyInterval = setInterval(fetchSkyData, 120000);
+
+    // 4. Cleanup function
+    return () => clearInterval(skyInterval);
+  }, [location]); // Refetch if coordinates change; //refetch if coords change
 
   return (
     <div className="app-container">
-      <button onClick={() => setIsNight(!isNight)} className="theme-toggle-btn ">
+      <button
+        onClick={() => setIsNight(!isNight)}
+        className="theme-toggle-btn "
+      >
         {isNight ? "🌙 Night Mode" : "☀️ Day Mode"}
       </button>
 
@@ -161,7 +184,6 @@ useEffect(() => {
             skyData={skyData}
             location={location}
             date={locationDate}
-            
           />
         </div>
 
