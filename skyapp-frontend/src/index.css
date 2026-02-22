@@ -9,7 +9,7 @@
   --card-border: rgba(62, 51, 35, 0.2); 
   --text-main: #3e3323;
   --text-sub: color-mix(in srgb, var(--text-main), transparent 30%);
-  --accent-color: #023508;
+  --accent-color: #021535;
   --accent-color2: rgb(155, 54, 18);
   --accent-color3: #be6e06;
   --accent-color4: #154490c2;
@@ -30,7 +30,7 @@
   --text-sub: rgba(255, 255, 255, 0.6);
   --accent-color: #0ac429;
   --accent-color2: rgb(228, 147, 17);
-  --accent-color3: #563f05;
+  --accent-color3: #045834;
   --accent-color4: #6792d6d3;
   --star-opacity: 0.6;
   --logo-url: url('/SkyDash2.PNG');
