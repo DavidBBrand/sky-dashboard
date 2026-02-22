@@ -10,7 +10,7 @@
 
 /* 2. Theme Variables */
 :root {
-  --bg-color: #bdb5a9;
+  --bg-color: #f9f6f1;
   --mesh-2: rgb(208, 195, 177);
   --mesh-1: rgb(166, 196, 223);
   --card-bg: rgba(130, 125, 120, 0.117);
@@ -42,7 +42,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
 }
 .logo-container {
   width: 120px;
@@ -277,8 +277,8 @@
 
 .dashboard-grid {
   display: grid;
-  gap: 24px;
-  padding: 10px; 
+  gap: 12px;
+  padding: 12px; 
   
   /* Switching to auto-fill keeps cards from stretching to fill the whole screen */
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -372,7 +372,7 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
 /* uniform glass-card for all card components */
 .glass-card {
   background: var(--card-bg);
-  border: .7px solid var(--card-border);
+  border: 1px solid var(--card-border);
   border-radius: 16px;
   padding: 12px;
   backdrop-filter: blur(1px);
