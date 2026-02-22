@@ -112,7 +112,7 @@
   transform: translate(-50%, -50%);
   z-index: 20;
   /*make pulse*/
-  animation: node-pulse 2s infinite ease-in-out;
+  animation: node-pulse 4s infinite ease-in-out;
 }
 @keyframes node-pulse {
   0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
