@@ -17,7 +17,7 @@
   --card-border: rgba(62, 51, 35, 0.2); 
   --text-main: #3e3323;
   --text-sub: rgba(62, 51, 35, 0.7);
-  --accent-color: #1661a7;
+  --accent-color: #7c084e;
   --separator-glow: rgba(76, 57, 28, 0.1);
   --separator-glow2: rgba(8, 48, 44, 0.656);
 }
@@ -45,8 +45,8 @@
   padding-bottom: 20px;
 }
 .logo-container {
-  width: 120px;
-  height: 120px;
+  width: 112px;
+  height: 112px;
   background-image: var(--logo-url);
   background-size: contain;
   background-repeat: no-repeat;
