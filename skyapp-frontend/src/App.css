@@ -17,20 +17,20 @@
   --card-border: rgba(62, 51, 35, 0.2); 
   --text-main: #3e3323;
   --text-sub: rgba(62, 51, 35, 0.7);
-  --accent-color: #1f4222;
+  --accent-color: #1661a7;
   --separator-glow: rgba(76, 57, 28, 0.1);
-  --separator-glow2: rgba(8, 48, 44, 0.53);
+  --separator-glow2: rgba(8, 48, 44, 0.656);
 }
 
 [data-theme="night"] {
-  --bg-color: #36091fde;
+  --bg-color: #250314de;
   --mesh-1: hsla(220, 40%, 15%, 1);
   --mesh-2: hsla(260, 30%, 10%, 1);
   --card-bg: rgba(15, 20, 30, 0.4);
   --card-border: rgba(255, 255, 255, 0.1);
   --text-main: #ffffff;
   --text-sub: rgba(255, 255, 255, 0.6);
-  --accent-color: #7da439;
+  --accent-color: #719d25;
   --separator-glow: rgba(8, 169, 35, 0.819);
   --separator-glow2: rgba(136, 232, 150, 0.453);
 }
