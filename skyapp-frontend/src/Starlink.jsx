@@ -78,7 +78,7 @@ const Starlink = ({ lat, lon }) => {
 
   return (
     <div className="starlink-card">
-      <div className="card-title">STARLINK NEARBY</div>
+      <div className="card-title">STARLINK SATELLITE RADAR</div>
 
       <div className="radar-container">
         {/* Layer 1: Background & Scanner */}
