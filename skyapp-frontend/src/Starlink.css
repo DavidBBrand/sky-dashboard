@@ -5,13 +5,21 @@
 
 .radar-container {
   position: relative;
-  width: 80%;
+  width: 90%;
   aspect-ratio: 1 / 1; 
   margin: 45px auto;
-  background: rgba(0, 255, 42, 0.05);
+  background: rgba(0, 255, 42, 0.03); /* Slightly transparency tweak */
   border-radius: 50%;
-  border: 1px solid var(--accent-color);
-  /* Do not use overflow: hidden here so labels can breathe */
+  
+  /* The Glow Effect */
+  border: .5px solid var(--separator-glow2);
+  box-shadow: 
+    0 0 15px rgba(0, 255, 42, 0.2),      /* Soft outer spread */
+    inset 0 0 15px rgba(0, 255, 42, 0.1); /* Soft inner glow */
+    
+  /* This creates the "Neon Tube" look */
+  filter: drop-shadow(0 0 2px var(--accent-color));
+  animation: border-pulse 4s ease-in-out infinite; 
 }
 
 /* 2. The Spinning Wedge */
@@ -19,7 +27,7 @@
   position: absolute;
   width: 50%; height: 50%;
   top: 0; left: 0;
-  background: linear-gradient(45deg, color-mix(in srgb, var(--accent-color), transparent 50%) 0%, transparent 100%);
+  background: linear-gradient(45deg, color-mix(in srgb, var(--accent-color), transparent 77%) 0%, transparent 100%);
   transform-origin: bottom right; /* Centers pivot point */
   animation: radar-spin 4s linear infinite;
   z-index: 1;
@@ -30,6 +38,11 @@
 @keyframes radar-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+@keyframes border-pulse {
+  0% { box-shadow: 0 0 12px rgba(0, 255, 42, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(0, 255, 42, 0.4); }
+  100% { box-shadow: 0 0 12px rgba(0, 255, 42, 0.2); }
 }
 
 /* 3. Geometry (Rings & Axes) */
@@ -52,12 +65,13 @@
   position: absolute;
   color: var(--accent-color);
   font-family: 'Courier New', monospace;
-  text-shadow: 1px 1px 2px #000;
+  text-shadow: .5px .5px 1px #000;
   z-index: 10;
   pointer-events: none;
+
 }
 
-.radar-label { font-size: 0.65rem; left: 52%; font-weight: bold; }
+.radar-label { font-size: 0.8rem; left: 52%; font-weight: bold; }
 .label-center { top: 48%; }
 .label-r1     { top: 34%; }
 .label-r2     { top: 18%; }
@@ -72,14 +86,20 @@
 /* 5. Nodes & Tooltips */
 .radar-node {
   position: absolute;
-  width: 6px; height: 6px;
+  width: 8px; height: 8px;
   background: var(--accent-color);
   border-radius: 50%;
-  box-shadow: 0 0 8px var(--accent-color);
+  box-shadow: 0 0 5px var(--accent-color);
   transform: translate(-50%, -50%);
   z-index: 20;
+  /*make pulse*/
+  animation: node-pulse 2s infinite ease-in-out;
 }
-
+@keyframes node-pulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.7; box-shadow: 0 0 12px var(--accent-color); }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
 .node-tooltip {
   visibility: hidden;
   position: absolute;
