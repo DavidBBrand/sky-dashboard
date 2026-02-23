@@ -1,8 +1,13 @@
 import "./Weather.css";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo } from "react"; // Added memo
+import { useLocation } from "./LocationContext.jsx"; // Added Context
 import WindMap from "./WindMap";
 
-const Weather = ({ lat, lon, sun, onDataReceived, theme }) => {
+const Weather = memo(({ sun, onDataReceived, theme }) => {
+  // 1. Grab location from Context
+  const { location } = useLocation();
+  const { lat, lon } = location;
+
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(false);
   const onDataReceivedRef = useRef(onDataReceived);
@@ -11,7 +16,7 @@ const Weather = ({ lat, lon, sun, onDataReceived, theme }) => {
     onDataReceivedRef.current = onDataReceived;
   }, [onDataReceived]);
 
-useEffect(() => {
+  useEffect(() => {
     let isMounted = true;
 
     const fetchWeather = () => {
@@ -26,7 +31,7 @@ useEffect(() => {
             setError(true);
           } else {
             setWeather(weatherData);
-            setError(false); // Clear error if fetch succeeds
+            setError(false);
             if (onDataReceivedRef.current) onDataReceivedRef.current(weatherData);
           }
         })
@@ -35,20 +40,17 @@ useEffect(() => {
         });
     };
 
-    // 1. Initial Reset & Fetch
     setWeather(null);
     setError(false);
     fetchWeather();
 
-    // 2. Set Interval (120,000ms = 2 minutes)
     const weatherInterval = setInterval(fetchWeather, 120000);
 
-    // 3. Cleanup
-    return () => { 
-      isMounted = false; 
-      clearInterval(weatherInterval); 
+    return () => {
+      isMounted = false;
+      clearInterval(weatherInterval);
     };
-  }, [lat, lon]);
+  }, [lat, lon]); // Only restart fetch if coordinates change
 
   const getWeatherIcon = (description) => {
     if (!description) return "🌡️";
@@ -115,12 +117,12 @@ useEffect(() => {
         </div>
         
         <div className="separator-line" />
+          {/* Note: WindMap still needs coords and theme to redraw properly */}
           <WindMap lat={lat} lon={lon} theme={theme} />
-    
         </>
       )}
     </div>
   );
-};
+});
 
 export default Weather;
