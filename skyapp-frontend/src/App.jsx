@@ -9,6 +9,8 @@ import ISSWatcher from "./ISSWatcher.jsx";
 import Starlink from "./Starlink.jsx";
 import Moon from "./Moon.jsx";
 
+import { LocationProvider } from "./LocationContext.jsx";
+
 function App() {
   const [isNight, setIsNight] = useState(true);
   const [skyData, setSkyData] = useState(null);
@@ -83,7 +85,7 @@ function App() {
     );
   }, [isNight]);
 
-useEffect(() => {
+  useEffect(() => {
     // 1. Define the fetch function so we can call it repeatedly
     const fetchSkyData = () => {
       fetch(
@@ -95,7 +97,7 @@ useEffect(() => {
     };
 
     // 2. Initial fetch on mount/location change
-    setSkyData(null); 
+    setSkyData(null);
     fetchSkyData();
 
     // 3. Set interval to match Redis TTL (120 seconds)
@@ -106,100 +108,103 @@ useEffect(() => {
   }, [location]); // Refetch if coordinates change; //refetch if coords change
 
   return (
-    <div className="app-container">
-      <button
-        onClick={() => setIsNight(!isNight)}
-        className="theme-toggle-btn "
-      >
-        {isNight ? "🌙 Night Mode" : "☀️ Day Mode"}
-      </button>
-
-      <header className="header-section">
-        <h1 className="main-title">SKY WATCH</h1>
-        <div
-          className="logo-container"
-          role="img"
-          aria-label="Sky Dashboard Logo"
-        />
-
-        <div className="search-wrapper">
-          <LocationSearch onLocationChange={setLocation} />
-        </div>
-
-        <div className="telemetry-info">
-          <span>{location.name}</span>
-          <span>
-            {Math.abs(location.lat).toFixed(2)}°{location.lat >= 0 ? "N" : "S"}{" "}
-            / {Math.abs(location.lon).toFixed(2)}°
-            {location.lon >= 0 ? "E" : "W"}
-          </span>
-          <span className="time-display">
-            Solar Time: {getLocalSolarTime()}
-          </span>
-          <span>
-            UTC OFFSET: {location.lon >= 0 ? "+" : ""}
-            {(location.lon / 15).toFixed(1)} HRS
-          </span>
-          <span className="time-display">
-            LOCAL STANDARD TIME: {weatherData ? getLiveLocalTime() : "--:--"}
-          </span>
-          {skyData?.sun?.phase && <GoldenHour sunData={skyData.sun} />}
-        </div>
-      </header>
-
-      <div className="dashboard-grid">
-        <div className="glass-card">
-          <Moon lat={location.lat} lon={location.lon} date={locationDate} />
-        </div>
-
-        <div className="glass-card">
-          <Weather
-            lat={location.lat}
-            lon={location.lon}
-            onDataReceived={setWeatherData}
-            sun={skyData?.sun}
-            theme={isNight ? "night" : "day"}
-          />
-        </div>
-
-        <div
-          className={`glass-card ${issDistance < 500 ? "proximity-alert-active" : ""}`}
+    <LocationProvider>
+      <div className="app-container">
+        <button
+          onClick={() => setIsNight(!isNight)}
+          className="theme-toggle-btn "
         >
-          <ISSWatcher
-            lat={location.lat}
-            lon={location.lon}
-            onDistanceUpdate={setIssDistance}
+          {isNight ? "🌙 Night Mode" : "☀️ Day Mode"}
+        </button>
+
+        <header className="header-section">
+          <h1 className="main-title">SKY WATCH</h1>
+          <div
+            className="logo-container"
+            role="img"
+            aria-label="Sky Dashboard Logo"
           />
+
+          <div className="search-wrapper">
+            <LocationSearch onLocationChange={setLocation} />
+          </div>
+
+          <div className="telemetry-info">
+            <span>{location.name}</span>
+            <span>
+              {Math.abs(location.lat).toFixed(2)}°
+              {location.lat >= 0 ? "N" : "S"} /{" "}
+              {Math.abs(location.lon).toFixed(2)}°
+              {location.lon >= 0 ? "E" : "W"}
+            </span>
+            <span className="time-display">
+              Solar Time: {getLocalSolarTime()}
+            </span>
+            <span>
+              UTC OFFSET: {location.lon >= 0 ? "+" : ""}
+              {(location.lon / 15).toFixed(1)} HRS
+            </span>
+            <span className="time-display">
+              LOCAL STANDARD TIME: {weatherData ? getLiveLocalTime() : "--:--"}
+            </span>
+            {skyData?.sun?.phase && <GoldenHour sunData={skyData.sun} />}
+          </div>
+        </header>
+
+        <div className="dashboard-grid">
+          <div className="glass-card">
+            <Moon lat={location.lat} lon={location.lon} date={locationDate} />
+          </div>
+
+          <div className="glass-card">
+            <Weather
+              lat={location.lat}
+              lon={location.lon}
+              onDataReceived={setWeatherData}
+              sun={skyData?.sun}
+              theme={isNight ? "night" : "day"}
+            />
+          </div>
+
+          <div
+            className={`glass-card ${issDistance < 500 ? "proximity-alert-active" : ""}`}
+          >
+            <ISSWatcher
+              lat={location.lat}
+              lon={location.lon}
+              onDistanceUpdate={setIssDistance}
+            />
+          </div>
+
+          <div className="glass-card">
+            <Starlink lat={location.lat} lon={location.lon} />
+          </div>
+
+          <div className="glass-card">
+            <MapCard
+              lat={location.lat}
+              lon={location.lon}
+              theme={isNight ? "night" : "day"}
+              skyData={skyData}
+              location={location}
+              date={locationDate}
+            />
+          </div>
+
+          <div className="glass-card">
+            {skyData ? (
+              <Planets skyData={skyData} />
+            ) : (
+              <div className="loading-card">
+                <p>Synchronizing with {location.name}...</p>
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="glass-card">
-          <Starlink lat={location.lat} lon={location.lon} />
-        </div>
-
-        <div className="glass-card">
-          <MapCard
-            lat={location.lat}
-            lon={location.lon}
-            theme={isNight ? "night" : "day"}
-            skyData={skyData}
-            location={location}
-            date={locationDate}
-          />
-        </div>
-
-        <div className="glass-card">
-          {skyData ? (
-            <Planets skyData={skyData} />
-          ) : (
-            <div className="loading-card">
-              <p>Synchronizing with {location.name}...</p>
-            </div>
-          )}
-        </div>
+        <p className="copyright">Copyright © 2026 David Brand</p>
       </div>
-
-      <p className="copyright">Copyright © 2026 David Brand</p>
-    </div>
+    </LocationProvider>
   );
 }
 

@@ -1,10 +1,14 @@
 import React, { useState, useEffect, memo } from "react";
 import "./ISSWatcher.css";
+import { useLocation } from "./LocationContext";
 
 const ISSWatcher = memo(({ lat, lon, onDistanceUpdate }) => {
   const [issPos, setIssPos] = useState({ lat: 0, lon: 0 });
   const [distance, setDistance] = useState(null);
   const [cityName, setCityName] = useState("Local Station");
+
+  const { coords } = useLocation();
+  const { lat, lon } = coords;
 
   useEffect(() => {
     const getLocalName = async () => {
