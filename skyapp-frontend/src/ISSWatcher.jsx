@@ -2,13 +2,13 @@ import React, { useState, useEffect, memo } from "react";
 import "./ISSWatcher.css";
 import { useLocation } from "./LocationContext";
 
-const ISSWatcher = memo(({ lat, lon, onDistanceUpdate }) => {
+const ISSWatcher = memo(({  onDistanceUpdate }) => {
   const [issPos, setIssPos] = useState({ lat: 0, lon: 0 });
   const [distance, setDistance] = useState(null);
   const [cityName, setCityName] = useState("Local Station");
 
-  const { coords } = useLocation();
-  const { lat, lon } = coords;
+  const { location} = useLocation();
+  const { lat, lon } = location;
 
   useEffect(() => {
     const getLocalName = async () => {

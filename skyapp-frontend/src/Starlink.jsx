@@ -1,13 +1,18 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, memo } from "react";
 import * as satellite from "satellite.js";
+import { useLocation } from "./LocationContext";
 import "./Starlink.css";
 
-const Starlink = ({ lat, lon }) => {
+const Starlink = memo(() => {
+  // FIX: Destructure 'location' (the key used in Context), then get lat/lon
+  const { location } = useLocation();
+  const { lat, lon } = location;
+
   const [nodes, setNodes] = useState([]);
   const [tles, setTles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isAlert, setIsAlert] = useState(false);
 
-  // 1. Fetching LIVE TLE Data
   useEffect(() => {
     setLoading(true);
     fetch(`http://127.0.0.1:8000/starlink-live?lat=${lat}&lon=${lon}`)
@@ -22,7 +27,6 @@ const Starlink = ({ lat, lon }) => {
       });
   }, [lat, lon]);
 
-  // 2. Update Radar Positions
   const updateRadar = useCallback(() => {
     if (!tles.length || !lat || !lon) return;
 
@@ -35,6 +39,8 @@ const Starlink = ({ lat, lon }) => {
     };
 
     const visiblePoints = [];
+    // FIX: Added 'let' to avoid ReferenceError
+    let closeContact = false; 
 
     tles.forEach((sat) => {
       try {
@@ -50,7 +56,9 @@ const Starlink = ({ lat, lon }) => {
               const groundDistKm = (Math.PI / 2 - lookAngles.elevation) * (satAltitude / 2);
               const groundDistMiles = Math.round(groundDistKm * 0.621371);
 
-              // 42% radius keeps the nodes safely inside for labels
+              // Proximity Alert logic
+              if (groundDistMiles < 200) closeContact = true;
+
               const r = (1 - lookAngles.elevation / (Math.PI / 2)) * 42;
               const theta = lookAngles.azimuth - Math.PI / 2;
 
@@ -68,6 +76,7 @@ const Starlink = ({ lat, lon }) => {
     });
 
     setNodes(visiblePoints);
+    setIsAlert(closeContact);
   }, [tles, lat, lon]);
 
   useEffect(() => {
@@ -79,9 +88,7 @@ const Starlink = ({ lat, lon }) => {
   return (
     <div className="starlink-card">
       <div className="card-title">STARLINK SATELLITE RADAR</div>
-
-      <div className="radar-container">
-        {/* Layer 1: Background & Scanner */}
+      <div className={`radar-container ${isAlert ? "proximity-alert" : ""}`}>
         <div className="radar-scanner"></div>
         <div className="radar-axis-h"></div>
         <div className="radar-axis-v"></div>
@@ -89,32 +96,24 @@ const Starlink = ({ lat, lon }) => {
         <div className="radar-ring r2"></div>
         <div className="radar-ring r3"></div>
 
-        {/* Layer 2: Directions */}
         <span className="radar-direction dir-n">N</span>
         <span className="radar-direction dir-e">E</span>
         <span className="radar-direction dir-s">S</span>
         <span className="radar-direction dir-w">W</span>
 
-        {/* Layer 3: Distance Markers */}
         <span className="radar-label label-center">0mi</span>
         <span className="radar-label label-r1">200mi</span>
         <span className="radar-label label-r2">500mi</span>
         <span className="radar-label label-r3">1600mi</span>
 
-        {/* Layer 4: Satellites */}
         {nodes.map((n) => (
-          <div
-            key={n.id}
-            className="radar-node"
-            style={{ left: `${n.x}%`, top: `${n.y}%` }}
-          >
+          <div key={n.id} className="radar-node" style={{ left: `${n.x}%`, top: `${n.y}%` }}>
             <span className="node-tooltip">
               <strong>{n.name}</strong><br/>
               {n.distance} mi
             </span>
           </div>
         ))}
-        
         {loading && <div className="radar-status">LINKING...</div>}
       </div>
 
@@ -132,6 +131,6 @@ const Starlink = ({ lat, lon }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Starlink;
