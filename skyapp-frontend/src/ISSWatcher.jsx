@@ -59,7 +59,7 @@ const ISSWatcher = ({ lat, lon, onDistanceUpdate }) => {
 
   return (
     <div className={`iss-card-internal ${isNearby ? "nearby" : ""}`}>
-      <h2 className="card-title">ISS TRACKER</h2>
+      <h2 className="card-title">INTERNATIONAL SPACE STATION</h2>
         
       <div className="svg-container ">
         <svg className="iss-favicon-small" viewBox="0 0 24 24" fill="currentColor">
