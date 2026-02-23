@@ -1,7 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
+import { useLocation } from "./LocationContext.jsx"; // 1. Use Context
 import "./Moon.css";
 
-const Moon = ({ lat, lon, date }) => {
+// 2. Wrap in memo to prevent unmounting when App theme changes
+const Moon = memo(({ date }) => {
+  // 3. Destructure location from global state
+  const { location } = useLocation();
+  const { lat, lon } = location;
+
   const [moonData, setMoonData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [trend, setTrend] = useState(null);
@@ -12,6 +18,7 @@ const Moon = ({ lat, lon, date }) => {
     let isMounted = true;
 
     const fetchMoonData = () => {
+      // Use coordinates from context
       fetch(`http://127.0.0.1:8000/moon-details?lat=${lat}&lon=${lon}`)
         .then((response) => response.json())
         .then((data) => {
@@ -34,8 +41,11 @@ const Moon = ({ lat, lon, date }) => {
 
     fetchMoonData();
     const interval = setInterval(fetchMoonData, 120000);
-    return () => { isMounted = false; clearInterval(interval); };
-  }, [lat, lon]);
+    return () => { 
+      isMounted = false; 
+      clearInterval(interval); 
+    };
+  }, [lat, lon]); // Only refetch data when location changes
 
   const getCompassDirection = (az) => {
     if (az === undefined) return "--";
@@ -74,7 +84,7 @@ const Moon = ({ lat, lon, date }) => {
 
   return (
     <div className="moon-container">
-      <h2 className="card-title">The Moon on <div>{date}</div></h2>
+      <h2 className="card-title">The Moon on <div className="date-display">{date}</div></h2>
 
       {loading ? (
         <div className="moon-loading-box">
@@ -116,6 +126,6 @@ const Moon = ({ lat, lon, date }) => {
       )}
     </div>
   );
-};
+});
 
 export default Moon;
