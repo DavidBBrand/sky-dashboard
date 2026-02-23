@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from "react"; // Added hooks
+import React, { memo } from "react";
+import { useLocation } from "./LocationContext.jsx"; // Use context
 import "./MapCard.css";
 import SolarCycle from "./SolarCycle";
 
-const MapCard = ({ lat, lon, theme, skyData, location, date }) => {
-  // console.log("PROPS CHECK:", { location, skyData }); // Debugging line to check received props
-  // 1. Pass skyData in as a prop
+const MapCard = memo(({ theme, skyData, date }) => {
+  // 1. Pull location from Context
+  const { location } = useLocation();
+  const { lat, lon, name } = location;
+
   const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 
   const zoom = 12;
   const darkStyle = "dark-v11";
   const lightStyle = "light-v11";
   const currentStyle = theme === "night" ? darkStyle : lightStyle;
+
+  // Static Map URL - will update when theme or location changes
   const mapUrl = `https://api.mapbox.com/styles/v1/mapbox/${currentStyle}/static/pin-s+ff4444(${lon},${lat})/${lon},${lat},${zoom},0/600x400@2x?access_token=${MAPBOX_TOKEN}`;
 
   return (
-    <div>
-      <h2 className="card-title"> {location?.name || "Initializing..."}</h2>
-      {/* 1. Reserve the space for SolarCycle */}
+    <div className="map-card-content">
+      <h2 className="card-title">{name || "Initializing..."}</h2>
+      
       <div
         style={{
           minHeight: "120px",
@@ -43,12 +48,11 @@ const MapCard = ({ lat, lon, theme, skyData, location, date }) => {
           </div>
         )}
       </div>
-      
 
       <img
         src={mapUrl}
         alt="Regional Telemetry Map"
-        key={currentStyle}
+        key={currentStyle} // Keyed to currentStyle to trigger fade transition on theme swap
         style={{
           width: "100%",
           borderRadius: "12px",
@@ -59,6 +63,6 @@ const MapCard = ({ lat, lon, theme, skyData, location, date }) => {
       />
     </div>
   );
-};
+});
 
 export default MapCard;
