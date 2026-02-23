@@ -15,10 +15,10 @@
   border: .5px solid var(--separator-glow2);
   box-shadow: 
     0 0 15px rgba(0, 255, 42, 0.2),      /* Soft outer spread */
-    inset 0 0 15px rgba(0, 255, 42, 0.1); /* Soft inner glow */
+    inset 0 0 12px rgba(0, 255, 42, 0.1); /* Soft inner glow */
     
   /* This creates the "Neon Tube" look */
-  filter: drop-shadow(0 0 2px var(--accent-color));
+  filter: drop-shadow(0 0 1px var(--accent-color));
   animation: border-pulse 4s ease-in-out infinite; 
 }
 

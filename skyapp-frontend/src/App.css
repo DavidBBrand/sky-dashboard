@@ -17,7 +17,7 @@
   --card-border: rgba(62, 51, 35, 0.2); 
   --text-main: #3e3323;
   --text-sub: rgba(62, 51, 35, 0.7);
-  --accent-color: #7c084e;
+  --accent-color: #991220;
   --separator-glow: rgba(76, 57, 28, 0.1);
   --separator-glow2: rgba(8, 48, 44, 0.656);
 }
@@ -42,7 +42,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 20px;
+  padding: 10px 10px 10px 10px;
+  
 }
 .logo-container {
   width: 112px;
@@ -59,8 +60,7 @@
 .header-section {
   width: 100%;
   max-width: 1300px; 
-  margin: 0 auto;   
-  padding: 5px 0; 
+  margin: 0 auto;    
   display: flex;
   flex-direction: column;
   align-items: center; 
@@ -70,7 +70,7 @@
 }
 .main-title {
   font-family: 'Share Tech Mono', sans-serif;
-  font-size: 4.2rem; /* Slightly larger for the new name */
+  font-size: 3.2rem; /* Slightly larger for the new name */
   letter-spacing: 10px;
   text-transform: uppercase;
   margin: 10px 0;
@@ -277,7 +277,7 @@
 
 .dashboard-grid {
   display: grid;
-  gap: 12px;
+  gap: 6px;
   padding: 12px; 
   
   /* Switching to auto-fill keeps cards from stretching to fill the whole screen */

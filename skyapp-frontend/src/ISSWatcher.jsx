@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import "./ISSWatcher.css";
 
-const ISSWatcher = ({ lat, lon, onDistanceUpdate }) => {
+const ISSWatcher = memo(({ lat, lon, onDistanceUpdate }) => {
   const [issPos, setIssPos] = useState({ lat: 0, lon: 0 });
   const [distance, setDistance] = useState(null);
   const [cityName, setCityName] = useState("Local Station");
@@ -89,15 +89,26 @@ const ISSWatcher = ({ lat, lon, onDistanceUpdate }) => {
         LAT: {parseFloat(issPos.lat).toFixed(2)} | LON: {parseFloat(issPos.lon).toFixed(2)}
       </p>
 
+      {/* Memoization prevents this iframe from re-mounting on every parent re-render */}
       <iframe
         className="iss-map-frame"
         title="ISS Map"
         src="https://isstracker.pl/en/widget/map?disableInfoBox=1&lang=en"
+        loading="lazy"
       ></iframe>
 
       {isNearby && <div className="proximity-alert">LOW ORBIT PROXIMITY ALERT</div>}
     </div>
   );
-};
+}, (prevProps, nextProps) => {
+  /* PERFORMANCE CHECK: 
+     Return 'true' to skip re-render. 
+     We only want to re-render if the core observer coordinates change.
+  */
+  return (
+    prevProps.lat === nextProps.lat && 
+    prevProps.lon === nextProps.lon
+  );
+});
 
 export default ISSWatcher;
