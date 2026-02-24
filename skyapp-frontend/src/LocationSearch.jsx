@@ -1,54 +1,62 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo } from "react";
 
-// Using memo so typing in the search box doesn't get interrupted 
+// Using memo so typing in the search box doesn't get interrupted
 // by other dashboard updates
 const LocationSearch = memo(({ onLocationChange }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
 
-const handleSearch = async (e) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation(); // Stop the event from bubbling up
-    }
-    
-    if (!query || loading) return; // Prevent double-clicks or empty searches
+  // Inside LocationSearch.jsx
+  const handleSearch = async (e) => {
+    if (e) e.preventDefault();
+    if (!query.trim()) return;
 
     setLoading(true);
+
+    // 1. Create a controller for this specific search
+    const controller = new AbortController();
+
     try {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`,
-        { headers: { 'User-Agent': 'SkyDashboard/1.0' } }
+        {
+          signal: controller.signal,
+          headers: {
+            // 2. Identify yourself (Essential for CORS/Rate-limiting)
+            "User-Agent": `SkyWatch/1.0 (${import.meta.env.VITE_NOMINATIM_EMAIL || "anonymous"})`
+          }
+        }
       );
+
+      if (response.status === 425 || response.status === 429) {
+        alert("Search is temporarily throttled. Please wait a few seconds.");
+        return;
+      }
+
       const data = await response.json();
 
       if (data && data.length > 0) {
         const { lat, lon, display_name } = data[0];
-        const parts = display_name.split(',');
-        const shortName = parts.length > 2 
-          ? `${parts[0].trim()}, ${parts[parts.length - 3].trim()}, ${parts[parts.length - 1].trim()}`
-          : display_name;
-
-        // CRITICAL: Call this before clearing the query to ensure the update hits
+        // Success logic...
         onLocationChange({
           lat: parseFloat(lat),
           lon: parseFloat(lon),
-          name: shortName
+          name: display_name.split(",")[0]
         });
-        
-        setQuery(''); 
-        // Blur the input to "reset" the focus state
-        if (e && e.target) e.target.blur(); 
+        setQuery("");
       } else {
         alert("Location not found.");
       }
     } catch (err) {
-      console.error("Search error:", err);
+      if (err.name === "AbortError") {
+        console.log("Search request cancelled.");
+      } else {
+        console.error("Search error:", err);
+      }
     } finally {
       setLoading(false);
     }
   };
-
   // Keep the GPS function ready in case you want to add a "Find Me" button later!
   const useGPS = () => {
     if (!navigator.geolocation) {
@@ -66,12 +74,14 @@ const handleSearch = async (e) => {
   };
 
   return (
-    <div style={{ 
-      display: 'flex', 
-      justifyContent: 'center', 
-      width: '100%' 
-    }}>
-      <form onSubmit={handleSearch} style={{ display: 'flex' }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        width: "100%"
+      }}
+    >
+      <form onSubmit={handleSearch} style={{ display: "flex" }}>
         <input
           type="text"
           placeholder={loading ? "LOCATING..." : "SEARCH CITY..."}
@@ -80,12 +90,12 @@ const handleSearch = async (e) => {
           className="theme-toggle-btn"
           disabled={loading}
           style={{
-            width: '250px',
-            textAlign: 'center',
-            outline: 'none',
-            fontSize: '0.8rem',
-            letterSpacing: '1px',
-            cursor: loading ? 'wait' : 'text',
+            width: "250px",
+            textAlign: "center",
+            outline: "none",
+            fontSize: "0.8rem",
+            letterSpacing: "1px",
+            cursor: loading ? "wait" : "text",
             opacity: loading ? 0.7 : 1
           }}
         />
