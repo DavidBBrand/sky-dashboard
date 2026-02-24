@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 // ADD THIS IMPORT BELOW:
-import { useLocation } from "./LocationContext.jsx"; 
+import { useLocation } from "./LocationContext.jsx";
 
 import "./App.css";
 import Weather from "./Weather.jsx";
@@ -48,12 +48,14 @@ function App() {
   useEffect(() => {
     const targetTimeZone = weatherData?.timezone || "America/Chicago";
     try {
-      const dateString = new Date().toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-        timeZone: targetTimeZone
-      }).replace(/(\w+)/, "$1.");
+      const dateString = new Date()
+        .toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+          timeZone: targetTimeZone
+        })
+        .replace(/(\w+)/, "$1.");
       setLocationDate(dateString);
     } catch (e) {
       console.error("Timezone Error:", e);
@@ -62,23 +64,48 @@ function App() {
 
   // Theme Sync
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", isNight ? "night" : "day");
+    document.documentElement.setAttribute(
+      "data-theme",
+      isNight ? "night" : "day"
+    );
   }, [isNight]);
 
   // Global Sky Data Fetch
   useEffect(() => {
-    const fetchSkyData = () => {
-      fetch(`http://127.0.0.1:8000/sky-summary?lat=${location.lat}&lon=${location.lon}`)
-        .then((res) => res.json())
-        .then((data) => setSkyData(data))
-        .catch((err) => console.error("FETCH ERROR:", err));
+    // 1. Create the controller
+    const controller = new AbortController();
+
+    const fetchSkyData = async () => {
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8000/sky-summary?lat=${location.lat}&lon=${location.lon}`,
+          { signal: controller.signal } // 2. Attach the signal to the fetch
+        );
+        const data = await response.json();
+        setSkyData(data);
+      } catch (err) {
+        // 3. Ignore errors caused by our intentional abort
+        if (err.name === "AbortError") {
+          console.log(
+            "Fetch aborted: New request started or component unmounted"
+          );
+        } else {
+          console.error("FETCH ERROR:", err);
+        }
+      }
     };
 
     setSkyData(null);
     fetchSkyData();
+
     const skyInterval = setInterval(fetchSkyData, 120000);
-    return () => clearInterval(skyInterval);
-  }, [location.lat, location.lon]); // Track coordinates specifically
+
+    return () => {
+      // 4. Cancel the fetch if the component re-renders or unmounts
+      controller.abort();
+      clearInterval(skyInterval);
+    };
+  }, [location.lat, location.lon]);
 
   return (
     <div className="app-container">
@@ -88,7 +115,11 @@ function App() {
 
       <header className="header-section">
         <h1 className="main-title">SKY WATCH</h1>
-        <div className="logo-container" role="img" aria-label="Sky Dashboard Logo" />
+        <div
+          className="logo-container"
+          role="img"
+          aria-label="Sky Dashboard Logo"
+        />
 
         <div className="search-wrapper">
           <LocationSearch onLocationChange={updateLocation} />
@@ -97,12 +128,16 @@ function App() {
         <div className="telemetry-info">
           <span>{location.name}</span>
           <span>
-            {Math.abs(location.lat).toFixed(2)}°{location.lat >= 0 ? "N" : "S"} /{" "}
-            {Math.abs(location.lon).toFixed(2)}°{location.lon >= 0 ? "E" : "W"}
+            {Math.abs(location.lat).toFixed(2)}°{location.lat >= 0 ? "N" : "S"}{" "}
+            / {Math.abs(location.lon).toFixed(2)}°
+            {location.lon >= 0 ? "E" : "W"}
           </span>
-          <span className="time-display">Solar Time: {getLocalSolarTime()}</span>
+          <span className="time-display">
+            Solar Time: {getLocalSolarTime()}
+          </span>
           <span>
-            UTC OFFSET: {location.lon >= 0 ? "+" : ""}{(location.lon / 15).toFixed(1)} HRS
+            UTC OFFSET: {location.lon >= 0 ? "+" : ""}
+            {(location.lon / 15).toFixed(1)} HRS
           </span>
           <span className="time-display">
             LOCAL TIME: {weatherData ? getLiveLocalTime() : "--:--"}
@@ -112,28 +147,38 @@ function App() {
       </header>
 
       <div className="dashboard-grid">
-        <div className="glass-card"><Moon date={locationDate} /></div>
         <div className="glass-card">
-          <Weather 
-            onDataReceived={setWeatherData} 
-            sun={skyData?.sun} 
-            theme={isNight ? "night" : "day"} 
+          <Moon date={locationDate} />
+        </div>
+        <div className="glass-card">
+          <Weather
+            onDataReceived={setWeatherData}
+            sun={skyData?.sun}
+            theme={isNight ? "night" : "day"}
           />
         </div>
-        <div className={`glass-card ${issDistance < 500 ? "proximity-alert-active" : ""}`}>
+        <div
+          className={`glass-card ${issDistance < 500 ? "proximity-alert-active" : ""}`}
+        >
           <ISSWatcher onDistanceUpdate={setIssDistance} />
         </div>
-        <div className="glass-card"><Starlink /></div>
         <div className="glass-card">
-          <MapCard 
-            theme={isNight ? "night" : "day"} 
-            skyData={skyData} 
-            date={locationDate} 
+          <Starlink />
+        </div>
+        <div className="glass-card">
+          <MapCard
+            theme={isNight ? "night" : "day"}
+            skyData={skyData}
+            date={locationDate}
           />
         </div>
         <div className="glass-card">
-          {skyData ? <Planets skyData={skyData} /> : (
-            <div className="loading-card"><p>Synchronizing with {location.name}...</p></div>
+          {skyData ? (
+            <Planets skyData={skyData} />
+          ) : (
+            <div className="loading-card">
+              <p>Synchronizing with {location.name}...</p>
+            </div>
           )}
         </div>
       </div>
