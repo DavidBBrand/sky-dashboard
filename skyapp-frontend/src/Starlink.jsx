@@ -40,7 +40,7 @@ const Starlink = memo(() => {
 
     const visiblePoints = [];
     // FIX: Added 'let' to avoid ReferenceError
-    let closeContact = false; 
+    let closeContact = false;
 
     tles.forEach((sat) => {
       try {
@@ -53,7 +53,8 @@ const Starlink = memo(() => {
 
             if (lookAngles.elevation > 0) {
               const satAltitude = 550;
-              const groundDistKm = (Math.PI / 2 - lookAngles.elevation) * (satAltitude / 2);
+              const groundDistKm =
+                (Math.PI / 2 - lookAngles.elevation) * (satAltitude / 2);
               const groundDistMiles = Math.round(groundDistKm * 0.621371);
 
               // Proximity Alert logic
@@ -72,7 +73,9 @@ const Starlink = memo(() => {
             }
           }
         }
-      } catch (e) { /* skip */ }
+      } catch (e) {
+        /* skip */
+      }
     });
 
     setNodes(visiblePoints);
@@ -107,9 +110,14 @@ const Starlink = memo(() => {
         <span className="radar-label label-r3">1600mi</span>
 
         {nodes.map((n) => (
-          <div key={n.id} className="radar-node" style={{ left: `${n.x}%`, top: `${n.y}%` }}>
+          <div
+            key={n.id}
+            className="radar-node"
+            style={{ left: `${n.x}%`, top: `${n.y}%` }}
+          >
             <span className="node-tooltip">
-              <strong>{n.name}</strong><br/>
+              <strong>{n.name}</strong>
+              <br />
               {n.distance} mi
             </span>
           </div>
@@ -125,8 +133,12 @@ const Starlink = memo(() => {
         <div className="stat-group" style={{ textAlign: "right" }}>
           <p className="stat-caption">Observer</p>
           <p className="stat-value">
-            {parseFloat(lat).toFixed(1)}°N {Math.abs(parseFloat(lon)).toFixed(1)}°W
+            {parseFloat(lat).toFixed(1)}°N{" "}
+            {Math.abs(parseFloat(lon)).toFixed(1)}°W
           </p>
+        </div>
+        <div className="glow-sub">
+          <h4>{location.name}</h4>
         </div>
       </div>
     </div>

@@ -10,21 +10,21 @@
 
 /* 2. Theme Variables */
 :root {
-  --bg-color: #f9f6f1;
+  --bg-color: #f5f3ef;
   --mesh-2: rgb(208, 195, 177);
   --mesh-1: rgb(166, 196, 223);
   --card-bg: rgba(130, 125, 120, 0.117);
   --card-border: rgba(62, 51, 35, 0.2); 
   --text-main: #3e3323;
   --text-sub: rgba(62, 51, 35, 0.7);
-  --accent-color: #5b3a06;
+  --accent-color: #6e3103eb;
   --separator-glow: rgba(76, 57, 28, 0.1);
   --separator-glow2: rgba(8, 48, 44, 0.656);
   --separator-glow3: rgba(114, 93, 82, 0.541);
 }
 
 [data-theme="night"] {
-  --bg-color: #250314de;
+  --bg-color: #100209de;
   --mesh-1: hsla(220, 40%, 15%, 1);
   --mesh-2: hsla(260, 30%, 10%, 1);
   --card-bg: rgba(15, 20, 30, 0.4);
@@ -424,7 +424,7 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
 
 /*  active state adds  tactical red pulse to the entire card */
 .glass-card.proximity-alert-active {
-  border-color: rgb(181, 73, 5);
+  border-color: rgb(227, 91, 6);
   box-shadow: 0 0 20px rgba(226, 103, 2, 0.788);
   animation: card-alert-pulse 1s infinite;
   border: 1px solid rgb(112, 44, 2);

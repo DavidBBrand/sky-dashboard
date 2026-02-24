@@ -94,7 +94,7 @@
 /* 5. Nodes & Tooltips */
 .radar-node {
   position: absolute;
-  width: 8px; height: 8px;
+  width: 6px; height: 6px;
   background: var(--accent-color);
   border-radius: 50%;
   box-shadow: 0 0 5px var(--accent-color);

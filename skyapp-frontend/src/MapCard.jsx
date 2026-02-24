@@ -20,7 +20,7 @@ const MapCard = memo(({ theme, skyData, date }) => {
 
   return (
     <div className="map-card-content">
-      <h2 className="card-title">{name || "Initializing..."}</h2>
+      {/* <h2 className="card-title">{name || "Initializing..."}</h2> */}
       
       <div
         style={{
@@ -37,7 +37,7 @@ const MapCard = memo(({ theme, skyData, date }) => {
             <div className="scanning-line"></div>
             <p
               style={{
-                fontSize: "0.7rem",
+                fontSize: "0.9rem",
                 letterSpacing: "3px",
                 color: "var(--text-sub)",
                 opacity: 0.5

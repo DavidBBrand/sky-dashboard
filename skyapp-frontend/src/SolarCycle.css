@@ -1,12 +1,9 @@
 .solar-cycle-container {
-
-  margin-top: 15px;
   padding: 12px;
   border-radius: 12px;
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  
   /* The Glass Effect */
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(10px) brightness(1.1);
@@ -31,10 +28,8 @@
   box-shadow: 
     0 1px 1px rgba(255, 255, 255, 0.3), 
     0 0 20px var(--separator-glow2);
-    
   /* The Night Mode Polish drop-shadow you provided */
-  filter: drop-shadow(0 0 10px var(--separator-glow2));
-  
+  filter: drop-shadow(0 0 10px var(--separator-glow4));
   transform: translateY(-2px);
 }
 
@@ -42,7 +37,7 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   color: var(--accent-color4);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .solar-flex {
@@ -51,7 +46,11 @@
 }
 
 .solar-time {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: 200;
     color: var(--accent-color2);
+}
+
+.solar-label {
+  font-size: 1.4rem;
 }

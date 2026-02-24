@@ -80,7 +80,7 @@ const Weather = memo(({ sun, onDataReceived, theme }) => {
   return (
     <div className="weather-container">
       <h2 className="card-title">
-        {weather ? "Current Weather" : "Live Weather"}
+        {location.name ? `Weather in ${location.name}` : "Live Weather"}
       </h2>
 
       <div className={`weather-icon ${!weather ? "weather-loading-pulse" : ""}`}>

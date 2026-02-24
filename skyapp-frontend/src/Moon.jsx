@@ -41,9 +41,9 @@ const Moon = memo(({ date }) => {
 
     fetchMoonData();
     const interval = setInterval(fetchMoonData, 120000);
-    return () => { 
-      isMounted = false; 
-      clearInterval(interval); 
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
     };
   }, [lat, lon]); // Only refetch data when location changes
 
@@ -66,16 +66,31 @@ const Moon = memo(({ date }) => {
               <mask id="moonMask">
                 <rect x="0" y="0" width="100" height="100" fill="black" />
                 <rect x="50" y="0" width="50" height="100" fill="white" />
-                <ellipse cx="50" cy="50" rx={rx} ry="50" fill={isGibbous ? "white" : "black"} />
+                <ellipse
+                  cx="50"
+                  cy="50"
+                  rx={rx}
+                  ry="50"
+                  fill={isGibbous ? "white" : "black"}
+                />
               </mask>
             </defs>
             <circle cx="50" cy="50" r="48" fill="#1a1a1a" />
             <circle cx="50" cy="50" r="48" fill="rgba(254, 252, 215, 0.05)" />
-            <circle cx="50" cy="50" r="48" fill="#fefcd7" mask="url(#moonMask)" className="moon-path-transition" />
+            <circle
+              cx="50"
+              cy="50"
+              r="48"
+              fill="#fefcd7"
+              mask="url(#moonMask)"
+              className="moon-path-transition"
+            />
           </svg>
         </div>
         <div className="text-center">
-          <h2 className="illumination-value glow-sub2">{percentage?.toFixed(1)}%</h2>
+          <h2 className="illumination-value glow-sub2">
+            {percentage?.toFixed(1)}%
+          </h2>
           <p className="illumination-label glow-sub">Illumination</p>
         </div>
       </div>
@@ -84,7 +99,10 @@ const Moon = memo(({ date }) => {
 
   return (
     <div className="moon-container">
-      <h2 className="card-title">The Moon on <div className="date-display">{date}</div></h2>
+      <h2 className="card-title">
+        The Moon as viewed from <div>{location.name} on</div>{" "}
+        <div className="date-display">{date}</div>
+      </h2>
 
       {loading ? (
         <div className="moon-loading-box">
@@ -97,17 +115,25 @@ const Moon = memo(({ date }) => {
           <div className="moon-stats-grid">
             <div className="text-left">
               <p className="stat-label">
-                Altitude {trend === "rising" ? "↑" : trend === "setting" ? "↓" : ""}
+                Altitude{" "}
+                {trend === "rising" ? "↑" : trend === "setting" ? "↓" : ""}
               </p>
-              <p className={`stat-value ${moonData.altitude > 0 ? 'alt-above' : 'alt-below'}`}>
+              <p
+                className={`stat-value ${moonData.altitude > 0 ? "alt-above" : "alt-below"}`}
+              >
                 {moonData.altitude?.toFixed(1)}°
               </p>
             </div>
             <div className="text-right">
               <p className="stat-label">Azimuth</p>
-              <p className="stat-value glow-sub2" style={{ color: "var(--text-main)" }}>
+              <p
+                className="stat-value glow-sub2"
+                style={{ color: "var(--text-main)" }}
+              >
                 {moonData.azimuth?.toFixed(1)}°
-                <span className="azimuth-unit">({getCompassDirection(moonData.azimuth)})</span>
+                <span className="azimuth-unit">
+                  ({getCompassDirection(moonData.azimuth)})
+                </span>
               </p>
             </div>
           </div>
