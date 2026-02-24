@@ -329,29 +329,55 @@
 .grid-span-2 { grid-column: span 2; }
 .grid-full-width { grid-column: 2; width: 600px;}
 
-/* 7. UI Components & Typography */
+
 .theme-toggle-btn {
-  position: fixed; /* Keep it pinned to the screen */
-  top: 10px;
-  right: 20px;
-  z-index: 1000; /* Highest priority to stay above everything */
-  padding: 10px 20px;
-  border-radius: 30px;
+  /* Default Mobile Styles */
+  position: relative; 
+  top: 0;
+  right: 0;
+  margin: 10px auto; /* Centered on mobile */
+  display: block;
+  
+  padding: 8px 16px;
+  border-radius: 20px;
   border: 1px solid var(--card-border);
   background: var(--card-bg);
   color: var(--text-main);
-  // cursor: pointer;
   backdrop-filter: blur(10px);
   font-weight: 600;
   text-transform: uppercase;
-  font-size: .75rem;
+  font-size: .7rem;
+  letter-spacing: 1px;
   transition: all 0.3s ease;
-  margin: 5px;
-  min-width: 160px;
-  opacity:0.9;
+  z-index: 1000;
+  width: fit-content;
+  min-width: 140px;
+}
+
+/* Desktop Styles: Pin it back to the corner */
+@media (min-width: 768px) {
+  .theme-toggle-btn {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    margin: 0;
+  }
+}
+
+.theme-toggle-btn:hover {
+  background: var(--separator-glow);
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
 }
 img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
   display: none !important;
+}
+[data-theme="day"] .theme-toggle-btn {
+  box-shadow: 0 0 10px rgba(255, 165, 0, 0.2);
+}
+
+[data-theme="night"] .theme-toggle-btn {
+  box-shadow: 0 0 10px rgba(100, 149, 237, 0.3);
 }
 
 .copyright {
