@@ -276,6 +276,40 @@
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 15px var(--separator-glow2);
 }
+/* Specific styling for the search input and gps button */
+.search-input-field {
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text-main);
+  backdrop-filter: blur(10px);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: .75rem;
+  transition: all 0.3s ease;
+  min-width: 250px;
+  outline: none;
+}
+
+.gps-action-btn {
+  padding: 8px 15px;
+  border-radius: 30px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text-main);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gps-action-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
 
 .dashboard-grid {
   display: grid;
