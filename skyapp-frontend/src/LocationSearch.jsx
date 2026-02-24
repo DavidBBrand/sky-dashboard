@@ -9,7 +9,7 @@ const LocationSearch = memo(({ onLocationChange }) => {
   // Inside LocationSearch.jsx
   const handleSearch = async (e) => {
     if (e) e.preventDefault();
-    if (!query.trim()) return;
+    if (!query.trim() || loading) return;
 
     setLoading(true);
 
@@ -64,41 +64,88 @@ const LocationSearch = memo(({ onLocationChange }) => {
       return;
     }
 
-    navigator.geolocation.getCurrentPosition((position) => {
-      onLocationChange({
-        lat: position.coords.latitude,
-        lon: position.coords.longitude,
-        name: "Current Location"
-      });
-    });
-  };
+    setLoading(true);
 
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+
+        // Default fallback
+        let finalName = "Current Location";
+
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`,
+            {
+              headers: {
+                "User-Agent": `SkyWatch/1.0 (${import.meta.env.VITE_NOMINATIM_EMAIL || "anonymous"})`
+              }
+            }
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+            const a = data.address;
+
+            // This order ensures we get the most relevant "Place Name"
+            finalName =
+              a.city ||
+              a.town ||
+              a.village ||
+              a.suburb ||
+              a.city_district ||
+              a.county ||
+              "Detected Location";
+
+            // Optional: If you want "City, State", do this:
+            // if (a.state) finalName += `, ${a.state}`;
+          }
+        } catch (err) {
+          console.error("Reverse Geocoding failed:", err);
+        } finally {
+          // This sends the full object to updateLocation in Context
+          onLocationChange({
+            lat: latitude,
+            lon: longitude,
+            name: finalName
+          });
+          setLoading(false);
+        }
+      },
+      (error) => {
+        setLoading(false);
+        alert("Location access denied.");
+      }
+    );
+  };
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        width: "100%"
-      }}
-    >
-      <form onSubmit={handleSearch} style={{ display: "flex" }}>
+    <div className="search-wrapper">
+      <form
+        onSubmit={handleSearch}
+        style={{ display: "flex", alignItems: "center", gap: "10px" }}
+      >
         <input
           type="text"
-          placeholder={loading ? "LOCATING..." : "SEARCH CITY..."}
+          placeholder={loading ? "LOCATING..." : "SEARCH LOCATION..."}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="theme-toggle-btn"
+          className="search-input-field" // Updated class
           disabled={loading}
           style={{
-            width: "250px",
-            textAlign: "center",
-            outline: "none",
-            fontSize: "0.8rem",
-            letterSpacing: "1px",
             cursor: loading ? "wait" : "text",
             opacity: loading ? 0.7 : 1
           }}
         />
+
+        <button
+          type="button"
+          onClick={useGPS}
+          className="gps-action-btn" // Updated class
+          disabled={loading}
+          title="Use My Location"
+        >
+          <span style={{ fontSize: "1.1rem" }}>📍</span>
+        </button>
       </form>
     </div>
   );
