@@ -22,18 +22,7 @@
   animation: border-pulse 4s ease-in-out infinite; 
 }
 
-/* 2. The Spinning Wedge */
-// .radar-scanner {
-//   position: absolute;
-//   width: 50%; height: 50%;
-//   top: 0; left: 0;
-//   background: linear-gradient(45deg, color-mix(in srgb, var(--accent-color), transparent 77%) 0%, transparent 100%);
-//   transform-origin: bottom right; /* Centers pivot point */
-//   animation: radar-spin 4s linear infinite;
-//   z-index: 1;
-//   pointer-events: none;
-//   clip-path: circle(100% at bottom right); /* Makes the square a wedge */
-// }
+
 .radar-scanner {
   position: absolute;
   width: 50%; height: 50%;

@@ -12,7 +12,7 @@
 
 /* 2. Dynamic Distance Mileage Text (Radar & Tactical) */
 .distance-value {
-  font-size: 2.8rem;
+  font-size: 5rem;
   font-weight: 600;
 
   margin-bottom: 12px;
@@ -41,24 +41,26 @@
 
 /* Applied when isNearby is true */
 .iss-distance-text {
-  background: linear-gradient(90deg, #aa3506 0%, #de744a 50%, #aa3506 100%);
+  color: var(--text-main);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent !important;
   display: inline-block;
-  font-weight: 600;
-  
+  font-weight: 400;
+  font-size: 3.3rem;
+  margin-top: 18px;
+  margin-bottom:18px;
   /* The 3D Etched Effect */
   text-shadow:
-    rgba(57, 21, 21, 0.479) 1px 1px 0.25px,
-    -0.5px -0.5px 0px rgba(255, 255, 255, 0.235);
+    rgba(42, 20, 20, 0.669) 1px 1px 0.25px,
+    -0.5px -0.5px 0px rgba(255, 255, 255, 0.466);
 
   animation:
     radar-sweep 2s linear infinite,
     tactical-flicker 4s ease-in-out infinite;
 
-  filter: drop-shadow(0 0 8px rgba(222, 74, 74, 0.3));
+  filter: drop-shadow(0 0 4px rgba(74, 222, 126, 0.3));
 }
 
 /* 3. Proximity Alert Text (The Amber Alert) */
@@ -156,12 +158,12 @@
   54% { opacity: 0.8; }
 }
 
-@keyframes alert-shake {
-  10%, 90% { transform: translate3d(-1px, 0, 0) rotate(-0.5deg); }
-  20%, 80% { transform: translate3d(2px, 0, 0) rotate(1deg); }
-  30%, 50%, 70% { transform: translate3d(-3px, 0, 0) rotate(-1.5deg); }
-  40%, 60% { transform: translate3d(3px, 0, 0) rotate(1.5deg); }
-}
+// @keyframes alert-shake {
+//   10%, 90% { transform: translate3d(-1px, 0, 0) rotate(-0.5deg); }
+//   20%, 80% { transform: translate3d(2px, 0, 0) rotate(1deg); }
+//   30%, 50%, 70% { transform: translate3d(-3px, 0, 0) rotate(-1.5deg); }
+//   40%, 60% { transform: translate3d(3px, 0, 0) rotate(1.5deg); }
+// }
 
 @keyframes alert-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
 

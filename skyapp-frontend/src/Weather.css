@@ -203,5 +203,5 @@
 /* This targets the tiles specifically to make the 'pink stain' look like neon telemetry */
 .leaflet-tile-pane {
   mix-blend-mode: screen; 
-  opacity: 0.77;
+  opacity: 0.81;
 }
