@@ -91,7 +91,7 @@ const Starlink = memo(() => {
   return (
     <div className="starlink-card">
       <div className="card-title">STARLINK SATELLITE RADAR</div>
-      <div className={`radar-container ${isAlert ? "proximity-alert" : ""}`}>
+      <div className={`radar-container ${isAlert ? "alert" : ""}`}>
         <div className="radar-scanner"></div>
         <div className="radar-axis-h"></div>
         <div className="radar-axis-v"></div>
@@ -135,10 +135,10 @@ const Starlink = memo(() => {
           <p className="stat-value">
             {parseFloat(lat).toFixed(1)}°N{" "}
             {Math.abs(parseFloat(lon)).toFixed(1)}°W
-          </p>
-        </div>
-        <div className="glow-sub">
-          <h4>{location.name}</h4>
+          </p>{" "}
+          <div className="glow-sub">
+            <h6>{location.name}</h6>
+          </div>
         </div>
       </div>
     </div>

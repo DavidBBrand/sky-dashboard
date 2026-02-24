@@ -139,6 +139,6 @@
 .stat-value { color: var(--accent-color); font-size: 1.1rem; font-weight: bold; margin: 0; }
 
 .radar-container.proximity-alert {
-  border-color: #ff9800 !important;
-  box-shadow: 0 0 20px rgba(255, 152, 0, 0.4), inset 0 0 15px rgba(255, 152, 0, 0.1) !important;
+  border-color:var(--text-sub) !important;
+  box-shadow: 0 0 20px rgba(172, 14, 3, 0.4), inset 0 0 15px rgba(255, 152, 0, 0.1) !important;
 }

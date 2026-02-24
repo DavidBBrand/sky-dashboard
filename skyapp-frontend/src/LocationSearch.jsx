@@ -70,10 +70,11 @@ const LocationSearch = memo(({ onLocationChange }) => {
       async (position) => {
         const { latitude, longitude } = position.coords;
 
-        // Default fallback
-        let finalName = "Current Location";
+        // 1. We start with a fallback, but we don't SEND it yet
+        let detectedName = "Current Location";
 
         try {
+          // 2. We wait for the "Reverse Geocode" fetch to finish
           const response = await fetch(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`,
             {
@@ -86,37 +87,28 @@ const LocationSearch = memo(({ onLocationChange }) => {
           if (response.ok) {
             const data = await response.json();
             const a = data.address;
-
-            // This order ensures we get the most relevant "Place Name"
-            finalName =
-              a.city ||
-              a.town ||
-              a.village ||
-              a.suburb ||
-              a.city_district ||
-              a.county ||
-              "Detected Location";
-
-            // Optional: If you want "City, State", do this:
-            // if (a.state) finalName += `, ${a.state}`;
+            // Check for specific name, otherwise keep "Current Location"
+            detectedName =
+              a.city || a.town || a.village || a.suburb || "Current Location";
           }
         } catch (err) {
-          console.error("Reverse Geocoding failed:", err);
+          console.error("Geocoding failed, using fallback.", err);
         } finally {
-          // This sends the full object to updateLocation in Context
+          // 3. IMPORTANT: Only call the update ONCE everything above is done
           onLocationChange({
             lat: latitude,
             lon: longitude,
-            name: finalName
+            name: detectedName
           });
           setLoading(false);
         }
       },
       (error) => {
         setLoading(false);
-        alert("Location access denied.");
-      }
-    );
+        console.error(error);
+      },
+      { enableHighAccuracy: true, timeout: 5000 }
+    ); // Added accuracy/timeout options
   };
   return (
     <div className="search-wrapper">

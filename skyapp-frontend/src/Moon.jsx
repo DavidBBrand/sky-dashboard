@@ -100,8 +100,8 @@ const Moon = memo(({ date }) => {
   return (
     <div className="moon-container">
       <h2 className="card-title">
-        The Moon as viewed from <div>{location.name} on</div>{" "}
-        <div className="date-display">{date}</div>
+        The Moon from <p className="glow-sub">{location.name}</p>
+        <p className="date-display">{date}</p>
       </h2>
 
       {loading ? (
