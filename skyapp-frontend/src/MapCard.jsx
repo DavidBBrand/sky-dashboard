@@ -4,7 +4,7 @@ import "./MapCard.css";
 import SolarCycle from "./SolarCycle";
 
 const MapCard = memo(({ theme, skyData, date }) => {
-  // 1. Pull location from Context
+  // Pull location from Context
   const { location } = useLocation();
   const { lat, lon, name } = location;
 
@@ -15,13 +15,11 @@ const MapCard = memo(({ theme, skyData, date }) => {
   const lightStyle = "light-v11";
   const currentStyle = theme === "night" ? darkStyle : lightStyle;
 
-  // Static Map URL - will update when theme or location changes
+  
   const mapUrl = `https://api.mapbox.com/styles/v1/mapbox/${currentStyle}/static/pin-s+ff4444(${lon},${lat})/${lon},${lat},${zoom},0/600x400@2x?access_token=${MAPBOX_TOKEN}`;
 
   return (
-    <div className="map-card-content">
-      {/* <h2 className="card-title">{name || "Initializing..."}</h2> */}
-      
+    <div className="map-card-content">  
       <div
         style={{
           minHeight: "120px",
@@ -52,7 +50,7 @@ const MapCard = memo(({ theme, skyData, date }) => {
       <img
         src={mapUrl}
         alt="Regional Telemetry Map"
-        key={currentStyle} // Keyed to currentStyle to trigger fade transition on theme swap
+        key={currentStyle} 
         style={{
           width: "100%",
           borderRadius: "12px",

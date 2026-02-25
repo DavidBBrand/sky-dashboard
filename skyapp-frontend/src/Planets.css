@@ -2,13 +2,11 @@
 .planet-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    
+    gap: 12px;  
 }
 
 /* Individual Planet Boxes */
 .planet-item {
-    /* Subtle contrast background that works in both modes */
     background: rgba(0, 0, 0, 0.05); 
     border: 1px solid var(--card-border);
     border-radius: 12px;

@@ -6,7 +6,6 @@
     width: 100%;
     
 }
-
 .weather-header {
     font-size: 1.2rem;
     text-transform: uppercase;
@@ -20,8 +19,7 @@
   text-shadow: 
     0 1px 1px rgba(255, 255, 255, 0.3), /* Top highlight */
     0 0 15px var(--separator-glow);      /* Theme-based glow */
-  
-  /* 3. Glass Depth */
+
   /* This creates a semi-transparent 'cut-through' effect */
   background: linear-gradient(
     to bottom, 
@@ -107,7 +105,6 @@
 .detail-item .label {
     font-size: 1.2rem; /* Smaller for hierarchy */
     text-transform: uppercase;
-    // letter-spacing: 1px;
     color: var(--accent-color2);
     font-weight:500;
 }

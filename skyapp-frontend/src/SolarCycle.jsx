@@ -1,7 +1,7 @@
-import React, { memo } from "react"; // Added memo
+import React, { memo } from "react"; 
 import "./SolarCycle.css";
 
-const SolarCycle = memo(({ sun, date }) => { // Wrapped in memo
+const SolarCycle = memo(({ sun, date }) => { 
   if (!sun) return null;
 
   const formatTime = (isoString) => {
@@ -14,17 +14,13 @@ const SolarCycle = memo(({ sun, date }) => { // Wrapped in memo
 
   return (
     <div className="solar-cycle-container">
-      {/* <h4 className="glow-sub"> <div className="card-title">{date}</div></h4>  */}
-      
       <div className="solar-flex">
-        {/* Sunrise Section */}
+        
         <div className="planet-item" style={{ flex: 1 }}>
           <span style={{ fontSize: "6.0rem" }} role="img" aria-label="sunrise">🌅</span>
           <p className="solar-time">{formatTime(sun.sunrise)}</p>
           <p className="solar-label glow-sub">SUNRISE</p>
-        </div>
-
-        {/* Sunset Section */}
+        </div>      
         <div className="planet-item" style={{ flex: 1 }}>
           <span style={{ fontSize: "6.0rem" }} role="img" aria-label="sunset">🌇</span>
           <p className="solar-time">{formatTime(sun.sunset)}</p>

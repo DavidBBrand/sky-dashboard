@@ -1,14 +1,11 @@
-
-/* Mobile Tweak for your Card */
 @media (max-width: 350px) {
     .map-card {
-        min-width: 100%;    /* Allow it to shrink below 280px if needed */
-        max-width: 100%;    /* Keep it within the padding */
-        padding: 15px;      /* Slightly tighter padding for small screens */
+        min-width: 100%;   
+        max-width: 100%;    
+        padding: 15px;     
     }
 }
  
-
 .solar-loader {
   width: 100%;
   height: 100px;

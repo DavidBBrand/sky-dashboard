@@ -1,6 +1,6 @@
 import "./Weather.css";
-import React, { useState, useEffect, useRef, memo } from "react"; // Added memo
-import { useLocation } from "./LocationContext.jsx"; // Added Context
+import React, { useState, useEffect, useRef, memo } from "react"; 
+import { useLocation } from "./LocationContext.jsx"; 
 import WindMap from "./WindMap";
 
 const Weather = memo(({ sun, onDataReceived, theme }) => {

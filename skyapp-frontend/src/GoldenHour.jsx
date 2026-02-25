@@ -1,14 +1,14 @@
 import React from "react";
 
 const GoldenHour = ({ sunData }) => {
-  // 1. If data hasn't loaded yet, or it's just standard daylight/night, show nothing
+  // If data hasn't loaded yet, or it's just standard daylight/night, show nothing
   if (!sunData || !sunData.phase || sunData.phase === "Standard" || sunData.phase === "Daylight") {
     return null; 
   }
 
   const isGolden = sunData.phase === "Golden Hour";
 
-  // 2. Component-specific styles to ensure it doesn't "mess up" the header
+  // Component-specific styles to ensure it doesn't "mess up" the header
   const badgeStyle = {
     backgroundColor: isGolden ? "#e29e3e9c" : "#5b63b7",
     color: "#fff",

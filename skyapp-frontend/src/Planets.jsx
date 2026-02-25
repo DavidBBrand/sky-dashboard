@@ -1,7 +1,7 @@
-import React, { memo } from "react"; // Added memo
+import React, { memo } from "react"; 
 import "./Planets.css";
 
-const Planets = memo(({ skyData }) => { // Wrapped in memo
+const Planets = memo(({ skyData }) => { 
   if (!skyData) return null;
 
   const { sun, planets } = skyData;
@@ -80,7 +80,7 @@ const Planets = memo(({ skyData }) => { // Wrapped in memo
                 <div 
                   className="glow-sub2"
                   style={{
-                    fontSize: "0.85rem", // Slightly smaller for better fit
+                    fontSize: "0.85rem", 
                     color: "var(--text-sub)",
                     marginTop: "5px",
                     opacity: 0.8

@@ -8,7 +8,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 2. Theme Variables */
 :root {
   --bg-color: #f5f3ef;
   --mesh-2: rgb(208, 195, 177);
@@ -167,11 +166,9 @@
     margin: 10px 0 10px;
     color: var(--text-main);
     opacity: 0.88;
-    /* 2. Glass  Effect */
     text-shadow: 
-      0 1px 1px rgba(255, 255, 255, 0.3), /* Top highlight */
-      1px 1px 4px var(--separator-glow);      /* Theme-based glow */
-    /* 3. Glass Depth */
+      0 1px 1px rgba(255, 255, 255, 0.3), 
+      1px 1px 4px var(--separator-glow);      
     background: linear-gradient(
       to bottom, 
       var(--text-main) 0%, 
@@ -179,7 +176,6 @@
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    /* 4. Smooth theme transition */
     transition: all 0.5s ease-in-out;
 }
 .telemetry-info {
@@ -221,7 +217,7 @@
   transition: color 0.3s ease;
 }
 
-/* Hover effect to make it feel interactive */
+
 .telemetry-info span:hover {
   color: var(--text-main);
   text-shadow: 
@@ -235,7 +231,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px auto; /* Changed 0 to auto to ensure the wrapper centers in the header */
+  margin: 10px auto; 
   box-sizing: border-box;
   text-align: center;
   padding-left: 0;

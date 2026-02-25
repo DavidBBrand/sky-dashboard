@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef, memo } from "react";
 import { useLocation } from "./LocationContext.jsx"; // 1. Use Context
 import "./Moon.css";
 
-// 2. Wrap in memo to prevent unmounting when App theme changes
+//  Wrap in memo to prevent unmounting when App theme changes
 const Moon = memo(({ date }) => {
-  // 3. Destructure location from global state
+  //  Destructure location from global state
   const { location } = useLocation();
   const { lat, lon } = location;
 
@@ -13,15 +13,14 @@ const Moon = memo(({ date }) => {
   const [trend, setTrend] = useState(null);
   const prevAlt = useRef(null);
 
-useEffect(() => {
+  useEffect(() => {
     setLoading(true);
     let isMounted = true;
 
     const fetchMoonData = () => {
-      // 1. Create the base URL using your environment variable
-      const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+      const API_BASE_URL =
+        import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
-      // 2. Use the dynamic URL instead of the hardcoded one
       fetch(`${API_BASE_URL}/moon-details?lat=${lat}&lon=${lon}`)
         .then((response) => response.json())
         .then((data) => {

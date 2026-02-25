@@ -1,4 +1,3 @@
-// /* Remove all filters from the wrapper itself to prevent inversion */
 .wind-map-wrapper {
   height: 300px;
   width: 100%;
@@ -8,11 +7,6 @@
   background: #222; /* Fallback background */
 }
 
-// /* target the cloud layer specifically */
-// .clouds-layer {
-//   transition: all 0.5s ease;
-//   pointer-events: none;
-// }
 
 /* Target the Cloud Layer (The 2nd layer in your MapContainer) */
 .wind-map-wrapper .leaflet-tile-pane .leaflet-layer:nth-child(2) {

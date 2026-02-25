@@ -13,7 +13,7 @@ const LocationSearch = memo(({ onLocationChange }) => {
 
     setLoading(true);
 
-    // 1. Create a controller for this specific search
+    // Create a controller for this specific search
     const controller = new AbortController();
 
     try {
@@ -22,7 +22,7 @@ const LocationSearch = memo(({ onLocationChange }) => {
         {
           signal: controller.signal,
           headers: {
-            // 2. Identify yourself (Essential for CORS/Rate-limiting)
+            // Identify yourself (Essential for CORS/Rate-limiting)
             "User-Agent": `SkyWatch/1.0 (${import.meta.env.VITE_NOMINATIM_EMAIL || "anonymous"})`
           }
         }
@@ -57,7 +57,7 @@ const LocationSearch = memo(({ onLocationChange }) => {
       setLoading(false);
     }
   };
-  // Keep the GPS function ready in case you want to add a "Find Me" button later!
+
   const useGPS = () => {
     if (!navigator.geolocation) {
       alert("Geolocation is not supported by your browser");
@@ -70,7 +70,7 @@ const LocationSearch = memo(({ onLocationChange }) => {
       async (position) => {
         const { latitude, longitude } = position.coords;
 
-        // 1. We start with a fallback, but we don't SEND it yet
+        //  start with a fallback, but don't SEND it yet
         let detectedName = "Current Location";
 
         try {
