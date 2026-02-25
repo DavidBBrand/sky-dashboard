@@ -142,7 +142,7 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-/* The "Scanner" line effect */
+
 .map-overlay-scan {
   position: absolute;
   top: 0;

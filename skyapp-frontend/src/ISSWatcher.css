@@ -158,13 +158,6 @@
   54% { opacity: 0.8; }
 }
 
-// @keyframes alert-shake {
-//   10%, 90% { transform: translate3d(-1px, 0, 0) rotate(-0.5deg); }
-//   20%, 80% { transform: translate3d(2px, 0, 0) rotate(1deg); }
-//   30%, 50%, 70% { transform: translate3d(-3px, 0, 0) rotate(-1.5deg); }
-//   40%, 60% { transform: translate3d(3px, 0, 0) rotate(1.5deg); }
-// }
-
 @keyframes alert-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
 
 @keyframes alert-pulse {
