@@ -25,14 +25,14 @@ def cache_sky_data(ttl_seconds=60):
                 if cached_val:
                     return json.loads(cached_val)
             except Exception as e:
-                print(f"⚠️ Redis Cache Read Error: {e}")
+                print(f" Redis Cache Read Error: {e}")
 
             result = await func(*args, **kwargs)
             
             try:
                 r.setex(cache_key, ttl_seconds, json.dumps(result))
             except Exception as e:
-                print(f"⚠️ Redis Cache Write Error: {e}")
+                print(f" Redis Cache Write Error: {e}")
                 
             return result
 
@@ -47,14 +47,14 @@ def cache_sky_data(ttl_seconds=60):
                 if cached_val:
                     return json.loads(cached_val)
             except Exception as e:
-                print(f"⚠️ Redis Cache Read Error: {e}")
+                print(f" Redis Cache Read Error: {e}")
 
             result = func(*args, **kwargs)
             
             try:
                 r.setex(cache_key, ttl_seconds, json.dumps(result))
             except Exception as e:
-                print(f"⚠️ Redis Cache Write Error: {e}")
+                print(f" Redis Cache Write Error: {e}")
                 
             return result
 
@@ -64,6 +64,6 @@ def cache_sky_data(ttl_seconds=60):
 # 🔍 Test connection on startup
 try:
     r.ping()
-    print("✅ Redis Connection Status: Connected to Upstash!")
+    print(" Redis Connection Status: Connected to Upstash!")
 except Exception as e:
-    print(f"❌ Redis Connection Status: Failed! Error: {e}")
+    print(f" Redis Connection Status: Failed! Error: {e}")
