@@ -63,8 +63,7 @@ const ISSWatcher = memo(({ onDistanceUpdate }) => {
         const dLat = (issLat - lat) * (Math.PI / 180);
 
         // Calculate Distance (Haversine Formula)
-        const R = 3958.8; // Miles
-        const dLat = (issLat - lat) * (Math.PI / 180);
+
         const dLon = (issLon - lon) * (Math.PI / 180);
         const a =
           Math.sin(dLat / 2) * Math.sin(dLat / 2) +
