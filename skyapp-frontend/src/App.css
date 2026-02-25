@@ -16,10 +16,10 @@
   --card-border: rgba(62, 51, 35, 0.2); 
   --text-main: #3e3323;
   --text-sub: rgba(62, 51, 35, 0.7);
-  --accent-color: #6e3103eb;
+  --accent-color: #1460d3eb;
   --separator-glow: rgba(76, 57, 28, 0.1);
   --separator-glow2: rgba(8, 48, 44, 0.656);
-  --separator-glow3: rgba(114, 93, 82, 0.541);
+  --separator-glow3: rgba(151, 63, 15, 0.541);
   --logo-url: url('/skydashday.png');
 }
 
@@ -114,7 +114,7 @@
     font-size: 1.4rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-weight: 600;
+    font-weight: 400;
     font-family: 'Share Tech Mono', monospace;
     margin: 10px 0 10px;
     color: var(--text-main);
@@ -122,7 +122,7 @@
     /* 2. Glass  Effect */
     text-shadow: 
       0 1px 1px rgba(212, 205, 205, 0.3), /* Top highlight */
-      0 0 12px var(--separator-glow);      /* Theme-based glow */
+      0 0 10px var(--separator-glow);      /* Theme-based glow */
     /* 3. Glass Depth */
     background: linear-gradient(
       to bottom, 
@@ -369,12 +369,12 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
 }
 
 .copyright {
-  font-size: 1em;
+  font-size: .8em;
   opacity: 0.6;
   margin-top: 40px;
   color: var(--text-sub);
   letter-spacing: 1px;
-  font-weight: 400;
+  font-weight: 600;
   font-family:'Michroma'
 }
 
@@ -412,7 +412,7 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
 
 .time-display {
   color:var(--accent-color4);
-  text-shadow: rgba(4, 32, 115, 0.641) 0.5px 0.5px 0.5px;
+  text-shadow: rgba(4, 41, 150, 0.641) 0.5px 0.5px 0.5px;
 }
 
 

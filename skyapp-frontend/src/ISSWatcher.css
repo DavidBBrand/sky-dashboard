@@ -43,13 +43,13 @@
   color: transparent !important;
   display: inline-block;
   font-weight: 400;
-  font-size: 3.3rem;
+  font-size: 2rem;
   margin-top: 18px;
   margin-bottom:18px;
   /* The 3D Etched Effect */
-  text-shadow:
-    rgba(42, 20, 20, 0.669) 1px 1px 0.25px,
-    -0.5px -0.5px 0px rgba(255, 255, 255, 0.466);
+  // text-shadow:
+  //   rgba(42, 20, 20, 0.669) 1px 1px 0.25px,
+  //   -0.5px -0.5px 0px rgba(255, 255, 255, 0.466);
 
   animation:
     radar-sweep 2s linear infinite,

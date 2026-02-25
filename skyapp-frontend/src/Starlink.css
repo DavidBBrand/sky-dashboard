@@ -12,14 +12,14 @@
   border-radius: 50%;
   
   /* The Glow Effect */
-  border: .5px solid var(--separator-glow2);
+  border: .5px solid var(--separator-glow);
   box-shadow: 
     0 0 15px rgba(0, 255, 42, 0.2),      /* Soft outer spread */
     inset 0 0 12px rgba(0, 255, 42, 0.1); /* Soft inner glow */
     
   /* This creates the "Neon Tube" look */
-  filter: drop-shadow(0 0 1px var(--accent-color));
-  animation: border-pulse 4s ease-in-out infinite; 
+  filter: drop-shadow(0 0 4px var(--accent-color));
+  animation: border-pulse 6s ease-in-out infinite; 
 }
 
 .radar-scanner {
@@ -27,8 +27,8 @@
   width: 50%; height: 50%;
   top: 0; left: 0;
   
-  /* UPDATED: Conic gradient for a true radar trail */
-  /* We place the solid color at 90deg (the leading edge) and fade back to 0deg */
+  /* UPDATED: Conic gradient for a radar scanner trail */
+  /* solid color at 90deg (the leading edge) and fade back to 0deg */
   background: conic-gradient(
     from 270deg at 100% 100%,
     transparent 0%,
@@ -71,10 +71,11 @@
 .radar-label, .radar-direction {
   position: absolute;
   color: var(--accent-color);
-  font-family: 'arial';
+  font-family: 'Share Tech Mono';
   text-shadow: .5px .5px 1px #000;
   z-index: 10;
   pointer-events: none;
+  opacity: 0.7;
 
 }
 
