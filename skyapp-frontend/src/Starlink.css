@@ -22,7 +22,6 @@
   animation: border-pulse 4s ease-in-out infinite; 
 }
 
-
 .radar-scanner {
   position: absolute;
   width: 50%; height: 50%;
@@ -38,7 +37,7 @@
   );
   
   transform-origin: bottom right;
-  animation: radar-spin 4s linear infinite;
+  animation: radar-spin 4.7s linear infinite;
   z-index: 1;
   pointer-events: none;
   clip-path: circle(100% at bottom right);
@@ -72,7 +71,7 @@
 .radar-label, .radar-direction {
   position: absolute;
   color: var(--accent-color);
-  font-family: 'Courier New', monospace;
+  font-family: 'arial';
   text-shadow: .5px .5px 1px #000;
   z-index: 10;
   pointer-events: none;
