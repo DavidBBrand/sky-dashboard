@@ -81,7 +81,7 @@ const Weather = memo(({ sun, onDataReceived, theme }) => {
 
   if (error)
     return (
-      <div className="glass-card error-msg">Weather currently unavailable</div>
+      <div className=" glow-sub2 error-msg">Weather currently unavailable</div>
     );
 
   return (

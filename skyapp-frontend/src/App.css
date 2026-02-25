@@ -83,8 +83,7 @@
     0 1px 1px rgba(255, 255, 255, 0.3), /* Top highlight */
     0 0 10px var(--separator-glow);      /* Theme-based glow */
   
-  /* 3. Glass Depth */
-  /* This creates a semi-transparent 'cut-through' effect */
+  /* semi-transparent 'cut-through' effect */
   background: linear-gradient(
     to bottom, 
     var(--text-main) 0%, 
@@ -134,6 +133,7 @@
     /* 4. Smooth theme transition */
     transition: all 0.5s ease-in-out;
 }
+
 
 .glow-sub {
     font-size: 1rem;
@@ -448,8 +448,11 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
   50% { box-shadow: 0 0 30px rgb(217, 127, 2); }
 }
 .glass-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 12px var(--separator-glow2);
+box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.3),            /* Outer depth */
+    inset 0 0 12px var(--separator-glow2);   /* Inner edge lighting */
+  border-color: var(--separator-glow2);
+  background: rgba(255, 255, 255, 0.017);
 }
 
 
