@@ -47,8 +47,8 @@
   align-items: center;  
 }
 .logo-container {
-  width: 112px;
-  height: 112px;
+  width: 56px;
+  height: 56px;
   background-image: var(--logo-url);
   background-size: contain;
   background-repeat: no-repeat;
