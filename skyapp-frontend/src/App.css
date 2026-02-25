@@ -24,13 +24,13 @@
 }
 
 [data-theme="night"] {
-  --bg-color: #100209de;
+  --bg-color: #0a0406de;
   --mesh-1: hsla(220, 40%, 15%, 1);
   --mesh-2: hsla(260, 30%, 10%, 1);
   --card-bg: rgba(15, 20, 30, 0.4);
   --card-border: rgba(255, 255, 255, 0.1);
   --text-main: #ffffff;
-  --text-sub: rgba(255, 255, 255, 0.6);
+  --text-sub: rgba(255, 255, 255, 0.682);
   --accent-color: #1ca42e;
   --separator-glow: rgba(8, 169, 35, 0.819);
   --separator-glow2: rgba(136, 232, 150, 0.453);
@@ -369,13 +369,13 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
 }
 
 .copyright {
-  font-size: .8em;
+  font-size: 1.2em;
   opacity: 0.6;
   margin-top: 40px;
   color: var(--text-sub);
   letter-spacing: 1px;
-  font-weight: 600;
-  font-family:'Michroma'
+  font-weight: 400;
+  font-family:'Share Tech Mono', monospace;
 }
 
 
