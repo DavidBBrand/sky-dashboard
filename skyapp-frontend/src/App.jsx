@@ -118,11 +118,11 @@ function App() {
 
       <header className="header-section">
         <h1 className="main-title">SKY WATCH</h1>
-        <div
+        {/* <div
           className="logo-container"
           role="img"
           aria-label="Sky Dashboard Logo"
-        />
+        /> */}
 
         <div className="search-wrapper">
           <LocationSearch onLocationChange={updateLocation} />

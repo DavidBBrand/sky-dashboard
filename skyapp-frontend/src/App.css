@@ -182,7 +182,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px; /* Increased slightly for better visual breathing room */
+  gap: 10px; /* Increased slightly for better visual breathing room */
   margin: 15px;
   text-align: center;
   color: var(--text-sub);
@@ -190,7 +190,7 @@
   text-transform: uppercase;
   font-size: 1rem;
   font-weight: 200; 
-  padding: 15px;
+  padding: 4px;
   margin-top: 20px;
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(10px) brightness(1.1);
