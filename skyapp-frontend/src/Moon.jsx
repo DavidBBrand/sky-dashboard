@@ -13,13 +13,16 @@ const Moon = memo(({ date }) => {
   const [trend, setTrend] = useState(null);
   const prevAlt = useRef(null);
 
-  useEffect(() => {
+useEffect(() => {
     setLoading(true);
     let isMounted = true;
 
     const fetchMoonData = () => {
-      // Use coordinates from context
-      fetch(`http://127.0.0.1:8000/moon-details?lat=${lat}&lon=${lon}`)
+      // 1. Create the base URL using your environment variable
+      const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
+      // 2. Use the dynamic URL instead of the hardcoded one
+      fetch(`${API_BASE_URL}/moon-details?lat=${lat}&lon=${lon}`)
         .then((response) => response.json())
         .then((data) => {
           if (isMounted) {
@@ -45,7 +48,7 @@ const Moon = memo(({ date }) => {
       isMounted = false;
       clearInterval(interval);
     };
-  }, [lat, lon]); // Only refetch data when location changes
+  }, [lat, lon]);
 
   const getCompassDirection = (az) => {
     if (az === undefined) return "--";

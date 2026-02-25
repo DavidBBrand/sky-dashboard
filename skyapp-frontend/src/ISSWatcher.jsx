@@ -41,7 +41,7 @@ const ISSWatcher = memo(({ onDistanceUpdate }) => {
 
     const fetchISS = async () => {
       try {
-        const res = await fetch("http://api.open-notify.org/iss-now.json", { signal }); // 2. Attach signal to ISS fetch
+        const res = await fetch("https://api.open-notify.org/iss-now.json", { signal }); // 2. Attach signal to ISS fetch
         const data = await res.json();
         const { latitude, longitude } = data.iss_position;
 

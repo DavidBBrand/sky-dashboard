@@ -15,7 +15,13 @@ const Starlink = memo(() => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://127.0.0.1:8000/starlink-live?lat=${lat}&lon=${lon}`)
+
+    // 1. Establish the API base URL
+    const API_BASE_URL =
+      import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
+    // 2. Use the dynamic URL
+    fetch(`${API_BASE_URL}/starlink-live?lat=${lat}&lon=${lon}`)
       .then((res) => res.json())
       .then((data) => {
         setTles(Array.isArray(data) ? data : [data]);

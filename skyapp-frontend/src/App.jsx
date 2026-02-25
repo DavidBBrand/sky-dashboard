@@ -75,25 +75,27 @@ function App() {
     // 1. Create the controller
     const controller = new AbortController();
 
-    const fetchSkyData = async () => {
-      try {
-        const response = await fetch(
-          `http://127.0.0.1:8000/sky-summary?lat=${location.lat}&lon=${location.lon}`,
-          { signal: controller.signal } // 2. Attach the signal to the fetch
-        );
-        const data = await response.json();
-        setSkyData(data);
-      } catch (err) {
-        // 3. Ignore errors caused by our intentional abort
-        if (err.name === "AbortError") {
-          console.log(
-            "Fetch aborted: New request started or component unmounted"
-          );
-        } else {
-          console.error("FETCH ERROR:", err);
-        }
-      }
-    };
+// Replace the fetch block in your useEffect with this:
+
+const fetchSkyData = async () => {
+  try {
+    // This line dynamically chooses the Render URL (prod) or localhost (dev)
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
+    const response = await fetch(
+      `${API_BASE_URL}/sky-summary?lat=${location.lat}&lon=${location.lon}`,
+      { signal: controller.signal }
+    );
+    const data = await response.json();
+    setSkyData(data);
+  } catch (err) {
+    if (err.name === "AbortError") {
+      console.log("Fetch aborted: New request started");
+    } else {
+      console.error("FETCH ERROR:", err);
+    }
+  }
+};
 
     setSkyData(null);
     fetchSkyData();

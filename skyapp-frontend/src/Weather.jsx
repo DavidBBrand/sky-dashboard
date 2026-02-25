@@ -20,7 +20,12 @@ const Weather = memo(({ sun, onDataReceived, theme }) => {
     let isMounted = true;
 
     const fetchWeather = () => {
-      fetch(`http://127.0.0.1:8000/weather?lat=${lat}&lon=${lon}`)
+      // 1. Establish the API base URL
+      const API_BASE_URL =
+        import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
+      // 2. Use the dynamic URL
+      fetch(`${API_BASE_URL}/weather?lat=${lat}&lon=${lon}`)
         .then((res) => {
           if (!res.ok) throw new Error("Server error");
           return res.json();
@@ -32,7 +37,8 @@ const Weather = memo(({ sun, onDataReceived, theme }) => {
           } else {
             setWeather(weatherData);
             setError(false);
-            if (onDataReceivedRef.current) onDataReceivedRef.current(weatherData);
+            if (onDataReceivedRef.current)
+              onDataReceivedRef.current(weatherData);
           }
         })
         .catch((err) => {
@@ -50,7 +56,7 @@ const Weather = memo(({ sun, onDataReceived, theme }) => {
       isMounted = false;
       clearInterval(weatherInterval);
     };
-  }, [lat, lon]); // Only restart fetch if coordinates change
+  }, [lat, lon]);
 
   const getWeatherIcon = (description) => {
     if (!description) return "🌡️";
@@ -59,23 +65,24 @@ const Weather = memo(({ sun, onDataReceived, theme }) => {
     const sunriseTime = sun?.sunrise ? new Date(sun.sunrise) : null;
     const sunsetTime = sun?.sunset ? new Date(sun.sunset) : null;
 
-    let isDaylight = (sunriseTime && sunsetTime) 
-      ? (now >= sunriseTime && now <= sunsetTime) 
-      : (now.getHours() >= 6 && now.getHours() < 18);
+    let isDaylight =
+      sunriseTime && sunsetTime
+        ? now >= sunriseTime && now <= sunsetTime
+        : now.getHours() >= 6 && now.getHours() < 18;
 
     if (desc.includes("clear")) return isDaylight ? "☀️" : "🌙";
     if (desc.includes("thunderstorm")) return "⛈️";
     if (desc.includes("drizzle") || desc.includes("rain")) return "🌧️";
     if (desc.includes("snow")) return "❄️";
-    if (desc.includes("clouds")) return desc.includes("few") || desc.includes("scattered") ? "🌤️" : "☁️";
+    if (desc.includes("clouds"))
+      return desc.includes("few") || desc.includes("scattered") ? "🌤️" : "☁️";
     return "🌡️";
   };
 
-  if (error) return (
-    <div className="glass-card error-msg">
-      Weather currently unavailable
-    </div>
-  );
+  if (error)
+    return (
+      <div className="glass-card error-msg">Weather currently unavailable</div>
+    );
 
   return (
     <div className="weather-container">
@@ -83,40 +90,44 @@ const Weather = memo(({ sun, onDataReceived, theme }) => {
         {location.name ? `${location.name} Weather` : "Live Weather"}
       </h2>
 
-      <div className={`weather-icon ${!weather ? "weather-loading-pulse" : ""}`}>
+      <div
+        className={`weather-icon ${!weather ? "weather-loading-pulse" : ""}`}
+      >
         {weather ? getWeatherIcon(weather.description) : "☀️"}
       </div>
 
       <h4 className="weather-temp glow-sub2">
         {weather ? `${Math.round(weather.temp)}°F` : "--°F"}
       </h4>
-      
+
       <p className="weather-desc glow-sub">
         {weather ? weather.description : "Synchronizing..."}
       </p>
       <div className="separator-line" />
       {weather && (
         <>
-        <div className="weather-details-grid">
-          <div className="detail-item">
-            <span className="label">Humidity</span>
-            <span className="value glow-sub2">{weather.humidity}%</span>
+          <div className="weather-details-grid">
+            <div className="detail-item">
+              <span className="label">Humidity</span>
+              <span className="value glow-sub2">{weather.humidity}%</span>
+            </div>
+            <div className="detail-item">
+              <span className="label">Pressure</span>
+              <span className="value glow-sub2">{weather.pressure} hPa</span>
+            </div>
+            <div className="detail-item">
+              <span className="label">Visibility</span>
+              <span className="value glow-sub2">
+                {(weather.visibility / 1000).toFixed(1)} km
+              </span>
+            </div>
+            <div className="detail-item">
+              <span className="label">Wind</span>
+              <span className="value glow-sub2">{weather.windspeed} mph</span>
+            </div>
           </div>
-          <div className="detail-item">
-            <span className="label">Pressure</span>
-            <span className="value glow-sub2">{weather.pressure} hPa</span>
-          </div>
-          <div className="detail-item">
-            <span className="label">Visibility</span>
-            <span className="value glow-sub2">{(weather.visibility / 1000).toFixed(1)} km</span>
-          </div>
-          <div className="detail-item">
-            <span className="label">Wind</span>
-            <span className="value glow-sub2">{weather.windspeed} mph</span>
-          </div>
-        </div>
-        
-        <div className="separator-line" />
+
+          <div className="separator-line" />
           {/* Note: WindMap still needs coords and theme to redraw properly */}
           <WindMap lat={lat} lon={lon} theme={theme} />
         </>
