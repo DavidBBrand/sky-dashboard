@@ -7,3 +7,4 @@ python-dotenv
 sgp4==2.24
 skyfield==1.52
 jplephem==2.22
+httpx
