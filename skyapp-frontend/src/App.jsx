@@ -75,27 +75,28 @@ function App() {
     // 1. Create the controller
     const controller = new AbortController();
 
-// Replace the fetch block in your useEffect with this:
+    // Replace the fetch block in your useEffect with this:
 
-const fetchSkyData = async () => {
-  try {
-    // This line dynamically chooses the Render URL (prod) or localhost (dev)
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+    const fetchSkyData = async () => {
+      try {
+        // This line dynamically chooses the Render URL (prod) or localhost (dev)
+        const API_BASE_URL =
+          import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
-    const response = await fetch(
-      `${API_BASE_URL}/sky-summary?lat=${location.lat}&lon=${location.lon}`,
-      { signal: controller.signal }
-    );
-    const data = await response.json();
-    setSkyData(data);
-  } catch (err) {
-    if (err.name === "AbortError") {
-      console.log("Fetch aborted: New request started");
-    } else {
-      console.error("FETCH ERROR:", err);
-    }
-  }
-};
+        const response = await fetch(
+          `${API_BASE_URL}/sky-summary?lat=${location.lat}&lon=${location.lon}`,
+          { signal: controller.signal }
+        );
+        const data = await response.json();
+        setSkyData(data);
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("Fetch aborted: New request started");
+        } else {
+          console.error("FETCH ERROR:", err);
+        }
+      }
+    };
 
     setSkyData(null);
     fetchSkyData();
