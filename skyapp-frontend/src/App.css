@@ -121,7 +121,7 @@
     opacity: 0.92;
     /* 2. Glass  Effect */
     text-shadow: 
-      0 1px 1px rgba(188, 180, 180, 0.3), /* Top highlight */
+      0 1px 1px rgba(212, 205, 205, 0.3), /* Top highlight */
       0 0 12px var(--separator-glow);      /* Theme-based glow */
     /* 3. Glass Depth */
     background: linear-gradient(
@@ -374,9 +374,8 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
   margin-top: 40px;
   color: var(--text-sub);
   letter-spacing: 1px;
-  text-transform: uppercase;
   font-weight: 400;
-  font-family:'Comfortaa'
+  font-family:'Michroma'
 }
 
 
