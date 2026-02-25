@@ -12,7 +12,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:5173",
-    "https://sky-watch.vercel.app", # Add your actual Vercel URL here
+    "https://sky-watch-chi.vercel.app", # Add your actual Vercel URL here
 ]
 
 app.add_middleware(
