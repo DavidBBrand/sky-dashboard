@@ -373,7 +373,6 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
   opacity: 0.6;
   margin-top: 40px;
   color: var(--text-sub);
-  letter-spacing: 1px;
   font-weight: 400;
   font-family:'Share Tech Mono', monospace;
 }
