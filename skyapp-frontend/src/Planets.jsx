@@ -43,7 +43,7 @@ const Planets = memo(({ skyData }) => {
           <h2 className="card-title">Visible Planets</h2>
           <div className="planet-grid">
             {Object.entries(planets).map(([name, info]) => (
-              <div key={name} className="planet-item">
+              <div key={name} className="planet-item glass-card">
                 <div style={{ fontSize: "2rem", marginBottom: "5px" }}>
                   {planetIcons[name] || "✨"}
                 </div>
@@ -52,7 +52,7 @@ const Planets = memo(({ skyData }) => {
                   <span
                     className="glow-sub2"
                     style={{
-                      fontSize: "1.2rem",
+                      fontSize: "1.8rem",
                       fontFamily: "serif",
                       fontWeight: "400"
                     }}
