@@ -40,7 +40,7 @@ const Planets = memo(({ skyData }) => {
     <div>
       <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
         <div>
-          <h2 className="card-title">Visible Planets</h2>
+          <h2 className="card-title">Planetary Telemetry</h2>
           <div className="planet-grid">
             {Object.entries(planets).map(([name, info]) => (
               <div key={name} className="planet-item glass-card">
