@@ -20,7 +20,7 @@
   --separator-glow: rgba(76, 57, 28, 0.1);
   --separator-glow2: rgba(8, 48, 44, 0.656);
   --separator-glow3: rgba(114, 93, 82, 0.541);
-  --logo-url: url('/SkyDashDay.PNG');
+  --logo-url: url('/skydashday.png');
 }
 
 [data-theme="night"] {
@@ -35,7 +35,7 @@
   --separator-glow: rgba(8, 169, 35, 0.819);
   --separator-glow2: rgba(136, 232, 150, 0.453);
   --separator-glow3: rgba(14, 100, 6, 0.675);
-  --logo-url: url('/SkyDash2.PNG');
+  --logo-url: url('/skydash2.png');
 }
 
 /* 3. Layout Structure */
