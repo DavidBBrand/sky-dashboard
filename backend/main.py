@@ -18,6 +18,7 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_origin_regex=r"https://sky-watch-.*\.vercel\.app", # Regex to allow any subdomain of sky-watch-*.vercel.app
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
