@@ -15,9 +15,10 @@ const RecenterMap = ({ lat, lon }) => {
 const WindMap = ({ lat, lon, theme }) => {
   const OPENWEATHER_API_KEY = import.meta.env.VITE_WIND_MAP_KEY;
   const isNight = theme === "night";
-  const baseTileUrl = isNight 
-    ? "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png" 
-    : "https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png";
+
+const baseTileUrl = isNight 
+  ? "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png" 
+  : "https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png";; 
 
   const cloudsUrl = `https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${OPENWEATHER_API_KEY}`;
 
@@ -38,9 +39,6 @@ const WindMap = ({ lat, lon, theme }) => {
         {/* Layer 2: The Clouds */}
         <TileLayer 
           url={cloudsUrl} 
-          opacity={isNight ? 0.5 : 0.7} 
-          zIndex={10}
-          className="clouds-layer"
         />
 
         <RecenterMap lat={lat} lon={lon} />
