@@ -11,6 +11,8 @@ import MapCard from "./MapCard.jsx";
 import ISSWatcher from "./ISSWatcher.jsx";
 import Starlink from "./Starlink.jsx";
 import Moon from "./Moon.jsx";
+import logoDay from './assets/skydashday.png';
+import logoNight from './assets/skydash2.png';
 
 function App() {
   const { location, updateLocation } = useLocation(); // Now this will work!
@@ -20,6 +22,8 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [issDistance, setIssDistance] = useState(null);
   const [locationDate, setLocationDate] = useState("");
+
+  const currentLogo = isNight ? logoNight : logoDay;
 
   const getLocalSolarTime = () => {
     if (!location) return "--:--";
@@ -118,12 +122,8 @@ function App() {
 
       <header className="header-section">
         <h1 className="main-title">SKY WATCH</h1>
-        <div
-          className="logo-container"
-          role="img"
-          aria-label="Sky Dashboard Logo"
-        />
 
+        <div className="logo-container" style={{ backgroundImage: `url(${currentLogo})` }}></div>
         <div className="search-wrapper">
           <LocationSearch onLocationChange={updateLocation} />
         </div>
