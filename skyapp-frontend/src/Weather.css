@@ -192,7 +192,7 @@
   border: .5px solid var(--te);
   position: relative;
   
-  /* THE SECRET SAUCE: Invert the colors of the map tiles */
+  /* Invert the colors of the map tiles */
   filter: invert(100%) hue-rotate(180deg) brightness(0.95) contrast(1.2);
   background: #000; 
 }
