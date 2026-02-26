@@ -180,15 +180,15 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px; /* Increased slightly for better visual breathing room */
+  gap: 16px; /* Increased slightly for better visual breathing room */
   margin: 15px;
   text-align: center;
   color: var(--text-sub);
-  letter-spacing: 1.5px; 
+
   text-transform: uppercase;
   font-size: 1rem;
   font-weight: 200; 
-  padding: 4px;
+  padding: 12px;
   margin-top: 20px;
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(10px) brightness(1.1);
