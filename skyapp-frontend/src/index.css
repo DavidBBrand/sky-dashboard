@@ -15,7 +15,7 @@
   --accent-color4: #154490c2;
   --star-opacity: 0; 
   --glass-blur: blur(4px);
-  --logo-url: url('/skydashday.png');
+
 }
 
 [data-theme='night'] {
@@ -33,7 +33,7 @@
   --accent-color3: #045834;
   --accent-color4: #6792d6d3;
   --star-opacity: 0.6;
-  --logo-url: url('/skydash2.png');
+
 }
 
 html {
