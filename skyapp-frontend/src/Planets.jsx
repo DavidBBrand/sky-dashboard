@@ -42,65 +42,69 @@ const Planets = memo(({ skyData }) => {
         <div>
           <h2 className="card-title">Planetary Telemetry</h2>
           <div className="planet-grid">
-            {Object.entries(planets).map(([name, info]) => (
-              <div key={name} className="planet-item">
-                <div style={{ fontSize: "2.4rem", marginBottom: "2px" }}>
-                  {planetIcons[name] || "✨"}
-                </div>
+            {Object.entries(planets).map(([name, info]) => {
+              // Logic declared here requires { } and 'return' below
+              const isBelowHorizon = parseFloat(info.altitude) < 0;
 
-                <div style={{ fontSize: "1rem", fontWeight: "400", color: "var(--text-main)" }}>
-                  <span
+              return (
+                <div key={name} className="planet-item">
+                  <div style={{ fontSize: "2.4rem", marginBottom: "2px" }}>
+                    {planetIcons[name] || "✨"}
+                  </div>
+
+                  <div style={{ fontSize: "1rem", fontWeight: "400", color: "var(--text-main)" }}>
+                    <span
+                      className="glow-sub2"
+                      style={{
+                        fontSize: "1.8rem",
+                        fontFamily: "serif",
+                        fontWeight: "400"
+                      }}
+                    >
+                      {getPlanetSymbol(name)}
+                    </span>
+                  </div>
+                  
+                  <div
                     className="glow-sub2"
                     style={{
-                      fontSize: "1.8rem",
-                      fontFamily: "serif",
-                      fontWeight: "400"
+                      fontSize: "1.4rem",
+                      fontWeight: "400",
+                      color: "var(--text-main)"
                     }}
                   >
-                    {getPlanetSymbol(name)}
+                    {name}
+                  </div>
+
+                  <span className={`status-tag ${info.is_visible ? "status-visible" : "status-set"}`}>
+                    {info.is_visible ? "Visible" : "Set"}
                   </span>
-                </div>
-                
-                <div
-                  className="glow-sub2"
-                  style={{
-                    fontSize: "1.4rem",
-                    fontWeight: "400",
-                    
-                    color: "var(--text-main)"
-                  }}
-                >
-                  {name}
-                </div>
 
-                <span className={`status-tag ${info.is_visible ? "status-visible" : "status-set"}`}>
-                  {info.is_visible ? "Visible" : "Set"}
-                </span>
-
-                <div 
-                  className="glow-sub2"
-                  style={{
-                    fontSize: "0.95rem", 
-                    color: "var(--text-sub)",
-                    marginTop: "8px",
-                    opacity: 0.8
-                  }}
-                >
-                  {getCompassDirection(info.azimuth)} at {info.azimuth}° Az
+                  <div 
+                    className="glow-sub2"
+                    style={{
+                      fontSize: "1rem",
+                      color: "var(--text-sub)",
+                      marginTop: "8px",
+                      opacity: 0.8
+                    }}
+                  >
+                    {getCompassDirection(info.azimuth)} at {info.azimuth}° Az
+                  </div>
+                  
+                  <div
+                    // className="glow-sub2"
+                    style={{
+                      fontSize: "1rem",
+                      color:  isBelowHorizon ? "#ff4d4d" :"var(--separator-glow2)",
+                      opacity: 0.8
+                    }}
+                  >
+                    {info.altitude}° Alt
+                  </div>
                 </div>
-                
-                <div
-                  className="glow-sub2"
-                  style={{
-                    fontSize: "0.95rem",
-                    color: "var(--text-sub)",
-                    opacity: 0.8
-                  }}
-                >
-                  {info.altitude}° Alt
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

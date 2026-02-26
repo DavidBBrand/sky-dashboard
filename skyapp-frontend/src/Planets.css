@@ -17,7 +17,7 @@
 
 /* Status Tags */
 .status-tag {
-    font-size: 0.65rem;
+    font-size: 1rem;
     font-weight: bold;
     padding: 2px 8px;
     border-radius: 4px;
@@ -36,9 +36,10 @@
 }
 
 .status-set { 
-    background: rgba(0, 0, 0, 0.1); 
+    background: rgba(255, 0, 0, 0.229); 
     color: var(--text-sub);
-    opacity: 0.5;
+    opacity: 0.88;
+    font-size: 1rem;
 }
 
 

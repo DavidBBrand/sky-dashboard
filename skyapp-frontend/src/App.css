@@ -18,7 +18,7 @@
   --text-sub: rgba(62, 51, 35, 0.7);
   --accent-color: #1460d3eb;
   --separator-glow: rgba(76, 57, 28, 0.1);
-  --separator-glow2: rgba(73, 108, 109, 0.364);
+  --separator-glow2: rgba(29, 82, 31, 0.571);
   --separator-glow3: rgba(151, 63, 15, 0.541);
 }
 
@@ -32,7 +32,7 @@
   --text-sub: rgba(255, 255, 255, 0.682);
   --accent-color: #1ca42e;
   --separator-glow: rgba(8, 169, 35, 0.819);
-  --separator-glow2: rgba(136, 232, 150, 0.453);
+  --separator-glow2: rgba(62, 222, 86, 0.835);
   --separator-glow3: rgba(14, 100, 6, 0.675);
 }
 
@@ -371,7 +371,7 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
 }
 
 .copyright {
-  font-size: 1.2em;
+  font-size: 1.2rem;
   opacity: 0.6;
   margin-top: 40px;
   color: var(--text-sub);
