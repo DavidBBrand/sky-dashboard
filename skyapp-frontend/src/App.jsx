@@ -11,8 +11,8 @@ import MapCard from "./MapCard.jsx";
 import ISSWatcher from "./ISSWatcher.jsx";
 import Starlink from "./Starlink.jsx";
 import Moon from "./Moon.jsx";
-import logoDay from './assets/skydashday.png';
-import logoNight from './assets/skydash2.png';
+import logoDay from './assets/skywatchday.png';
+import logoNight from './assets/skywatch.png';
 
 function App() {
   const { location, updateLocation } = useLocation(); // Now this will work!
