@@ -123,6 +123,10 @@ const LocationSearch = memo(({ onLocationChange }) => {
           onChange={(e) => setQuery(e.target.value)}
           className="search-input-field" 
           disabled={loading}
+          autoComplete="off"
+          spellCheck="false"
+          inputMode="search"
+          placeholder="Search location..."
           style={{
             cursor: loading ? "wait" : "text",
             opacity: loading ? 0.7 : 1
