@@ -118,10 +118,10 @@ const LocationSearch = memo(({ onLocationChange }) => {
       >
         <input
           type="text"
-          placeholder={loading ? "LOCATING..." : "SEARCH LOCATION..."}
+          placeholder={loading ? "LOCATING..." : "Search location..."}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="search-input-field" // Updated class
+          className="search-input-field" 
           disabled={loading}
           style={{
             cursor: loading ? "wait" : "text",
@@ -132,7 +132,7 @@ const LocationSearch = memo(({ onLocationChange }) => {
         <button
           type="button"
           onClick={useGPS}
-          className="gps-action-btn" // Updated class
+          className="gps-action-btn" 
           disabled={loading}
           title="Use My Location"
         >
