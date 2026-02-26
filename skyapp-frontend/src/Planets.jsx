@@ -44,7 +44,7 @@ const Planets = memo(({ skyData }) => {
           <div className="planet-grid">
             {Object.entries(planets).map(([name, info]) => (
               <div key={name} className="planet-item">
-                <div style={{ fontSize: "2rem", marginBottom: "5px" }}>
+                <div style={{ fontSize: "2.4rem", marginBottom: "2px" }}>
                   {planetIcons[name] || "✨"}
                 </div>
 
@@ -64,9 +64,9 @@ const Planets = memo(({ skyData }) => {
                 <div
                   className="glow-sub2"
                   style={{
-                    fontSize: "1.2rem",
+                    fontSize: "1.4rem",
                     fontWeight: "400",
-                    marginBottom: "2px",
+                    
                     color: "var(--text-main)"
                   }}
                 >
@@ -80,9 +80,9 @@ const Planets = memo(({ skyData }) => {
                 <div 
                   className="glow-sub2"
                   style={{
-                    fontSize: "0.85rem", 
+                    fontSize: "0.95rem", 
                     color: "var(--text-sub)",
-                    marginTop: "5px",
+                    marginTop: "8px",
                     opacity: 0.8
                   }}
                 >
@@ -92,7 +92,7 @@ const Planets = memo(({ skyData }) => {
                 <div
                   className="glow-sub2"
                   style={{
-                    fontSize: "0.85rem",
+                    fontSize: "0.95rem",
                     color: "var(--text-sub)",
                     opacity: 0.8
                   }}

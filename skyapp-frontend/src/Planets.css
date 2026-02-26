@@ -2,7 +2,7 @@
 .planet-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;  
+    gap: 8px;  
 }
 
 /* Individual Planet Boxes */
@@ -10,12 +10,9 @@
     background: rgba(0, 0, 0, 0.05); 
     border: 1px solid var(--card-border);
     border-radius: 12px;
-    padding: 1px;
     text-align: center;
     transition: background 0.3s ease;
     margin-bottom: 6px;
-    margin-left: 6px;
-    margin-right: 6px;
 }
 
 /* Status Tags */
@@ -30,7 +27,7 @@
 /* Keep the Green for visibility, but soften the background */
 .status-visible { 
     background: rgba(74, 222, 128, 0.2); 
-    color: #2da44e; /* Darker green for Day Mode readability */
+    color: #38ba5d; /* Darker green for Day Mode readability */
 }
 
 /* Night Mode Adjustment for Visibility Text */
