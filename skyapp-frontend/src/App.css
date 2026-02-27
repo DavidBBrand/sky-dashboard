@@ -71,6 +71,7 @@
   font-family: 'Share Tech Mono', sans-serif;
   font-size: 3.2rem; /* Slightly larger for the new name */
   letter-spacing: 1px;
+  margin:10px 0;
   text-transform: uppercase;
   /* 1. Dynamic Color */
   color: var(--text-main);
@@ -94,6 +95,7 @@
 .sub-title {
   font-family: 'Share Tech Mono', sans-serif;
   font-size: 1rem; /* Slightly larger for the new name */
+  margin: 10px 0;
   letter-spacing: 1px;
   text-transform: uppercase;
   /* 1. Dynamic Color */
