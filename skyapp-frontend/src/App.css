@@ -72,7 +72,6 @@
   font-size: 3.2rem; /* Slightly larger for the new name */
   letter-spacing: 1px;
   text-transform: uppercase;
-  margin: 10px 0;
   /* 1. Dynamic Color */
   color: var(--text-main);
   opacity: 0.85;
@@ -80,7 +79,6 @@
   text-shadow: 
     0 1px 1px rgba(255, 255, 255, 0.3), /* Top highlight */
     0 0 10px var(--separator-glow);      /* Theme-based glow */
-  
   /* semi-transparent 'cut-through' effect */
   background: linear-gradient(
     to bottom, 
@@ -89,7 +87,6 @@
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
   /* 4. Smooth theme transition */
   transition: all 0.5s ease-in-out;
 }
@@ -99,7 +96,6 @@
   font-size: 1rem; /* Slightly larger for the new name */
   letter-spacing: 1px;
   text-transform: uppercase;
-  margin: 10px 0;
   /* 1. Dynamic Color */
   color: var(--text-main);
   opacity: 0.85;
