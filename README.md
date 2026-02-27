@@ -1,4 +1,5 @@
-# 🌙 Sky Watch
+# 🌙 Sky Watch Telemetry Dashboard
+
 
 A high-precision, observatory-style dashboard featuring real-time astronomical tracking and local weather synchronization.
 
@@ -36,3 +37,4 @@ pip install -r requirements.txt
 ## Launch Uvicorn ASGI server
 
 uvicorn main:app --reload
+
