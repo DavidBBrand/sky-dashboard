@@ -126,7 +126,6 @@ const LocationSearch = memo(({ onLocationChange }) => {
           autoComplete="off"
           spellCheck="false"
           inputMode="search"
-          placeholder="Search location..."
           style={{
             cursor: loading ? "wait" : "text",
             opacity: loading ? 0.7 : 1
