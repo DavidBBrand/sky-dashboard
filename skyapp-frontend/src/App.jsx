@@ -11,8 +11,8 @@ import MapCard from "./MapCard.jsx";
 import ISSWatcher from "./ISSWatcher.jsx";
 import Starlink from "./Starlink.jsx";
 import Moon from "./Moon.jsx";
-import logoDay from './assets/skywatchday.png';
-import logoNight from './assets/skywatch.png';
+import logoDay from "./assets/skywatchday.png";
+import logoNight from "./assets/skywatch.png";
 
 function App() {
   const { location, updateLocation } = useLocation(); // Now this will work!
@@ -76,17 +76,14 @@ function App() {
 
   // Global Sky Data Fetch
   useEffect(() => {
-    // 1. Create the controller
+    // 1. ADD THIS GUARD: If we don't have coordinates, don't fetch anything!
+    if (location.lat === null) return;
+
     const controller = new AbortController();
-
-    // Replace the fetch block in your useEffect with this:
-
     const fetchSkyData = async () => {
       try {
-        // This line dynamically chooses the Render URL (prod) or localhost (dev)
         const API_BASE_URL =
           import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
-
         const response = await fetch(
           `${API_BASE_URL}/sky-summary?lat=${location.lat}&lon=${location.lon}`,
           { signal: controller.signal }
@@ -94,28 +91,31 @@ function App() {
         const data = await response.json();
         setSkyData(data);
       } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Fetch aborted: New request started");
-        } else {
-          console.error("FETCH ERROR:", err);
-        }
+        if (err.name !== "AbortError") console.error("FETCH ERROR:", err);
       }
     };
 
-    setSkyData(null);
     fetchSkyData();
-
-    const skyInterval = setInterval(fetchSkyData, 120000);
-
-    return () => {
-      // 4. Cancel the fetch if the component re-renders or unmounts
-      controller.abort();
-      clearInterval(skyInterval);
-    };
-  }, [location.lat, location.lon]);
-
+    return () => controller.abort();
+  }, [location.lat, location.lon]); // This only fires once lat changes from null
+  if (location.lat === null) {
+    return (
+      <div className="loading-screen card-title">
+        <div className="scanner"></div>
+        <h1>SKY WATCH SYSTEM INITIALIZING...</h1>
+        <p>WAITING FOR SATELLITE FIX (GPS)...</p>
+      </div>
+    );
+  }
   return (
     <div className="app-container">
+      {/* SYSTEM STATUS OVERLAY */}
+      {location.isInitial && (
+        <div className="system-status-bar">
+          <span className="blink">●</span> INITIALIZING GLOBAL POSITIONING
+          SYSTEM...
+        </div>
+      )}
       <button onClick={() => setIsNight(!isNight)} className="theme-toggle-btn">
         {isNight ? "🌙 Night Mode" : "☀️ Day Mode"}
       </button>
@@ -124,7 +124,10 @@ function App() {
         <h1 className="main-title">SKY WATCH</h1>
         <h2 className="sub-title">Telemetry Dashboard</h2>
 
-        <div className="logo-container" style={{ backgroundImage: `url(${currentLogo})` }}></div>
+        <div
+          className="logo-container"
+          style={{ backgroundImage: `url(${currentLogo})` }}
+        ></div>
         <div className="search-wrapper">
           <LocationSearch onLocationChange={updateLocation} />
         </div>

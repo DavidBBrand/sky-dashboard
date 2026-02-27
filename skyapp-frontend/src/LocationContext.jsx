@@ -1,15 +1,22 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 const LocationContext = createContext();
 
 export const LocationProvider = ({ children }) => {
+  // const [location, setLocation] = useState({
+  //   lat: 35.9251,
+  //   lon: -86.8689,
+  //   name: "Franklin, TN",
+  //   timezone: "America/Chicago",
+  //   isInitial: true // Flag for the "Acquiring GPS" message
+  // });
   const [location, setLocation] = useState({
-    lat: 35.9251,
-    lon: -86.8689,
-    name: "Franklin, TN",
-    timezone: "America/Chicago" 
+    lat: null,
+    lon: null,
+    name: "Locating...",
+    timezone: null,
+    isInitial: true
   });
-
   // Helper to fetch timezone from coordinates
   const fetchTimezone = async (lat, lon) => {
     try {
@@ -17,16 +24,22 @@ export const LocationProvider = ({ children }) => {
         `https://timeapi.io/api/Timezone/coordinate?latitude=${lat}&longitude=${lon}`
       );
       const data = await response.json();
-      return data.timeZone; 
+      return data.timeZone || "UTC";
     } catch (error) {
       console.error("Timezone fetch failed:", error);
-      return Intl.DateTimeFormat().resolvedOptions().timeZone; 
+      return Intl.DateTimeFormat().resolvedOptions().timeZone;
     }
   };
 
+  // Restored the missing updateLocation function
   const updateLocation = async (newLoc) => {
+    // If the new location doesn't have a timezone, fetch it
     const tz = await fetchTimezone(newLoc.lat, newLoc.lon);
-    setLocation({ ...newLoc, timezone: tz });
+    setLocation({
+      ...newLoc,
+      timezone: tz,
+      isInitial: false // User manually searched, so we aren't "initial" anymore
+    });
   };
 
   useEffect(() => {
@@ -34,39 +47,57 @@ export const LocationProvider = ({ children }) => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          
-          try {
-            const geoRes = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-            );
-            const geoData = await geoRes.json();
-            
-            const tz = await fetchTimezone(latitude, longitude);
 
-            const cityName = geoData.address.city || geoData.address.town || geoData.address.village || "Unknown Location";
-            const stateName = geoData.address.state || geoData.address.country || "";
+          try {
+            // Fetch both Name and Timezone in parallel for speed
+            const [geoRes, tz] = await Promise.all([
+              fetch(
+                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+              ),
+              fetchTimezone(latitude, longitude)
+            ]);
+
+            const geoData = await geoRes.json();
+            const cityName =
+              geoData.address.city ||
+              geoData.address.town ||
+              geoData.address.village ||
+              "Current Location";
+            const stateName =
+              geoData.address.state || geoData.address.country || "";
 
             setLocation({
               lat: latitude,
               lon: longitude,
-              name: `${cityName}${stateName ? ', ' + stateName : ''}`,
-              timezone: tz
+              name: `${cityName}${stateName ? ", " + stateName : ""}`,
+              timezone: tz,
+              isInitial: false // Acquisition complete
             });
           } catch (error) {
             console.error("Location initialization failed:", error);
+            setLocation((prev) => ({ ...prev, isInitial: false }));
           }
         },
-        // --- FIX: Added the mandatory error callback function here ---
         (error) => {
-          console.warn("Geolocation access denied or failed:", error.message);
+          console.warn("Geolocation denied. Reverting to Default Telemetry.");
+          setLocation({
+            lat: 35.9251,
+            lon: -86.8689,
+            name: "Franklin, TN", // Or call it "Base Station"
+            timezone: "America/Chicago",
+            isInitial: false // This tells the UI to stop showing the "Locating..." message
+          });
         },
-        // --- The options object is now correctly the 3rd parameter ---
         { enableHighAccuracy: true, timeout: 10000 }
       );
+    } else {
+      // Geolocation not supported by browser
+      setLocation((prev) => ({ ...prev, isInitial: false }));
     }
   }, []);
 
   return (
+    // This value object MUST contain the functions defined above
     <LocationContext.Provider value={{ location, updateLocation }}>
       {children}
     </LocationContext.Provider>
