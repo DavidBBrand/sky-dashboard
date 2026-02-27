@@ -29,7 +29,7 @@ const MapCard = memo(({ theme, skyData, date }) => {
         }}
       >
         {skyData?.sun ? (
-          <SolarCycle sun={skyData.sun} date={date} />
+          <SolarCycle sun={skyData.sun} date={date} timezone={location.timezone} />
         ) : (
           <div className="solar-loader">
             <div className="scanning-line"></div>

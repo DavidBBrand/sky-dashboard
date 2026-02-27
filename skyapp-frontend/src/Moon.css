@@ -149,9 +149,9 @@
 .alt-below { color: var(--accent-color2); }
 
 .azimuth-unit {
-  color: var(--accent-color);
   margin-left: 5px;
   font-size: 1.2rem;
+  font-weight: normal;
 }
 
 /* Loading States */

@@ -102,7 +102,7 @@ const Moon = memo(({ date }) => {
   return (
     <div className="moon-container">
       <h2 className="card-title">
-        The Moon from <p className="glow-sub2">{location.name}</p>
+        The Moon from <p>{location.name}</p>
         <p className="date-display">{date}</p>
       </h2>
 
@@ -129,8 +129,7 @@ const Moon = memo(({ date }) => {
             <div className="text-right">
               <p className="stat-label">Azimuth</p>
               <p
-                className="stat-value glow-sub2"
-                style={{ color: "var(--text-main)" }}
+                className="stat-value card-title"
               >
                 {moonData.azimuth?.toFixed(1)}°
                 <span className="azimuth-unit">
