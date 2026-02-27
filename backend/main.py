@@ -12,13 +12,15 @@ app = FastAPI()
 
 origins = [
     "http://localhost:5173",
-    "https://sky-watch-chi.vercel.app", # Add your actual Vercel URL here
+    "https://sky-watch-chi.vercel.app",
+    "https://skywatchdash.com",    
+    "https://www.skywatchdash.com",
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_origin_regex=r"https://sky-watch-.*\.vercel\.app", # Regex to allow any subdomain of sky-watch-*.vercel.app
+    allow_origin_regex=r"https://sky-watch-.*\.vercel\.app",# Regex to allow any subdomain of sky-watch-*.vercel.app
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
