@@ -1,0 +1,9 @@
+/* TEAM */
+    Developer: David Brand
+    Site: skywatchdash.com
+    GitHub: https://github.com/DavidBBrand
+
+/* SITE */
+    Last update: 2026/02/26
+    Standards: HTML5, CSS3, React, FastAPI
+    Components: satellite-js, Lucide Icons
