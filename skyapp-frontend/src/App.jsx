@@ -122,6 +122,7 @@ function App() {
 
       <header className="header-section">
         <h1 className="main-title">SKY WATCH</h1>
+        <h2 className="sub-title">Telemetry Dashboard</h2>
 
         <div className="logo-container" style={{ backgroundImage: `url(${currentLogo})` }}></div>
         <div className="search-wrapper">
