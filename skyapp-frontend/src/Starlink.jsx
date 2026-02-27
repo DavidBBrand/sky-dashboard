@@ -18,7 +18,6 @@ const Starlink = memo(() => {
     const API_BASE_URL =
       import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
-
     fetch(`${API_BASE_URL}/starlink-live?lat=${lat}&lon=${lon}`)
       .then((res) => res.json())
       .then((data) => {
@@ -54,26 +53,28 @@ const Starlink = memo(() => {
           if (pv && pv.position) {
             const satEcf = satellite.eciToEcf(pv.position, gmst);
             const lookAngles = satellite.ecfToLookAngles(observerGd, satEcf);
-
             if (lookAngles.elevation > 0) {
-              const satAltitude = 550;
-              const groundDistKm =
-                (Math.PI / 2 - lookAngles.elevation) * (satAltitude / 2);
-              const groundDistMiles = Math.round(groundDistKm * 0.621371);
+              // FIX: Use .rangeSat instead of .range
+              const slantRangeKm = lookAngles.rangeSat;
 
-              // Proximity Alert logic
-              if (groundDistMiles < 200) closeContact = true;
+              if (slantRangeKm) {
+                const slantRangeMiles = Math.round(slantRangeKm * 0.621371);
 
-              const r = (1 - lookAngles.elevation / (Math.PI / 2)) * 42;
-              const theta = lookAngles.azimuth - Math.PI / 2;
+                // Proximity Alert logic
+                if (slantRangeMiles < 400) closeContact = true;
 
-              visiblePoints.push({
-                x: 50 + r * Math.cos(theta),
-                y: 50 + r * Math.sin(theta),
-                id: sat.OBJECT_ID || sat.NORAD_CAT_ID,
-                name: sat.OBJECT_NAME || "STARLINK",
-                distance: groundDistMiles
-              });
+                // Your existing radial positioning
+                const r = (1 - lookAngles.elevation / (Math.PI / 2)) * 42;
+                const theta = lookAngles.azimuth - Math.PI / 2;
+
+                visiblePoints.push({
+                  x: 50 + r * Math.cos(theta),
+                  y: 50 + r * Math.sin(theta),
+                  id: sat.OBJECT_ID || sat.NORAD_CAT_ID,
+                  name: sat.OBJECT_NAME || "STARLINK",
+                  distance: slantRangeMiles
+                });
+              }
             }
           }
         }
