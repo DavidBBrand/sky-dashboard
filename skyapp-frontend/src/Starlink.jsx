@@ -110,8 +110,8 @@ const Starlink = memo(() => {
         <span className="radar-direction dir-w">W</span>
 
         <span className="radar-label label-center">{location.name}</span>
-        <span className="radar-label label-r1">200mi</span>
-        <span className="radar-label label-r2">500mi</span>
+        <span className="radar-label label-r1">350mi</span>
+        <span className="radar-label label-r2">700mi</span>
         <span className="radar-label label-r3">1600mi</span>
 
         {nodes.map((n) => (
