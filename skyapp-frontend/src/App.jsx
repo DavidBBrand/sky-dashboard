@@ -15,7 +15,7 @@ import logoDay from "./assets/skywatchday.png";
 import logoNight from "./assets/skywatch.png";
 
 function App() {
-  const { location, updateLocation } = useLocation(); // Now this will work!
+  const { location, updateLocation } = useLocation(); 
 
   const [isNight, setIsNight] = useState(true);
   const [skyData, setSkyData] = useState(null);
@@ -76,7 +76,7 @@ function App() {
 
   // Global Sky Data Fetch
   useEffect(() => {
-    // 1. ADD THIS GUARD: If we don't have coordinates, don't fetch anything!
+    // 1. ADD THIS GUARD: If we don't have coordinates, don't fetch anything
     if (location.lat === null) return;
 
     const controller = new AbortController();
@@ -103,7 +103,7 @@ function App() {
       <div className="loading-screen card-title">
         <div className="scanner"></div>
         <h1>SKY WATCH SYSTEM INITIALIZING...</h1>
-        <p>WAITING FOR SATELLITE FIX (GPS)...</p>
+        <p>WAITING FOR LOCATION FIX (GPS)...</p>
       </div>
     );
   }
