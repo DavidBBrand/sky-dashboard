@@ -14,11 +14,11 @@
   /* The Glow Effect */
   border: .5px solid var(--separator-glow);
   box-shadow: 
-    0 0 15px rgba(0, 255, 42, 0.2),      /* Soft outer spread */
+    0 0 8px rgba(0, 255, 42, 0.2),      /* Soft outer spread */
     inset 0 0 12px rgba(0, 255, 42, 0.1); /* Soft inner glow */
     
   /* This creates the "Neon Tube" look */
-  filter: drop-shadow(0 0 4px var(--accent-color));
+  filter: drop-shadow(0 0 2px var(--accent-color));
   animation: border-pulse 6s ease-in-out infinite; 
 }
 
@@ -57,7 +57,7 @@
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 85%);
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 55%);
   border-radius: 50%;
   z-index: 1;
 }
@@ -72,7 +72,7 @@
   position: absolute;
   color: var(--accent-color);
   font-family: 'Share Tech Mono';
-  text-shadow: .5px .5px 1px #000;
+  text-shadow: .25px .25px .5px #000;
   z-index: 10;
   pointer-events: none;
   opacity: 0.7;
@@ -94,17 +94,17 @@
 /* 5. Nodes & Tooltips */
 .radar-node {
   position: absolute;
-  width: 6px; height: 6px;
+  width: 8px; height: 8px;
   background: var(--accent-color);
   border-radius: 50%;
-  box-shadow: 0 0 5px var(--accent-color);
+  box-shadow: 0 0 2px var(--accent-color);
   transform: translate(-50%, -50%);
   z-index: 20;
   animation: node-pulse 4s infinite ease-in-out;
 }
 @keyframes node-pulse {
   0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.7; box-shadow: 0 0 12px var(--accent-color); }
+  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.5; box-shadow: 0 0 16px var(--accent-color); }
   100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
 .node-tooltip {
@@ -113,10 +113,10 @@
   bottom: 150%; left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.95);
-  color: var(--accent-color);
+  color: var(--accent-color2);
   padding: 4px 8px;
   border-radius: 4px;
-  font-size: 0.65rem;
+  font-size: 0.85rem;
   border: 1px solid var(--accent-color);
   white-space: nowrap;
   text-align: center;

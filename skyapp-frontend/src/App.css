@@ -16,7 +16,7 @@
   --card-border: rgba(62, 51, 35, 0.2); 
   --text-main: #3e3323;
   --text-sub: rgba(62, 51, 35, 0.7);
-  --accent-color: #1460d3eb;
+  --accent-color: #33281eeb;
   --separator-glow: rgba(76, 57, 28, 0.1);
   --separator-glow2: rgba(14, 98, 17, 0.698);
   --separator-glow3: rgba(151, 63, 15, 0.541);
@@ -164,7 +164,6 @@
 .glow-sub {
     font-size: 1rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
     font-weight: 400;
     font-family: 'Share Tech Mono', monospace;
     margin: 10px 0 10px;
