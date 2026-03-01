@@ -56,8 +56,8 @@ const MapCard = memo(({ theme, skyData, date }) => {
           borderRadius: "12px",
           display: "block",
           transition: "opacity 0.5s ease",
-          marginTop: "20px"
-        }}
+          marginTop: "20px",}}
+        // loading="eager"
       />
     </div>
   );

@@ -1,7 +1,7 @@
 import "./Weather.css";
 import React, { useState, useEffect, useRef, memo } from "react"; 
 import { useLocation } from "./LocationContext.jsx"; 
-import WindMap from "./WindMap";
+import WeatherMap from "./WeatherMap.jsx";
 
 const Weather = memo(({ sun, onDataReceived, theme }) => {
   // 1. Grab location from Context
@@ -128,8 +128,8 @@ const Weather = memo(({ sun, onDataReceived, theme }) => {
           </div>
 
           <div className="separator-line" />
-          {/* Note: WindMap still needs coords and theme to redraw properly */}
-          <WindMap lat={lat} lon={lon} theme={theme} />
+          {/* Note: WeatherMap still needs coords and theme to redraw properly */}
+          <WeatherMap lat={lat} lon={lon} theme={theme} />
         </>
       )}
     </div>

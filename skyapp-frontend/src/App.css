@@ -75,7 +75,7 @@
   text-transform: uppercase;
   /* 1. Dynamic Color */
   color: var(--text-main);
-  opacity: 0.85;
+  opacity: 0.89;
   /* 2. Glass  Effect */
   text-shadow: 
     0 1px 1px rgba(255, 255, 255, 0.3), /* Top highlight */
@@ -95,13 +95,13 @@
 
 .sub-title {
   font-family: 'Share Tech Mono', sans-serif;
-  font-size: 1rem; /* Slightly larger for the new name */
-  margin: 10px 0;
+  font-size: 1.4rem; /* Slightly larger for the new name */
+  margin: 2px 0;
   letter-spacing: 1px;
   text-transform: uppercase;
   /* 1. Dynamic Color */
   color: var(--text-main);
-  opacity: 0.85;
+  opacity: 0.89;
   /* 2. Glass  Effect */
   text-shadow: 
     0 1px 1px rgba(255, 255, 255, 0.3), /* Top highlight */

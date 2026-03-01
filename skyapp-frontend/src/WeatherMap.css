@@ -1,12 +1,33 @@
-.wind-map-wrapper {
+
+.weather-map-wrapper {
   height: 300px;
   width: 100%;
   border-radius: 12px;
   overflow: hidden;
   position: relative;
-  background: #111;
+  
+  /* 1. Dark background for Night Mode */
+  background-color: #0a0a0b;
+
+  /* 2. CSS Grid Pattern (No Image File Needed) */
+  background-image: 
+    linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: center;
+
+  /* 3. Force the LCP paint */
+  content-visibility: auto;
+  contain-intrinsic-size: 300px;
 }
 
+/* 4. Match the Day Mode colors */
+.mode-day .weather-map-wrapper {
+  background-color: #f0f2f5;
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+}
 /* Base Map Layer (The Land) */
 .mode-night .leaflet-tile-pane .leaflet-layer:nth-child(1) {
   /*  turns a bright map into a deep navy/charcoal 'Night' map */
