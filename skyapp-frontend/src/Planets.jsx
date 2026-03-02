@@ -86,7 +86,6 @@ const Planets = memo(({ skyData }) => {
                       fontSize: "1rem",
                       color: "var(--text-sub)",
                       marginTop: "8px",
-                      opacity: 0.8
                     }}
                   >
                     {getCompassDirection(info.azimuth)} at {info.azimuth}° Az
@@ -101,6 +100,11 @@ const Planets = memo(({ skyData }) => {
                     }}
                   >
                     {info.altitude}° Alt
+                  </div>
+                  <div>
+                  <span className="glow-sub2">
+                   Distance: {info.distance_au} AU
+                  </span>
                   </div>
                 </div>
               );

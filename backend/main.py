@@ -125,7 +125,8 @@ def get_sky_summary(lat: float = Query(35.92), lon: float = Query(-86.86)):
         planet_data[name] = {
             "altitude": round(float(alt.degrees), 1),
             "azimuth": round(float(az.degrees), 1),
-            "is_visible": bool(alt.degrees > 0)
+            "is_visible": bool(alt.degrees > 0),
+            "distance_au": round(float(distance.au), 3)
         }
 
     return {
