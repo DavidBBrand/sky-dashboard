@@ -42,4 +42,8 @@
     font-size: 1rem;
 }
 
+.distance {
+    color: var(--accent-color2);
+    font-size: .8rem;
+}
 

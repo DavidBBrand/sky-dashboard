@@ -102,8 +102,9 @@ const Planets = memo(({ skyData }) => {
                     {info.altitude}° Alt
                   </div>
                   <div>
+                  <span className="distance">Distance: </span>
                   <span className="glow-sub2">
-                   Distance: {info.distance_au} AU
+                    {info.distance_au} AU
                   </span>
                   </div>
                 </div>
