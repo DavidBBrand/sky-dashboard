@@ -1,0 +1,26 @@
+{
+  "short_name": "Sky Watch",
+  "name": "Sky Watch Dashboard | Orbital Telemetry",
+  "icons": [
+    {
+      "src": "CrescentMoon.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "CrescentMoon.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "CrescentMoon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0a0a0a",
+  "background_color": "#0a0a0a"
+}
