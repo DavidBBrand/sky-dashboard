@@ -142,12 +142,13 @@
   margin: 0;
   font-size: 1.2rem;
   font-weight: bold;
+
   
 }
 
 /* Dynamic Altitude Coloring */
-.alt-above { color: #17ae4e; }
-.alt-below { color: var(--accent-color2); }
+.alt-above { color: var(--separator-glow2); }
+.alt-below { color: var(--accent-color4); }
 
 .azimuth-unit {
   margin-left: 5px;

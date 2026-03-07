@@ -121,7 +121,7 @@ const Moon = memo(({ date }) => {
                 {trend === "rising" ? "↑" : trend === "setting" ? "↓" : ""}
               </p>
               <p
-                className={`stat-value glow-sub2 ${moonData.altitude > 0 ? "alt-above" : "alt-below"}`}
+                className={`stat-value glow-sub  ${moonData.altitude > 0 ? "alt-above" : "alt-below"}`}
               >
                 {moonData.altitude?.toFixed(1)}°
               </p>
@@ -129,7 +129,7 @@ const Moon = memo(({ date }) => {
             <div className="text-right">
               <p className="stat-label">Azimuth</p>
               <p
-                className="stat-value glow-sub2"
+                className="stat-value glow-sub"
               >
                 {moonData.azimuth?.toFixed(1)}°
                 <span className="azimuth-unit">
