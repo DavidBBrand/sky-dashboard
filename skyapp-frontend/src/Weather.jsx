@@ -96,7 +96,7 @@ const Weather = memo(({ sun, onDataReceived, theme }) => {
         {weather ? getWeatherIcon(weather.description) : "☀️"}
       </div>
 
-      <h4 className="weather-temp glow-sub2">
+      <h4 className="weather-temp glow-sub">
         {weather ? `${Math.round(weather.temp)}°F` : "--°F"}
       </h4>
 
