@@ -96,7 +96,7 @@ const Planets = memo(({ skyData }) => {
                     style={{
                       fontSize: "1rem",
                       color:  isBelowHorizon ? "#ff4d4d" :"var(--separator-glow2)",
-                      opacity: 0.8
+                      fontWeight: "800",
                     }}
                   >
                     {info.altitude}° Alt
