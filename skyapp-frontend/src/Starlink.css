@@ -6,27 +6,29 @@
 .radar-container {
   position: relative;
   width: 90%;
-  aspect-ratio: 1 / 1; 
+  aspect-ratio: 1 / 1;
   margin: 45px auto;
   background: rgba(0, 255, 42, 0.03); /* Slightly transparency tweak */
   border-radius: 50%;
-  
+
   /* The Glow Effect */
-  border: .5px solid var(--separator-glow);
-  box-shadow: 
-    0 0 8px rgba(0, 255, 42, 0.2),      /* Soft outer spread */
-    inset 0 0 12px rgba(0, 255, 42, 0.1); /* Soft inner glow */
-    
+  border: 0.5px solid var(--separator-glow);
+  box-shadow:
+    0 0 8px rgba(0, 255, 42, 0.2),
+    /* Soft outer spread */ inset 0 0 12px rgba(0, 255, 42, 0.1); /* Soft inner glow */
+
   /* This creates the "Neon Tube" look */
   filter: drop-shadow(0 0 2px var(--accent-color));
-  animation: border-pulse 6s ease-in-out infinite; 
+  animation: border-pulse 6s ease-in-out infinite;
 }
 
 .radar-scanner {
   position: absolute;
-  width: 50%; height: 50%;
-  top: 0; left: 0;
-  
+  width: 50%;
+  height: 50%;
+  top: 0;
+  left: 0;
+
   /* UPDATED: Conic gradient for a radar scanner trail */
   /* solid color at 90deg (the leading edge) and fade back to 0deg */
   background: conic-gradient(
@@ -35,7 +37,7 @@
     color-mix(in srgb, var(--accent-color), transparent 70%) 90%,
     var(--accent-color) 100%
   );
-  
+
   transform-origin: bottom right;
   animation: radar-spin 4.7s linear infinite;
   z-index: 1;
@@ -43,58 +45,120 @@
   clip-path: circle(100% at bottom right);
 }
 @keyframes radar-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 @keyframes border-pulse {
-  0% { box-shadow: 0 0 12px rgba(0, 255, 42, 0.2); }
-  50% { box-shadow: 0 0 20px rgba(0, 255, 42, 0.4); }
-  100% { box-shadow: 0 0 12px rgba(0, 255, 42, 0.2); }
+  0% {
+    box-shadow: 0 0 12px rgba(0, 255, 42, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 255, 42, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 12px rgba(0, 255, 42, 0.2);
+  }
 }
 
 /* 3. Geometry (Rings & Axes) */
-.radar-ring, .radar-axis-h, .radar-axis-v {
+.radar-ring,
+.radar-axis-h,
+.radar-axis-v {
   position: absolute;
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   border: 1px solid color-mix(in srgb, var(--accent-color), transparent 55%);
   border-radius: 50%;
   z-index: 1;
 }
-.radar-ring.r1 { width: 33%; height: 33%; }
-.radar-ring.r2 { width: 66%; height: 66%; }
-.radar-ring.r3 { width: 100%; height: 100%; }
-.radar-axis-h { width: 100%; height: 1px; background: rgba(0, 255, 0, 0.1); }
-.radar-axis-v { width: 1px; height: 100%; background: rgba(0, 255, 0, 0.1); }
+.radar-ring.r1 {
+  width: 33%;
+  height: 33%;
+}
+.radar-ring.r2 {
+  width: 66%;
+  height: 66%;
+}
+.radar-ring.r3 {
+  width: 100%;
+  height: 100%;
+}
+.radar-axis-h {
+  width: 100%;
+  height: 1px;
+  background: rgba(0, 255, 0, 0.1);
+}
+.radar-axis-v {
+  width: 1px;
+  height: 100%;
+  background: rgba(0, 255, 0, 0.1);
+}
 
 /* 4. Labels & Directions */
-.radar-label, .radar-direction {
+.radar-label,
+.radar-direction {
   position: absolute;
   color: var(--accent-color);
-  font-family: 'Share Tech Mono';
-  text-shadow: .25px .25px .5px #000;
+  font-family: "Share Tech Mono";
+  text-shadow: 0.25px 0.25px 0.5px #000;
   z-index: 10;
   pointer-events: none;
   opacity: 0.7;
-
 }
 
-.radar-label { font-size: 0.8rem; left: 52%; font-weight: bold; }
-.label-center { top: 48%; }
-.label-r1     { top: 34%; }
-.label-r2     { top: 18%; }
-.label-r3     { top: 2%; }
+.radar-label {
+  font-size: 0.8rem;
+  left: 52%;
+  font-weight: bold;
+}
+.label-center {
+  top: 48%;
+}
+.label-r1 {
+  top: 34%;
+}
+.label-r2 {
+  top: 18%;
+}
+.label-r3 {
+  top: 2%;
+}
 
-.radar-direction { font-size: 0.9rem; font-weight: 800; }
-.dir-n { top: -35px; left: 50%; transform: translateX(-50%); }
-.dir-s { bottom: -35px; left: 50%; transform: translateX(-50%); }
-.dir-e { right: -35px; top: 50%; transform: translateY(-50%); }
-.dir-w { left: -35px; top: 50%; transform: translateY(-50%); }
+.radar-direction {
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+.dir-n {
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.dir-s {
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.dir-e {
+  right: -35px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.dir-w {
+  left: -35px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 /* 5. Nodes & Tooltips */
 .radar-node {
   position: absolute;
-  width: 8px; height: 8px;
+  width: 8px;
+  height: 8px;
   background: var(--accent-color);
   border-radius: 50%;
   box-shadow: 0 0 2px var(--accent-color);
@@ -103,14 +167,25 @@
   animation: node-pulse 6s infinite ease-in-out;
 }
 @keyframes node-pulse {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.8; box-shadow: 0 0 16px var(--accent-color); }
-  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.8;
+    box-shadow: 0 0 16px var(--accent-color);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
 }
 .node-tooltip {
   visibility: hidden;
   position: absolute;
-  bottom: 150%; left: 50%;
+  bottom: 150%;
+  left: 50%;
   transform: translateX(-50%);
   background: rgba(31, 21, 73, 0.95);
   color: var(--separator-glow2);
@@ -124,10 +199,16 @@
   z-index: 100;
 }
 .tooltip-name {
-  color: var(--accent-color2)
+  color: var(--accent-color2);
 }
-.node-tooltip strong { display: block; color: #fff; margin-bottom: 2px; }
-.radar-node:hover .node-tooltip { visibility: visible; }
+.node-tooltip strong {
+  display: block;
+  color: #fff;
+  margin-bottom: 2px;
+}
+.radar-node:hover .node-tooltip {
+  visibility: visible;
+}
 
 /* 6. Stats Bottom Row */
 .stats-row {
@@ -137,10 +218,22 @@
   border-top: 1px solid rgba(0, 255, 0, 0.1);
   padding-top: 10px;
 }
-.stat-caption { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; margin: 0; }
-.stat-value { color: var(--accent-color); font-size: 1.1rem; font-weight: bold; margin: 0; }
+.stat-caption {
+  font-size: 1.2rem;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  margin: 0;
+}
+.stat-value {
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}
 
 .radar-container.proximity-alert {
-  border-color:var(--text-sub) !important;
-  box-shadow: 0 0 20px rgba(172, 14, 3, 0.4), inset 0 0 15px rgba(255, 152, 0, 0.1) !important;
+  border-color: var(--text-sub) !important;
+  box-shadow:
+    0 0 20px rgba(172, 14, 3, 0.4),
+    inset 0 0 15px rgba(255, 152, 0, 0.1) !important;
 }
