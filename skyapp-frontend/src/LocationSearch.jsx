@@ -132,7 +132,7 @@ const LocationSearch = memo(({ onLocationChange }) => {
           }}
         />
 
-        <button
+        {/* <button
           type="button"
           onClick={useGPS}
           className="gps-action-btn" 
@@ -140,7 +140,7 @@ const LocationSearch = memo(({ onLocationChange }) => {
           title="Use My Location"
         >
           <span style={{ fontSize: "1.1rem" }}>📍</span>
-        </button>
+        </button> */}
       </form>
     </div>
   );
