@@ -42,24 +42,7 @@
 
 .weather-desc {
     font-size: 1.4rem;
-    color: var(--text-sub);
-    margin: px 0;
-    font-family: "Share Tech Mono", monospace;
-    color: var(--text-main);
-    opacity: 0.89;
-    /* 2. Glass  Effect */
-    text-shadow: 
-      0 1px 1px rgba(255, 255, 255, 0.3), /* Top highlight */
-      0 0 15px var(--separator-glow);      /* Theme-based glow */
-    background: linear-gradient(
-      to bottom, 
-      var(--text-main) 0%, 
-      var(--text-sub) 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  /* 4. Smooth theme transition */
-  transition: all 0.5s ease-in-out;
+
 }
 
 .weather-details-grid {

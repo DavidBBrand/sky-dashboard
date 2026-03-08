@@ -18,7 +18,7 @@
   --text-sub: rgba(62, 51, 35, 0.7);
   --accent-color: #563c27eb;
   --accent-color2: rgb(106, 42, 18);
-  --separator-glow: rgba(115, 82, 32, 0.337);
+  --separator-glow: rgba(73, 51, 18, 0.097);
   --separator-glow2: rgba(14, 98, 17, 0.698);
   --separator-glow3: rgba(151, 63, 15, 0.541);
 }
@@ -181,7 +181,7 @@
     /*  Glass  Effect */
     text-shadow: 
       0 1px 1px rgba(255, 255, 255, 0.3), /* Top highlight */
-      0 0 5px var(--separator-glow);      /* Theme-based glow */
+      0 0 4px var(--separator-glow);      /* Theme-based glow */
     /*  Glass Depth */
     background: linear-gradient(
       to bottom, 
@@ -203,7 +203,7 @@
     opacity: 0.88;
     text-shadow: 
       0 1px 1px rgba(255, 255, 255, 0.3), 
-      1px 1px 4px var(--separator-glow);      
+      0px 0px 2px var(--separator-glow);      
     background: linear-gradient(
       to bottom, 
       var(--text-main) 0%, 
@@ -214,6 +214,9 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     transition: all 0.5s ease-in-out;
+    transform: translateZ(0); 
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 .telemetry-info {
   display: flex;

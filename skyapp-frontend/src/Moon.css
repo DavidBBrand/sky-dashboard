@@ -3,11 +3,10 @@
     font-size: 3rem;
     font-weight: 200;
     margin: 10px 0;
-    /* Text shadow that adapts slightly */
     text-shadow: 0 0 6px var(--card-border);
 }
 
-   /* Container for the milestones */
+
 .moon-details {
   margin-top: 15px;
   padding: 12px;
@@ -15,30 +14,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  
-  /* The Glass Effect */
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(10px) brightness(1.1);
-  -webkit-backdrop-filter: blur(10px) brightness(1.1); 
-  gap: 24px;
- 
+  background: rgba(255, 255, 255, 0.02); 
   border: .8px solid var(--card-border);
-  box-shadow: 
-    0 1px 3px rgba(0, 0, 0, 0.1),          
-    0 0 10px rgba(255, 255, 255, 0.05),      
-    inset 0 0 15px rgba(255, 255, 255, 0.03); 
-    
-  transition: all 0.3s ease-in-out;
-}
-
-/* Hover effect to make it feel interactive */
-.moon-details:hover {
-  background: rgba(165, 147, 9, 0.066);
-  border: .8px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 
-    0 6px 20px rgba(0, 0, 0, 0.4),
-    0 0 15px rgba(255, 255, 255, 0.1);
-  transform: translateY(-1px);
 }
 
 .milestone-item {
@@ -132,31 +109,30 @@
 
 .stat-label {
   color: var(--accent-color2);
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin: 0;
   text-transform: uppercase;
 }
 
 /* Moon.css */
 .stat-value {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
 
 }
-
 .milestone-date {
     font-family: 'Archivo Narrow', sans-serif;
     font-size: 1.2rem;
   
 }
-
-
+.milestone-phase {
+  font-size: 1rem;
+}
 .azimuth-unit {
   margin-left: 5px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: normal;
 }
 
-/* Loading States */
 .moon-loading-box {
   height: 400px;
   display: flex;
