@@ -224,7 +224,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 16px; /* Increased slightly for better visual breathing room */
-  margin: 15px;
+  margin: 10px;
   text-align: center;
   color: var(--text-sub);
 
@@ -272,7 +272,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px auto; 
+  margin: 6px auto; 
   box-sizing: border-box;
   text-align: center;
   padding-left: 0;
