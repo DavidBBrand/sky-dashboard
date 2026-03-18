@@ -146,53 +146,51 @@ def get_sky_summary(lat: float = Query(35.92), lon: float = Query(-86.86)):
         "planets": planet_data
     }
 
-
 @app.get("/weather")
-@cache_sky_data(ttl_seconds=120)  # Caches for 2 minutes
+@cache_sky_data(ttl_seconds=120)
 async def get_weather(lat: float = Query(35.92), lon: float = Query(-86.86)):
-    # We added: &current=relative_humidity_2m,surface_pressure,visibility
     url = (
         f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}"
         f"&current=temperature_2m,relative_humidity_2m,weather_code,surface_pressure,wind_speed_10m,visibility"
         f"&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=auto"
     )
     
-    # add a User-Agent header (Crucial for Render):
+    # Standard browser-mimicking headers
     headers = {
-        "User-Agent": "SkyWatchDashboard/1.0 (https://skywatchdash.com)"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        "Accept": "application/json"
     }
 
-    # Create the client with a specific transport to force IPv4
-    transport = httpx.AsyncHTTPTransport(local_address="0.0.0.0")
-
     try:
-        async with httpx.AsyncClient(transport=transport, follow_redirects=True) as client:
+        # We removed 'transport' - let httpx handle the defaults for Render
+        async with httpx.AsyncClient(follow_redirects=True) as client:
             response = await client.get(url, headers=headers, timeout=15.0)
-            data = response.json()
+            
+            # This will show up in Render Logs if Open-Meteo blocks us
+            if response.status_code != 200:
+                print(f"DEBUG: API returned status {response.status_code}")
+                return {"error": f"API Status {response.status_code}"}
 
-            # Open-Meteo puts these in the 'current' object now
+            data = response.json()
             current = data.get("current", {})
 
-            # Defensive check: if Open-Meteo sends None, we provide a fallback
-            if not current or current.get("temperature_2m") is None:
-                print(f"Open-Meteo Error for {lat},{lon}: {data}")
-                return {"error": "API Data Missing", "temp": "N/A"}
+            if not current:
+                print(f"DEBUG: No 'current' field in JSON: {data}")
+                return {"error": "API Data Empty"}
 
             return {
-                "temp": round(current.get("temperature_2m")),
-                "windspeed": current.get("wind_speed_10m"),
-                "humidity": current.get("relative_humidity_2m"),
-                "pressure": current.get("surface_pressure"),
-                "visibility": current.get("visibility"),
-                "description": get_weather_description(current.get("weather_code")),
+                "temp": round(current.get("temperature_2m", 0)),
+                "windspeed": current.get("wind_speed_10m", 0),
+                "humidity": current.get("relative_humidity_2m", 0),
+                "pressure": current.get("surface_pressure", 0),
+                "visibility": current.get("visibility", 0),
+                "description": get_weather_description(current.get("weather_code", 0)),
                 "timezone": data.get("timezone", "UTC")
             }
     except Exception as e:
-        print(f"Backend Fetch Error: {e}")
-        # Returning a dict with an 'error' key usually prevents
-        # a well-written @cache_sky_data from saving the result.
+        # This is the most important print for us right now
+        print(f"CRITICAL BACKEND ERROR: {str(e)}")
         return {"error": str(e)}
-
 
 @app.get("/moon-details")
 @cache_sky_data(ttl_seconds=120)  # Caches for 2 minutes
