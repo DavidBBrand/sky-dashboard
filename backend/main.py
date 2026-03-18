@@ -147,7 +147,7 @@ def get_sky_summary(lat: float = Query(35.92), lon: float = Query(-86.86)):
     }
 
 @app.get("/weather")
-@cache_sky_data(ttl_seconds=120)
+@cache_sky_data(ttl_seconds=600)
 async def get_weather(lat: float = Query(35.92), lon: float = Query(-86.86)):
     url = (
         f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}"
