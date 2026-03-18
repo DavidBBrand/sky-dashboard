@@ -156,13 +156,18 @@ async def get_weather(lat: float = Query(35.92), lon: float = Query(-86.86)):
         f"&current=temperature_2m,relative_humidity_2m,weather_code,surface_pressure,wind_speed_10m,visibility"
         f"&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=auto"
     )
-    # add a User-Agent header( Crucial for Render):
+    
+    # add a User-Agent header (Crucial for Render):
     headers = {
-        "User-Agent": "SkyWatchDashboard/1.0 (https://skywatchdash.com)"}
+        "User-Agent": "SkyWatchDashboard/1.0 (https://skywatchdash.com)"
+    }
 
-    async with httpx.AsyncClient() as client:
-        try:
-            response = await client.get(url, headers=headers, timeout=10.0)
+    # Create the client with a specific transport to force IPv4
+    transport = httpx.AsyncHTTPTransport(local_address="0.0.0.0")
+
+    try:
+        async with httpx.AsyncClient(transport=transport, follow_redirects=True) as client:
+            response = await client.get(url, headers=headers, timeout=15.0)
             data = response.json()
 
             # Open-Meteo puts these in the 'current' object now
@@ -182,11 +187,11 @@ async def get_weather(lat: float = Query(35.92), lon: float = Query(-86.86)):
                 "description": get_weather_description(current.get("weather_code")),
                 "timezone": data.get("timezone", "UTC")
             }
-        except Exception as e:
-            print(f"Backend Fetch Error: {e}")
-            # Returning a dict with an 'error' key usually prevents
-            # a well-written @cache_sky_data from saving the result.
-            return {"error": str(e)}
+    except Exception as e:
+        print(f"Backend Fetch Error: {e}")
+        # Returning a dict with an 'error' key usually prevents
+        # a well-written @cache_sky_data from saving the result.
+        return {"error": str(e)}
 
 
 @app.get("/moon-details")
