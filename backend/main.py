@@ -1,3 +1,5 @@
+import os
+
 import requests
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -147,50 +149,46 @@ def get_sky_summary(lat: float = Query(35.92), lon: float = Query(-86.86)):
     }
 
 @app.get("/weather")
-@cache_sky_data(ttl_seconds=600)
+@cache_sky_data(ttl_seconds=900) # Cache for 15 mins to stay super safe
 async def get_weather(lat: float = Query(35.92), lon: float = Query(-86.86)):
-    url = (
-        f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}"
-        f"&current=temperature_2m,relative_humidity_2m,weather_code,surface_pressure,wind_speed_10m,visibility"
-        f"&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=auto"
-    )
+    # Best practice: Put this in Render Env Variables as WEATHER_API_KEY
+    api_key = os.getenv("WEATHER_API_KEY")
     
-    # Standard browser-mimicking headers
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-        "Accept": "application/json"
-    }
+    if not api_key:
+        return {"error": "API Key missing", "details": "Check Render Environment Variables"}
+    
+    url = (
+        f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"
+        f"{lat},{lon}?unitGroup=us&key={api_key}&contentType=json&include=current"
+    )
 
     try:
-        # We removed 'transport' - let httpx handle the defaults for Render
         async with httpx.AsyncClient(follow_redirects=True) as client:
-            response = await client.get(url, headers=headers, timeout=15.0)
+            response = await client.get(url, timeout=15.0)
             
-            # This will show up in Render Logs if Open-Meteo blocks us
             if response.status_code != 200:
-                print(f"DEBUG: API returned status {response.status_code}")
+                print(f"Weather Provider Error: {response.status_code}")
                 return {"error": f"API Status {response.status_code}"}
 
             data = response.json()
-            current = data.get("current", {})
+            current = data.get("currentConditions")
 
             if not current:
-                print(f"DEBUG: No 'current' field in JSON: {data}")
-                return {"error": "API Data Empty"}
+                return {"error": "Data structure mismatch"}
 
+            # Map Visual Crossing fields to your existing Frontend names
             return {
-                "temp": round(current.get("temperature_2m", 0)),
-                "windspeed": current.get("wind_speed_10m", 0),
-                "humidity": current.get("relative_humidity_2m", 0),
-                "pressure": current.get("surface_pressure", 0),
-                "visibility": current.get("visibility", 0),
-                "description": get_weather_description(current.get("weather_code", 0)),
+                "temp": round(current.get("temp")),
+                "windspeed": current.get("windspeed"),
+                "humidity": current.get("humidity"),
+                "pressure": current.get("pressure"),
+                "visibility": current.get("visibility"),
+                "description": current.get("conditions"),
                 "timezone": data.get("timezone", "UTC")
             }
     except Exception as e:
-        # This is the most important print for us right now
-        print(f"CRITICAL BACKEND ERROR: {str(e)}")
-        return {"error": str(e)}
+        print(f"Visual Crossing Connection Error: {e}")
+        return {"error": "Connection Timeout"}
 
 @app.get("/moon-details")
 @cache_sky_data(ttl_seconds=120)  # Caches for 2 minutes
