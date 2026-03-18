@@ -5,7 +5,7 @@ from skyfield.api import load, Topos
 from skyfield import almanac
 from datetime import datetime, timedelta
 import httpx
-# redis file 
+# redis file
 from redis_client import cache_sky_data
 
 app = FastAPI()
@@ -13,14 +13,15 @@ app = FastAPI()
 origins = [
     "http://localhost:5173",
     "https://sky-watch-chi.vercel.app",
-    "https://skywatchdash.com",    
+    "https://skywatchdash.com",
     "https://www.skywatchdash.com",
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_origin_regex=r"https://sky-watch-.*\.vercel\.app",# Regex to allow any subdomain of sky-watch-*.vercel.app
+    # Regex to allow any subdomain of sky-watch-*.vercel.app
+    allow_origin_regex=r"https://sky-watch-.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -41,23 +42,25 @@ def get_weather_description(code):
     }
     return mapping.get(code, "Cloudy")
 # --- NEW HELPER FOR MOON PHASES ---
+
+
 def get_upcoming_moon_phases():
     ts = load.timescale()
     t0 = ts.now()
     t1 = ts.utc(t0.utc_datetime() + timedelta(days=31))
-    
+
     # Find the times and phase IDs (0=New, 1=First Quarter, 2=Full, 3=Last Quarter)
     times, phases = almanac.find_discrete(t0, t1, almanac.moon_phases(eph))
-    
+
     phase_names = ["New Moon", "First Quarter", "Full Moon", "Last Quarter"]
-    
+
     milestones = []
     for time, phase_id in zip(times, phases):
         milestones.append({
             "phase": phase_names[phase_id],
             "date": time.utc_datetime().strftime("%b %d")
         })
-    
+
     return milestones
 
 
@@ -65,7 +68,7 @@ def get_upcoming_moon_phases():
 @cache_sky_data(ttl_seconds=86400)
 async def get_starlink_tles(lat: float = None, lon: float = None):
     url = "https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=json"
-    
+
     # Use follow_redirects=True (CelesTrak often redirects to HTTPS or WWW)
     async with httpx.AsyncClient(follow_redirects=True) as client:
         try:
@@ -77,6 +80,7 @@ async def get_starlink_tles(lat: float = None, lon: float = None):
             # Printing to the terminal helps you see the error even if the JSON is empty
             print(f"CRITICAL FETCH ERROR: {e}")
             return {"error": str(e)}
+
 
 @app.get("/sky-summary")
 @cache_sky_data(ttl_seconds=120)  # Cache for 2 minutes
@@ -152,33 +156,37 @@ async def get_weather(lat: float = Query(35.92), lon: float = Query(-86.86)):
         f"&current=temperature_2m,relative_humidity_2m,weather_code,surface_pressure,wind_speed_10m,visibility"
         f"&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=auto"
     )
+    # add a User-Agent header( Crucial for Render):
+    headers = {
+        "User-Agent": "SkyWatchDashboard/1.0 (https://skywatchdash.com)"}
 
     async with httpx.AsyncClient() as client:
         try:
-            response = await client.get(url, timeout=5.0)
+            response = await client.get(url, headers=headers, timeout=10.0)
             data = response.json()
-            
+
             # Open-Meteo puts these in the 'current' object now
             current = data.get("current", {})
-            
-            #Defensive check: if Open-Meteo sends None, we provide a fallback
-            def safe_get(val, default=0):
-                return val if val is not None else default 
-            
+
+            # Defensive check: if Open-Meteo sends None, we provide a fallback
+            if not current or current.get("temperature_2m") is None:
+                print(f"Open-Meteo Error for {lat},{lon}: {data}")
+                return {"error": "API Data Missing", "temp": "N/A"}
+
             return {
-                "temp": round(safe_get(current.get("temperature_2m"))),
-                "windspeed": safe_get(current.get("wind_speed_10m")),
-                "humidity": safe_get(current.get("relative_humidity_2m")),
-                "pressure": safe_get(current.get("surface_pressure")),
-                "visibility": safe_get(current.get("visibility")), # Returns in meters
-                "description": get_weather_description(safe_get(current.get("weather_code"))),
-                "timezone": data.get("timezone", "UTC"),
-                "utc_offset": data.get("utc_offset_seconds", 0),
-                "local_time": current.get("time", "Unknown")
+                "temp": round(current.get("temperature_2m")),
+                "windspeed": current.get("wind_speed_10m"),
+                "humidity": current.get("relative_humidity_2m"),
+                "pressure": current.get("surface_pressure"),
+                "visibility": current.get("visibility"),
+                "description": get_weather_description(current.get("weather_code")),
+                "timezone": data.get("timezone", "UTC")
             }
         except Exception as e:
-            print(f"Error: {e}")
-            return {"error": "Weather service unavailable"}
+            print(f"Backend Fetch Error: {e}")
+            # Returning a dict with an 'error' key usually prevents
+            # a well-written @cache_sky_data from saving the result.
+            return {"error": str(e)}
 
 
 @app.get("/moon-details")
