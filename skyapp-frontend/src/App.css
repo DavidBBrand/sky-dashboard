@@ -14,7 +14,7 @@
   --mesh-1: rgb(166, 196, 223);
   --card-bg: rgba(130, 125, 120, 0.117);
   --card-border: rgba(62, 51, 35, 0.2); 
-  --text-main: #3e3323;
+  --text-main: #181004;
   --text-sub: rgba(62, 51, 35, 0.7);
   --accent-color: #563c27eb;
   --accent-color2: rgb(106, 42, 18);
@@ -33,7 +33,7 @@
   --text-sub: rgba(255, 255, 255, 0.682);
   --accent-color: #1ca42e;
   --accent-color2: rgb(245, 151, 1);
-  --separator-glow: rgba(36, 197, 63, 0.915);
+  --separator-glow: rgba(36, 197, 63, 0.948);
   --separator-glow2: rgba(62, 222, 86, 0.572);
   --separator-glow3: rgba(14, 100, 6, 0.675);
 }
@@ -73,7 +73,7 @@
 .main-title {
   font-family: 'Datatype', monospace;
   font-size: 3.8rem; /* Slightly larger for the new name */
-  letter-spacing: 1px;
+  letter-spacing: 4px;
   margin:10px 0;
   text-transform: uppercase;
   /* 1. Dynamic Color */
@@ -107,7 +107,7 @@
   font-family: 'Datatype', monospace;
   font-size: 1.4rem; /* Slightly larger for the new name */
   margin: 2px 0;
-  letter-spacing: 1px;
+  letter-spacing: 0px;
   text-transform: uppercase;
   /* 1. Dynamic Color */
   color: var(--text-main);
@@ -150,7 +150,7 @@
     letter-spacing: 0px;
     font-weight: 400;
     font-family: 'Barlow Condensed', sans-serif;
-    margin: 8px 0 8px;
+    margin: 0px 0 12px;
     color: var(--text-main);
     opacity: 0.92;
     /* 2. Glass  Effect */
@@ -175,7 +175,6 @@
     text-transform: uppercase;
     font-weight: 400;
     font-family: 'Datatype', monospace;
-    margin: 10px 0 10px;
     color: var(--text-main);
     opacity: 0.88;
     /*  Glass  Effect */
@@ -198,7 +197,6 @@
 
     font-weight: 400;
     font-family: 'Datatype', monospace;
-    margin: 10px 0 10px;
     color: var(--text-main);
     opacity: 0.88;
     text-shadow: 
@@ -470,17 +468,23 @@ img[src*="marker"], .leaflet-marker-icon, .mapboxgl-marker {
 }
 
 /*  active state adds  tactical red pulse to the entire card */
-.glass-card.proximity-alert-active {
-  border-color: rgb(227, 91, 6);
-  box-shadow: 0 0 20px rgba(226, 103, 2, 0.788);
-  animation: card-alert-pulse 1s infinite;
-  border: 1px solid rgb(112, 44, 2);
-  
+/* 🚨 The Tactical Alert: Triggers when the internal ISSWatcher says 'nearby' */
+.glass-card:has(.nearby) {
+  border: 1.5px solid #c927067e !important; /* Force the border back on */
+  background: rgba(201, 39, 6, 0.05); /* Very subtle red tint to the card */
+  animation: card-alert-pulse 1.2s infinite ease-in-out;
+  transition: all 0.3s ease;
 }
 
 @keyframes card-alert-pulse {
-  0%, 100% { box-shadow: 0 0 15px rgba(248, 120, 0, 0.677); }
-  50% { box-shadow: 0 0 30px rgb(217, 127, 2); }
+  0%, 100% { 
+    border-color: #c92706; 
+    box-shadow: 0 0 15px rgba(201, 39, 6, 0.6), inset 0 0 10px rgba(201, 39, 6, 0.2); 
+  }
+  50% { 
+    border-color: rgba(201, 39, 6, 0.3); 
+    box-shadow: 0 0 5px rgba(201, 39, 6, 0.1), inset 0 0 2px rgba(201, 39, 6, 0.05); 
+  }
 }
 .glass-card:hover {
 box-shadow: 
