@@ -120,13 +120,13 @@ const Moon = memo(({ date }) => {
                 Altitude{" "}
                 {trend === "rising" ? "↑" : trend === "setting" ? "↓" : ""}
               </p>
-              <h2 style={{ "fontSize": "1.5rem" }} className={`glow-sub`}>{moonData.altitude?.toFixed(1)}°</h2>
+              <h2 style={{ "fontSize": "1.4rem" }} className={`glow-sub`}>{moonData.altitude?.toFixed(1)}°</h2>
             </div>
             <div className="text-right">
               <p className="stat-label">Azimuth</p>
-              <p style={{ "fontSize": "1.5rem" }} className="glow-sub">
+              <p style={{ "fontSize": "1.4rem" }} className="glow-sub">
                 {moonData.azimuth?.toFixed(1)}°
-                <span style={{ "fontSize": "1.2rem" }}  className="glow-sub">
+                <span style={{ "fontSize": "1.4rem" }}  className="glow-sub">
                   ({getCompassDirection(moonData.azimuth)})
                 </span>
               </p>

@@ -11,18 +11,13 @@
 /* 2. Dynamic Distance Mileage Text (Radar & Tactical) */
 /* Update .distance-value to handle the standard display */
 .distance-value {
-  font-size: 4rem; /* Slightly smaller than 5rem to avoid overflow */
+  font-size: 3rem; /* Slightly smaller than 5rem to avoid overflow */
   font-weight: 600;
   margin: 12px 0;
   color: var(--text-main);
   opacity: 0.9;
   /* Use a tighter shadow for Night Mode */
-  text-shadow: 0 0 8px var(--separator-glow);
-  background: linear-gradient(to bottom, var(--text-main) 0%, var(--text-sub) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: all 0.5s ease;
+
 }
 
 /* Specific fix for the 'nearby' animation glow */
@@ -31,7 +26,7 @@
   /* Lower the spread of the drop-shadow for Night Mode */
   filter: drop-shadow(0 0 3px var(--separator-glow));
   animation: tactical-flicker 4s ease-in-out infinite;
-  font-size:3rem;
+  font-size:4rem;
 }
 
 /* 🌙 Night Mode Specific "Dimmer" */
@@ -88,11 +83,12 @@
 
 /* 5. Telemetry & Subtext */
 .location-subtext {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: var(--text-sub);
   text-transform: uppercase;
   letter-spacing: 0px;
   margin: 0;
+  font-family: 'Barlow Condensed';
 }
 
 .telemetry-coords {

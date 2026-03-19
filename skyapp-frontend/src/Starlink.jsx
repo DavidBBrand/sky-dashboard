@@ -95,7 +95,7 @@ const Starlink = memo(() => {
 
   return (
     <div className="starlink-card">
-      <div className="card-title">STARLINK SATELLITE RADAR</div>
+      <div className="card-title">Starlink Satellite Radar</div>
       <div className={`radar-container ${isAlert ? "alert" : ""}`}>
         <div className="radar-scanner"></div>
         <div className="radar-axis-h"></div>

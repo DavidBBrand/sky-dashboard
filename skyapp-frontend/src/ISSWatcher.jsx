@@ -98,7 +98,7 @@ const ISSWatcher = memo(({ onDistanceUpdate }) => {
 
   return (
     <div className={`iss-card-internal ${isNearby ? "nearby" : ""}`}>
-      <h2 className="card-title">INTERNATIONAL SPACE STATION</h2>
+      <h2 className="card-title">International Space Station</h2>
 
       <div className="svg-container">
         <svg
@@ -119,7 +119,7 @@ const ISSWatcher = memo(({ onDistanceUpdate }) => {
       </div>
 
       <div className="distance-display-group">
-        <div className="glow-sub" style={{ fontSize: "3rem", fontWeight: "500" }}>
+        <div className="glow-sub iss-distance-text" style={{  fontWeight: "500" }}>
           {distance
             ? `${Math.round(distance).toLocaleString()} mi`
             : "SCANNING..."}
