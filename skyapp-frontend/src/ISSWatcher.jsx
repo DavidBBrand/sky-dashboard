@@ -128,7 +128,7 @@ const ISSWatcher = memo(({ onDistanceUpdate }) => {
       </div>
 
       <p className="telemetry-coords">
-        LAT: {parseFloat(issPos.lat).toFixed(2)} | LON:{" "}
+        LAT: {parseFloat(issPos.lat).toFixed(2)}  |  LON:{" "}
         {parseFloat(issPos.lon).toFixed(2)}
       </p>
 

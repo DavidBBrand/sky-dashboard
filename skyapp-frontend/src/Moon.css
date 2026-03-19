@@ -1,4 +1,44 @@
+.moon-header-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5px; /* Pull the Moon visual up closer */
+  width: 100%;
+}
 
+/* 1. Target EVERYTHING in the header block to kill margins */
+.moon-header-block * {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.0; /* Absolute minimum vertical height */
+}
+
+/* 2. Style the "The Moon from" part */
+.moon-header-block .card-title {
+  font-size: 1.5rem; /* Keep this smaller to emphasize the city */
+  opacity: 0.7;
+  text-transform: uppercase;
+  margin-bottom: 2px !important;
+}
+
+/* 3. Style the City (Franklin) */
+.moon-header-block .location-name {
+  display: block; /* Force to its own line */
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2.4rem; /* Big and tactical */
+  font-weight: 600;
+  color: var(--text-main);
+  letter-spacing: -1px; /* Tighter look */
+}
+
+/* 4. Style the Date */
+.moon-header-block .date-display {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2rem; /* Date should usually be smaller for hierarchy */
+  color: var(--text-sub);
+  margin-top: 4px !important; 
+}
 .moon-percentage {
     font-size: 3rem;
     font-weight: 200;

@@ -23,9 +23,6 @@
 /* Specific fix for the 'nearby' animation glow */
 .iss-distance-text {
   font-family: 'Datatype', monospace;
-  /* Lower the spread of the drop-shadow for Night Mode */
-  filter: drop-shadow(0 0 3px var(--separator-glow));
-  animation: tactical-flicker 4s ease-in-out infinite;
   font-size:4rem;
 }
 
@@ -36,25 +33,21 @@
   opacity: 0.8;
 }
 
-/* 3. Proximity Alert Text (The Amber Alert) */
+/* 3. Proximity Alert Text */
 .proximity-alert {
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  color: #c92706;
-  text-transform: uppercase;
-  letter-spacing: 5px;
+  color: #c92706; /* Keep that urgent red */
+  letter-spacing: 2px;
   margin-top: 10px;
   display: inline-block;
-
-  animation:
-    alert-blink 1s ease-in-out infinite,
-    alert-pulse 1s ease-in-out infinite,
+  
+  /* Update 1: Change to a faster, "flickery" duration */
+  animation: 
+    alert-pulse 1.4s ease-in-out infinite, 
     alert-shake 0.9s cubic-bezier(0.016, 0.018, 0.016, 0.2) infinite;
-  text-shadow:
-    1px 1px 0.25px rgba(0, 0, 0, 0.702),
-    -0.5px -0.5px 0px rgba(255, 255, 255, 0.419);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
-
 /* 4. Connection Ping Indicator */
 .ping-indicator {
   width: 16px;
@@ -83,20 +76,20 @@
 
 /* 5. Telemetry & Subtext */
 .location-subtext {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: var(--text-sub);
   text-transform: uppercase;
-  letter-spacing: 0px;
+  letter-spacing: 1px;
   margin: 0;
   font-family: 'Barlow Condensed';
 }
 
 .telemetry-coords {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: var(--accent-color2);
-  font-weight: 500;
   margin-top: 12px;
   font-family: 'Datatype', monospace;
+  
 }
 
 /* 6. Layout & Iframe */
@@ -138,8 +131,8 @@
 @keyframes alert-pulse {
   0%, 100% { transform: scale(1.0); }
   50% { 
-    text-shadow: 1px 1px 0.25px rgba(0,0,0,0.5), 0 0 15px rgba(170, 50, 10, 0.9);
-    transform: scale(1.03); 
+    text-shadow: 1px 1px 0.25px rgba(0,0,0,0.5), 0 0 3px rgba(170, 50, 10, 0.9);
+    transform: scale(1.02); 
   }
 }
 
