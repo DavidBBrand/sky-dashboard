@@ -1,5 +1,6 @@
 import os
-
+import json
+from pathlib import Path
 import requests
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -68,37 +69,34 @@ def get_upcoming_moon_phases():
 
 
 
-
 @app.get("/starlink-live")
 @cache_sky_data(ttl_seconds=86400)
 async def get_starlink_tles():
-    # Use the 'nodes.php' endpoint; sometimes it's less restricted than 'gp.php'
     url = "https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=json"
+    backup_path = Path(__file__).parent / "starlink_backup.json"
     
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 SkyWatch-Telemetry-Monitor/1.0",
         "Accept": "application/json"
     }
 
     async with httpx.AsyncClient(follow_redirects=True, headers=headers) as client:
         try:
-            response = await client.get(url, timeout=15.0)
-            
-            # Catch the 403 block specifically
-            if response.status_code == 403:
-                print("🚨 CELESTRAK BLOCK: Status 403. Server IP is likely blacklisted.")
-                return {"error": "Upstream API Blocked (403 Forbidden)"}
-
+            # Short timeout so the user doesn't wait 15s for a failure
+            response = await client.get(url, timeout=5.0)
             response.raise_for_status()
-            data = response.json()
-            return data[:100]
+            return response.json()[:100]
 
-        except Exception as e:
-            # THIS is the fix for the empty log:
-            error_details = f"{type(e).__name__}: {str(e)}"
-            print(f"CRITICAL FETCH ERROR: {error_details}")
-            traceback.print_exc() # This prints the full stack trace to Render logs
-            return {"error": error_details}
+        except (httpx.ConnectTimeout, httpx.HTTPStatusError, Exception) as e:
+            print(f" LIVE FETCH FAILED: {e}. Switching to local backup.")
+            
+            # FALLBACK: Load from the local JSON file
+            if backup_path.exists():
+                with open(backup_path, "r") as f:
+                    data = json.load(f)
+                    return data[:100]
+            
+            return {"error": "Satellite link offline. No backup available."}
 
 @app.get("/sky-summary")
 @cache_sky_data(ttl_seconds=120)  # Cache for 2 minutes
