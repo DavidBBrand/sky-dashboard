@@ -28,7 +28,7 @@
 /* 🌙 Night Mode Specific "Dimmer" */
 [data-theme="night"] .distance-value {
   /* Reduce the glow intensity significantly */
-  text-shadow: 0 0 4px var(--separator-glow);
+  text-shadow: 0 0 5px var(--separator-glow);
   opacity: 0.88;
   letter-spacing:2px;
 }
@@ -58,7 +58,7 @@
   transition: background-color 0.3s ease;
   background: var(--separator-glow);
   box-shadow: 0 0 8px var(--separator-glow);
-  margin-bottom: 24px;
+  margin-bottom: 0px;
   opacity: 0.99;
 }
 

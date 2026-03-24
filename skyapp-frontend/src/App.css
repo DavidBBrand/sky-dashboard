@@ -170,14 +170,13 @@
 }
 
 .glow-sub {
-  font-weight: 400;
   font-family: "Barlow Condensed", sans-serif;
   color: var(--text-main);
   opacity: 0.88;
   /*  Glass  Effect */
   text-shadow:
     0 1px 1px rgba(255, 255, 255, 0.3),
-    /* Top highlight */ 0 0 4px var(--separator-glow); /* Theme-based glow */
+    /* Top highlight */ 0 0 3px var(--separator-glow); /* Theme-based glow */
   /*  Glass Depth */
   background: linear-gradient(
     to bottom,
@@ -229,6 +228,7 @@
   box-shadow: 
     0 1px 3px rgba(0, 0, 0, 0.1), 
     inset 0 0 14px var(--separator-glow2);
+    font-size:1.4rem;
 }
 
 .telemetry-info span {

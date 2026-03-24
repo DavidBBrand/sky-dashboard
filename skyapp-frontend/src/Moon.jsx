@@ -105,7 +105,7 @@ const Moon = memo(({ date }) => {
         <div className="moon-header-block">
           <div className="glow-sub date-display">The Moon from</div>
           <div className="glow-sub location-name">{location.name}</div>
-          <div className="glow-sub2 date-display">{date}</div>
+          <div className="glow-sub date-display">{date}</div>
         </div>
         {/* ... rest of the code */}
       

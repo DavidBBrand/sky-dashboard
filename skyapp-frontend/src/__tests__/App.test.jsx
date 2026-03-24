@@ -26,17 +26,17 @@ vi.mock('../LocationContext', () => ({
 test('renders Sky Watch title and toggles theme', async () => {
   render(<App />); // No Provider needed because we mocked the whole module
 
-  // 3. Simple matcher is fine now because loading is forced to false
+  // Simple matcher is fine now because loading is forced to false
   const titleElement = await screen.findByText(/SKY WATCH/i);
   expect(titleElement).toBeInTheDocument();
 
-  // 4. Verify initial theme (Night)
+  // Verify initial theme (Night)
   expect(document.documentElement.getAttribute('data-theme')).toBe('night');
 
-  // 5. Toggle Theme
+  // Toggle Theme
   const toggleBtn = screen.getByRole('button', { name: /toggle day\/night mode/i });
   fireEvent.click(toggleBtn);
   
-  // 6. Verify change to Day
+  // Verify change to Day
   expect(document.documentElement.getAttribute('data-theme')).toBe('day');
 });
