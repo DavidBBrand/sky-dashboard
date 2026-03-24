@@ -1,10 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { expect, test, vi } from 'vitest';
+import { expect, test, vi } from 'vitest'; // Removed beforeEach
 import App from '../App';
 import { LocationProvider } from '../LocationContext';
 import '@testing-library/jest-dom';
 
-// This "mocks" Leaflet so it doesn't try to render real map graphics during tests
+// 1. Mock Leaflet
 vi.mock('react-leaflet', () => ({
   MapContainer: ({ children }) => <div data-testid="map">{children}</div>,
   TileLayer: () => null,
@@ -12,40 +12,35 @@ vi.mock('react-leaflet', () => ({
   Popup: () => null,
 }));
 
-test('renders Sky Watch title and toggles theme', async () => { // Added 'async'
-  
-  // 2. Mock Geolocation to bypass the "WAITING FOR GPS" screen
-  const mockGeolocation = {
-    getCurrentPosition: vi.fn().mockImplementation((success) =>
-      success({
-        coords: {
-          latitude: 35.92,
-          longitude: -86.86,
-        },
-      })
-    ),
-    watchPosition: vi.fn(),
-  };
-  global.navigator.geolocation = mockGeolocation;
+// 2. Geolocation Mock (Global Scope)
+const mockGeolocation = {
+  getCurrentPosition: vi.fn().mockImplementation((success) =>
+    success({
+      coords: { latitude: 35.92, longitude: -86.86 },
+    })
+  ),
+  watchPosition: vi.fn(),
+};
+vi.stubGlobal('navigator', { geolocation: mockGeolocation });
 
+test('renders Sky Watch title and toggles theme', async () => {
   render(
     <LocationProvider>
       <App />
     </LocationProvider>
   );
 
-  // Check if the HUD title exists
-  const titleElement = screen.getByText(/SKY WATCH/i);
+  // 3. Use findByText to wait for the GPS mock to kick in
+  const titleElement = await screen.findByText(/SKY WATCH/i);
   expect(titleElement).toBeInTheDocument();
 
-  // Check Theme Toggle
-// 1. Verify it starts as Night (Default)
+  // 4. Verify initial theme (Night)
   expect(document.documentElement.getAttribute('data-theme')).toBe('night');
 
-  // 2. Click the Toggle
+  // 5. Toggle Theme
   const toggleBtn = screen.getByRole('button', { name: /toggle day\/night mode/i });
   fireEvent.click(toggleBtn);
   
-  // 3. Verify it changed to Day
+  // 6. Verify change to Day
   expect(document.documentElement.getAttribute('data-theme')).toBe('day');
 });
