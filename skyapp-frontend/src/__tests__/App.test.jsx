@@ -20,12 +20,13 @@ test('renders Sky Watch title and toggles theme', () => {
     </LocationProvider>
   );
 
-  // 1. Check if the HUD title exists
+  // Check if the HUD title exists
   const titleElement = screen.getByText(/SKY WATCH/i);
   expect(titleElement).toBeInTheDocument();
 
-  // 2. Check Theme Toggle
-  const toggleBtn = screen.getByRole('button', { name: /🌙 Night Mode|☀️ Day Mode/i });
+  // Check Theme Toggle
+
+  const toggleBtn = screen.getByRole('button', { name: /🌙 Night Mode/i });
   fireEvent.click(toggleBtn);
   
   // Verify if data-theme attribute changes on the document
