@@ -3,6 +3,7 @@ import { expect, test } from 'vitest';
 import App from '../App';
 import { LocationProvider } from '../LocationContext';
 import { vi } from 'vitest';
+import '@testing-library/jest-dom';
 
 // This "mocks" Leaflet so it doesn't try to render real map graphics during tests
 vi.mock('react-leaflet', () => ({
