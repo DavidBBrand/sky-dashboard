@@ -106,7 +106,7 @@ const getLiveLocalTime = () => {
     return (
       <div className="loading-screen card-title">
         <div className="scanner"></div>
-          <div>SKY WATCH SYSTEM INITIALIZING...</div>
+          <div>SYSTEM INITIALIZING...</div>
           <div>WAITING FOR LOCATION FIX (GPS)...</div>
       </div>
     );
@@ -119,7 +119,7 @@ const getLiveLocalTime = () => {
           <span className="blink">●</span> Initializing...
         </div>
       )}
-      <button onClick={() => setIsNight(!isNight)} className="theme-toggle-btn">
+      <button onClick={() => setIsNight(!isNight)} className="theme-toggle-btn" aria-label="Toggle day/night mode">
         {isNight ? "🌙 Night Mode" : "☀️ Day Mode"}
       </button>
 
