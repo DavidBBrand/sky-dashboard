@@ -8,9 +8,8 @@ on:
 
 jobs:
   # --- BACKEND TESTING ---
-backend-tests:
+  backend-tests: # <--- Fixed: Indented 2 spaces
     runs-on: ubuntu-latest
-    # Tell the runner to do everything inside the backend folder
     defaults:
       run:
         working-directory: ./backend 
@@ -31,7 +30,7 @@ backend-tests:
         run: pytest
 
   # --- FRONTEND TESTING ---
-  frontend-tests:
+  frontend-tests: # <--- Fixed: Indented 2 spaces
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
