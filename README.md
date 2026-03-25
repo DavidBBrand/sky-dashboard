@@ -71,3 +71,28 @@ graph TD
     SF -->|Result| API
     API -->|JSON Data| UI
     UI -->|Render Planets/Moon| Map
+
+
+## ⏱️ Timing Diagram
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant FastAPI
+    participant Redis
+    participant NASA
+
+    User->>Browser: Opens Sky Watch
+    Browser->>Browser: Get GPS Coord
+    Browser->>FastAPI: GET /sky-summary?lat=xx&lon=yy
+    FastAPI->>Redis: Check Cache
+    alt Cache Hit
+        Redis-->>FastAPI: Return Cached Data
+    else Cache Miss
+        FastAPI->>NASA: Fetch Ephemeris (DE421)
+        NASA-->>FastAPI: Planetary Vectors
+        FastAPI->>Redis: Store Result (24h)
+    end
+    FastAPI-->>Browser: JSON Payload
+    Browser->>User: Render HUD & Star Map
