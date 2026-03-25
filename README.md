@@ -1,19 +1,15 @@
 # 🌙 Sky Watch Telemetry Dashboard
 
-
 A high-precision, observatory-style dashboard featuring real-time astronomical tracking and local weather synchronization.
 
 ## 🚀 Getting Started
 
-To run this application locally, you will need **two terminal windows** open (one for the backend and one for the frontend).
+Better yet, visit: [skywatchdash.com](https://www.skywatchdash.com)
 
-Better yet, visit https://www.skywatchdash.com
+To run this application locally, you will need **two terminal windows** open (Node.js and Python 3.8+ required).
 
-You must have Node.js and Python 3.8+ installed
-
-## Frontend Setup (React + Vite)
-Open your first bash terminal:
-
+### Frontend Setup (React + Vite)
+```bash
 cd skyapp-frontend
 npm install
 npm run dev
@@ -39,7 +35,7 @@ pip install -r requirements.txt
 ## Launch Uvicorn ASGI server
 
 uvicorn main:app --reload
-
+```
 ## 🛰️ System Architecture
 
 ```mermaid
@@ -71,7 +67,7 @@ graph TD
     SF -->|Result| API
     API -->|JSON Data| UI
     UI -->|Render Planets/Moon| Map
-
+```
 
 ## ⏱️ Timing Diagram
 
@@ -96,3 +92,4 @@ sequenceDiagram
     end
     FastAPI-->>Browser: JSON Payload
     Browser->>User: Render HUD & Star Map
+```
