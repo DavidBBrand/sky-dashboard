@@ -35,10 +35,11 @@
 }
 
 .weather-temp {
-    font-size: 3.5rem;
-    font-weight: 500;
+    font-size: 3.8rem;
+    font-weight: 400;
     margin: 20px 0;
-    color: var(--text-main);
+
+ 
 }
 
 .weather-desc {
@@ -88,11 +89,11 @@
   font-size: 6rem;
 }
 .detail-item .value {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: var(--text-main);
     font-weight: 400;
     margin-top: 4px;
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 .weather-loading-pulse {
     animation: pulse 2s infinite ease-in-out;

@@ -127,7 +127,7 @@ const Starlink = memo(() => {
             </span>
           </div>
         ))}
-        {loading && <div className="radar-status">LINKING...</div>}
+        {loading && <div className="radar-status glow-sub">Loading...</div>}
       </div>
 
       <div className="stats-row">

@@ -20,11 +20,11 @@
 .solar-time {
   font-size: 1.4rem;
   color: var(--accent-color2);
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 .solar-label {
   font-size: 1.8rem;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--text-main);
 }
