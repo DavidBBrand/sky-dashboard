@@ -17,7 +17,7 @@
   --text-main: #181004;
   --text-sub: rgba(62, 51, 35, 0.7);
   --accent-color: #563c27eb;
-  --accent-color2: rgb(106, 42, 18);
+  --accent-color2: rgb(133, 48, 18);
   --separator-glow: rgba(73, 51, 18, 0.097);
   --separator-glow2: rgba(14, 63, 98, 0.32);
   --separator-glow3: rgba(151, 63, 15, 0.541);
@@ -222,7 +222,7 @@
   box-sizing: border-box; 
   padding: 12px; 
   margin: 10px auto; 
-  background: rgba(169, 167, 181, 0.08);
+  background: var(--card-bg);
   border: 0.8px solid var(--card-border);
   border-radius: 2rem;
   box-shadow: 
@@ -346,7 +346,6 @@
   padding: 8px 16px;
   border-radius: 20px;
   border: 2px solid var(--card-border);
-  background: var(--card-bg);
   color: var(--text-main);
   backdrop-filter: blur(3px);
   font-weight: 600;
@@ -357,7 +356,7 @@
   width: fit-content;
   min-width: 140px;
   font-family: "Barlow Condensed", sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   opacity: 0.92;
   /* 2. Glass  Effect */
   text-shadow:
