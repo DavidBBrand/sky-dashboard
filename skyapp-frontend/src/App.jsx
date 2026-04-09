@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-// ADD THIS IMPORT BELOW:
 import { useLocation } from "./LocationContext.jsx";
-
 import "./App.css";
 import Weather from "./Weather.jsx";
 import Planets from "./Planets.jsx";
@@ -15,9 +13,9 @@ import logoDay from "./assets/skywatchday.png";
 import logoNight from "./assets/skywatch.png";
 
 function App() {
-  const { location, updateLocation } = useLocation(); 
-
-  const [isNight, setIsNight] = useState(true);
+  const { location, updateLocation } = useLocation();
+  const hour = new Date().getHours();
+  const [isNight, setIsNight] = useState(hour < 6 || hour >= 19);
   const [skyData, setSkyData] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
   const [issDistance, setIssDistance] = useState(null);
@@ -36,16 +34,16 @@ function App() {
     return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
   };
 
-const getLiveLocalTime = () => {
-    // Visual Crossing 
+  const getLiveLocalTime = () => {
+    // Visual Crossing
     if (!weatherData || !weatherData.timezone) return "--:--";
-    
+
     try {
       return new Date().toLocaleTimeString("en-US", {
         hour: "2-digit",
         minute: "2-digit",
         hour12: true,
-        timeZone: weatherData.timezone, 
+        timeZone: weatherData.timezone
       });
     } catch (e) {
       console.error("Local Time Error:", e);
@@ -69,18 +67,32 @@ const getLiveLocalTime = () => {
       console.error("Timezone Error:", e);
     }
   }, [location.lat, location.lon, weatherData?.timezone]);
-
-  // Theme Sync
+  // theme sync
   useEffect(() => {
-    document.documentElement.setAttribute(
-      "data-theme",
-      isNight ? "night" : "day"
-    );
-  }, [isNight]);
+    if (skyData?.sun?.sunrise && skyData?.sun?.sunset) {
+      const now = new Date();
+      const sunrise = new Date(skyData.sun.sunrise);
+      const sunset = new Date(skyData.sun.sunset);
 
+      // Convert everything to "minutes since midnight" for a clean numeric comparison
+      const nowMins = now.getHours() * 60 + now.getMinutes();
+      const sunriseMins = sunrise.getHours() * 60 + sunrise.getMinutes();
+      const sunsetMins = sunset.getHours() * 60 + sunset.getMinutes();
+
+      const shouldBeNight = nowMins < sunriseMins || nowMins > sunsetMins;
+
+      console.log(" FINAL THEME SYNC:", {
+        isNight: shouldBeNight,
+        nowMins,
+        sunriseMins,
+        sunsetMins
+      });
+
+      setIsNight(shouldBeNight);
+    }
+  }, [skyData]);
   // Global Sky Data Fetch
   useEffect(() => {
-   
     if (location.lat === null) return;
 
     const controller = new AbortController();
@@ -106,8 +118,10 @@ const getLiveLocalTime = () => {
     return (
       <div className="loading-screen card-title">
         <div className="scanner"></div>
-          <div>System Initializing...</div>
-          <div>Please click <strong>'Allow'</strong> to synchronize local telemetry</div>
+        <div>System Initializing...</div>
+        <div>
+          Please click <strong>'Allow'</strong> to synchronize local telemetry
+        </div>
       </div>
     );
   }
@@ -119,7 +133,11 @@ const getLiveLocalTime = () => {
           <span className="blink">●</span> Initializing...
         </div>
       )}
-      <button onClick={() => setIsNight(!isNight)} className="theme-toggle-btn" aria-label="Toggle day/night mode">
+      <button
+        onClick={() => setIsNight(!isNight)}
+        className="theme-toggle-btn"
+        aria-label="Toggle day/night mode"
+      >
         {isNight ? "🌙 Night Mode" : "☀️ Day Mode"}
       </button>
 

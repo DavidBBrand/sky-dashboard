@@ -20,11 +20,9 @@ const Weather = memo(({ sun, onDataReceived, theme }) => {
     let isMounted = true;
 
     const fetchWeather = () => {
-      // 1. Establish the API base URL
       const API_BASE_URL =
         import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
-      // 2. Use the dynamic URL
       fetch(`${API_BASE_URL}/weather?lat=${lat}&lon=${lon}`)
         .then((res) => {
           if (!res.ok) throw new Error("Server error");
@@ -59,24 +57,59 @@ const Weather = memo(({ sun, onDataReceived, theme }) => {
   }, [lat, lon]);
 
   const getWeatherIcon = (description) => {
+    console.log(
+      "Current Theme in Weather:",
+      theme,
+      "isDaylight:",
+      theme === "day"
+    );
     if (!description) return "🌡️";
     const desc = description.toLowerCase();
-    const now = new Date();
-    const sunriseTime = sun?.sunrise ? new Date(sun.sunrise) : null;
-    const sunsetTime = sun?.sunset ? new Date(sun.sunset) : null;
+    // Inside Weather.jsx, update this line:
+    const isDaylight =
+      theme === "day" ||
+      (new Date().getHours() >= 6 && new Date().getHours() < 19);
 
-    let isDaylight =
-      sunriseTime && sunsetTime
-        ? now >= sunriseTime && now <= sunsetTime
-        : now.getHours() >= 6 && now.getHours() < 18;
+    // Debugging: This will tell you EXACTLY what text the API sent
+    console.log(
+      `Weather: "${desc}" | Theme: ${theme} | Daylight: ${isDaylight}`
+    );
 
-    if (desc.includes("clear")) return isDaylight ? "☀️" : "🌙";
-    if (desc.includes("thunderstorm")) return "⛈️";
+    // 1. CLEAR & SUNNY
+    if (desc.includes("clear") || desc.includes("sunny")) {
+      return isDaylight ? "☀️" : "🌙";
+    }
+
+    // 2. CLOUDY
+    if (
+      desc.includes("clouds") ||
+      desc.includes("partly") ||
+      desc.includes("overcast")
+    ) {
+      if (
+        isDaylight &&
+        (desc.includes("few") ||
+          desc.includes("scattered") ||
+          desc.includes("partly"))
+      ) {
+        return "🌤️";
+      }
+      return "☁️";
+    }
+
+    // 3. STORMS
+    if (desc.includes("thunderstorm") || desc.includes("storm")) return "⛈️";
+
+    // 4. PRECIPITATION
     if (desc.includes("drizzle") || desc.includes("rain")) return "🌧️";
     if (desc.includes("snow")) return "❄️";
-    if (desc.includes("clouds"))
-      return desc.includes("few") || desc.includes("scattered") ? "🌤️" : "☁️";
-    return "🌡️";
+
+    // 5. MIST / FOG
+    if (desc.includes("mist") || desc.includes("fog") || desc.includes("haze"))
+      return "🌫️";
+
+    // 6. FINAL FALLBACK: If we don't know what it is, show a Sun in day and Moon at night
+    return isDaylight ? "☀️" : "🌙";
   };
 
   if (error)
