@@ -55,18 +55,19 @@ vi.stubGlobal('fetch', vi.fn(() =>
 test('renders Sky Watch title and toggles theme', async () => {
   render(<App />); 
 
-  // 1. Wait for the app to initialize and clear the loading screen
+  // 1. Wait for render
   const titleElement = await screen.findByText(/SKY WATCH/i);
   expect(titleElement).toBeInTheDocument();
 
-  // 2. Verify initial theme is DAY (because it is 12:00 PM in our mock)
-  // This proves your new solar-sync logic is working in the test!
+  // 2. Verify initial theme is DAY (Mocked to Noon)
   expect(document.documentElement.getAttribute('data-theme')).toBe('day');
 
-  // 3. Toggle Theme to NIGHT
-  const toggleBtn = screen.getByRole('button', { name: /☀️ Day Mode/i });
+  // 3. Find button by its ARIA LABEL (ignoring the shifting emoji text)
+  const toggleBtn = screen.getByLabelText(/toggle day\/night mode/i);
+  
+  // 4. Toggle to NIGHT
   fireEvent.click(toggleBtn);
   
-  // 4. Verify it changed to NIGHT
+  // 5. Verify change to NIGHT
   expect(document.documentElement.getAttribute('data-theme')).toBe('night');
 });
