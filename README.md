@@ -32,7 +32,7 @@ cd skyapp-frontend
 npm install
 npm run dev
 ```
-## BACKEND SETUP (Docker)
+### BACKEND SETUP (Docker)
 from the root directory containing the docker-compose.yml file, run:
 ```bash
 docker-compose up --build
