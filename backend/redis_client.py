@@ -1,6 +1,7 @@
 import redis
 import json
 import asyncio
+import inspect
 import os
 from functools import wraps
 from dotenv import load_dotenv
@@ -66,7 +67,7 @@ def cache_sky_data(ttl_seconds=60):
                 
             return result
 
-        return async_wrapper if asyncio.iscoroutinefunction(func) else sync_wrapper
+        return async_wrapper if inspect.iscoroutinefunction(func) else sync_wrapper
     return decorator
 
 # --- Connection Diagnostic ---
