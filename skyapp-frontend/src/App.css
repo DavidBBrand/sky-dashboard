@@ -458,16 +458,13 @@ img[src*="marker"],
   z-index: 1;
 }
 
-/* The "Slow & Weighted" Sweep */
+/* The "Slow & Weighted" Sweep 
 .glass-card:hover::after {
   left: 150%;
-  /* 1.2s is the 'Goldilocks' zone for luxury UI. 
-     The cubic-bezier creates a slow entry and a lingering exit. */
   transition: left 1.2s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: 0.1s; /* Short pause before the light "strikes" */
-  /* Combined Shadow: 1. Outer glow/depth, 2. Internal green rim light */
-}
-
+  /* Combined Shadow: 1. Outer glow/depth, 2. Internal green rim light 
+} */
 /* 4. Tactical Red Glint (Override for Alert Mode) */
 .glass-card:has(.nearby)::after {
   background: linear-gradient(
