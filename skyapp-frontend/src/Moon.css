@@ -96,6 +96,7 @@
     
   transition: all 0.3s ease-in-out;
   font-family: 'Barlow Condensed', sans-serif;
+  border: 1px solid var(--separator-glow2);
   
 }
 .illumination-value {

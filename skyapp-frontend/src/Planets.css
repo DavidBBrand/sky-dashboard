@@ -15,7 +15,8 @@
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.1),
     /* Outer depth */ 0 0 10px rgba(255, 255, 255, 0.05),
-    /* Ambient outer glow */ inset 0 0 12px var(--separator-glow2); /* Subtle inner bloom */
+    /* Ambient outer glow */ inset 0 0 12px var(--separator-glow2); 
+    border: 1px solid var(--separator-glow2);/* Subtle inner bloom */
 
 }
 

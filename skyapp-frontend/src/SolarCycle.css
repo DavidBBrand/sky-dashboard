@@ -2,7 +2,7 @@
   background: rgba(19, 82, 57, 0.034);
   font-family: "Barlow Condensed", sans-serif;
   font-size: 1rem;
-  border: 1px solid var(--card-border);
+  border: 1px solid var(--separator-glow2);
   border-radius: 2rem;
   text-align: center;
   transition: background 0.3s ease;

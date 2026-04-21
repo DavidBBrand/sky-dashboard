@@ -49,8 +49,8 @@
   position: relative;
   margin-top: 30px;
   transition: background-color 0.3s ease;
-  background: var(--separator-glow);
-  box-shadow: 0 0 8px var(--separator-glow);
+  background: var(--separator-glow2);
+  box-shadow: 0 0 8px var(--separator-glow2);
   margin-bottom: 0px;
   opacity: 0.99;
 }

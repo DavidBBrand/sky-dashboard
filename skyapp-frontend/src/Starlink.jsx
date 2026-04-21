@@ -125,7 +125,7 @@ const Starlink = memo(() => {
             <span className="node-tooltip">
               <strong className="tooltip-name">{n.name}</strong>
               <br />
-              <span style={{color: "var(--accent-color3)"}}>{n.distance} mi</span>
+              <span style={{color: "var(--accent-color2)"}}>{n.distance} mi</span>
             </span>
           </div>
         ))}

@@ -7,12 +7,12 @@
   border-radius: 50%;
 
   /*  Glow Effect */
-  border: 0.5px solid var(--accent-color);
+  border: 0.5px solid var(--accent-color4);
   box-shadow:
     0 0 8px rgba(255, 213, 0, 0.1),
     /* Soft outer spread */ inset 0 0 1px rgba(255, 221, 0, 0.1); 
     /* Soft inner glow */
-  filter: drop-shadow(0 0 2px var(--accent-color));
+  filter: drop-shadow(0 0 2px var(--accent-color3));
 }
 
 .radar-scanner {
