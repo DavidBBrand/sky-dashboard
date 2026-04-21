@@ -498,7 +498,8 @@ img[src*="marker"],
 }
 
 .loading-screen {
-  font-size: 2rem;
-  font-family: 'Datatype', monospace;
-  letter-spacing: -3px;
+  font-size: 1.6rem;
+  font-family: 'Roboto Condensed', sans-serif;
+  letter-spacing: -1px;
+  margin-top: 5rem;
 }
