@@ -44,13 +44,12 @@
   letter-spacing: 2px;
   margin: 0px auto;
   text-transform: uppercase;
-  /* 1. Dynamic Color */
   color: var(--text-main);
   opacity: 0.89;
-  /* 2. Glass  Effect */
+  /*  Etched Glass  Effect */
   text-shadow:
     0 1px 1px rgba(255, 255, 255, 0.3),
-    /* Top highlight */ 0 0 6px var(--separator-glow); /* Theme-based glow */
+    /* Top highlight */ 0 0 6px var(--separator-glow); 
   /* semi-transparent 'cut-through' effect */
   background: linear-gradient(
     to bottom,
@@ -191,7 +190,7 @@
   padding: 12px; 
   margin: 10px auto; 
   background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  border: 1px solid var(--separator-glow2);
   border-radius: 2rem;
   box-shadow: 
     0 1px 3px rgba(0, 0, 0, 0.1), 
@@ -458,14 +457,6 @@ img[src*="marker"],
   z-index: 1;
 }
 
-/* The "Slow & Weighted" Sweep 
-.glass-card:hover::after {
-  left: 150%;
-  transition: left 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-  transition-delay: 0.1s; /* Short pause before the light "strikes" */
-  /* Combined Shadow: 1. Outer glow/depth, 2. Internal green rim light 
-} */
-/* 4. Tactical Red Glint (Override for Alert Mode) */
 .glass-card:has(.nearby)::after {
   background: linear-gradient(
     to right,

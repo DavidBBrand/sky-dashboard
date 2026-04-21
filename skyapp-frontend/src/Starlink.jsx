@@ -109,7 +109,9 @@ const Starlink = memo(() => {
         <span className="radar-direction dir-s">S</span>
         <span className="radar-direction dir-w">W</span>
 
-        <span className="radar-label label-center">{location.name}</span>
+        <div className="radar-center-anchor">
+          <span className="radar-label label-center">{location.name}</span>
+        </div>
         <span className="radar-label label-r1">400mi</span>
         <span className="radar-label label-r2">750mi</span>
         <span className="radar-label label-r3">1600mi</span>
