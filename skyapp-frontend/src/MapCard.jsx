@@ -56,9 +56,10 @@ const MapCard = memo(({ theme, skyData, date }) => {
           style={{
             width: "100%",
             height: "100%",
-            borderRadius: "12px",
+            borderRadius: "2rem",
             display: "block",
             transition: "opacity 0.5s ease",
+            border: "1.5px solid var(--separator-glow2)",
             }}
           // loading="eager"
         />

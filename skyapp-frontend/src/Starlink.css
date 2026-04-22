@@ -105,15 +105,15 @@
 }
 
 .radar-label {
-  font-size: .8rem;
+  font-size: 1rem;
   left: 51%;
   font-weight: bold;
 }
 .label-center {
-  position: relative;
-  left: 42px;
+  position: static;
+  left: 14px;
   top: -8px;
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: bold;
   background: rgba(0, 0, 0, 0.03);
   white-space: nowrap;
@@ -125,17 +125,17 @@
 }
 
 .radar-label:not(.label-center) {
-  left: 52%;
+  left: 46%;
   transform: translateX(-5px);
 }
 .label-r1 {
   top: 34%;
 }
 .label-r2 {
-  top: 18%;
+  top: 17%;
 }
 .label-r3 {
-  top: 2%;
+  top: 1%;
 }
 
 .radar-direction {

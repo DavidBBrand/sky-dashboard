@@ -2,7 +2,7 @@
   /* Day Theme (Refined Solar) */
   --bg-color: #f5f3ef;
   --mesh-1: rgb(166, 196, 223);
-  --mesh-2: rgb(242, 238, 233);
+  --mesh-2: rgb(221, 215, 207);
   --mesh-3: hsla(40, 20%, 80%, 1); /* From index.css */
   
   --card-bg: rgba(60, 87, 168, 0.1);
@@ -27,8 +27,8 @@
 [data-theme="night"] {
   --bg-color: rgba(17, 17, 78, 0.95);
   --mesh-1: rgb(2, 18, 28);
-  --mesh-2: rgb(10, 4, 42);
-  --mesh-3: hsla(280, 20%, 12%, 1);
+  --mesh-2: rgb(16, 10, 51);
+  --mesh-3: rgb(13, 2, 59);
 
   --card-bg: rgba(42, 51, 75, 0.15); /* Slightly darker for better contrast */
   --card-border: rgba(255, 255, 255, 0.1);

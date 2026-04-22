@@ -48,9 +48,10 @@
       box-shadow:
       0 1px 3px rgba(0, 0, 0, 0.1),
       /* Outer depth */ 0 0 14px rgba(255, 255, 255, 0.05),
-      /* Ambient outer glow */ inset 0 0 14px var(--separator-glow2);
+      /* Ambient outer glow */ inset 0px 0 20px var(--separator-glow2);
       border-radius: 2rem;
-      padding:10px;
-      margin: 8px auto;
+      padding:8px;
+      padding-right: 10px;
+      margin: 14px auto;
       border: 1px solid var(--separator-glow2);
 }
