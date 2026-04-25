@@ -57,12 +57,12 @@ const Weather = memo(({ sun, onDataReceived, theme }) => {
   }, [lat, lon]);
 
   const getWeatherIcon = (description) => {
-    console.log(
-      "Current Theme in Weather:",
-      theme,
-      "isDaylight:",
-      theme === "day"
-    );
+    // console.log(
+    //   "Current Theme in Weather:",
+    //   theme,
+    //   "isDaylight:",
+    //   theme === "day"
+    // );
     if (!description) return "🌡️";
     const desc = description.toLowerCase();
     // Inside Weather.jsx, update this line:
@@ -71,9 +71,9 @@ const Weather = memo(({ sun, onDataReceived, theme }) => {
       (new Date().getHours() >= 6 && new Date().getHours() < 19);
 
     // Debugging: This will tell you EXACTLY what text the API sent
-    console.log(
-      `Weather: "${desc}" | Theme: ${theme} | Daylight: ${isDaylight}`
-    );
+    // console.log(
+    //   `Weather: "${desc}" | Theme: ${theme} | Daylight: ${isDaylight}`
+    // );
 
     // 1. CLEAR & SUNNY
     if (desc.includes("clear") || desc.includes("sunny")) {

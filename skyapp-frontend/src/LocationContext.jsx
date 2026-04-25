@@ -16,7 +16,9 @@ export const LocationProvider = ({ children }) => {
       const response = await fetch(
         `https://timeapi.io/api/Timezone/coordinate?latitude=${lat}&longitude=${lon}`
       );
+      
       const data = await response.json();
+      console.log("Timezone API Response:", data); // Debug log to inspect the structure
       return data.timeZone || "UTC";
     } catch (error) {
       console.error("Timezone fetch failed:", error);
@@ -51,6 +53,8 @@ export const LocationProvider = ({ children }) => {
             ]);
 
             const geoData = await geoRes.json();
+            // console.log("Full GeoData Object:", geoData); 
+            // console.log({ geoData })// Debug log to inspect the structure
             const cityName =
               geoData.address.city ||
               geoData.address.town ||
