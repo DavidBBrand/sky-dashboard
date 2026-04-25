@@ -166,15 +166,14 @@
 /* 5. Nodes & Tooltips */
 .radar-node {
   position: absolute;
-  width: 6px;
-  height: 6px;
+  width: 9px;
+  height: 9px;
   background: var(--accent-color);
   border-radius: 50%;
   box-shadow: 0 0 2px var(--accent-color);
   transform: translate(-50%, -50%);
   z-index: 20;
-  // animation: node-pulse 1s infinite ease-in-out;
-  animation: blip-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  animation: node-pulse 3s infinite ease-in-out;
 }
 @keyframes node-pulse {
   0% {
@@ -191,20 +190,7 @@
     opacity: 1;
   }
 }
-@keyframes blip-ping {
-  0% {
-    transform: scale(0.5);
-    opacity: 1;
-  }
-  20% {
-    transform: scale(1.5);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(2.5);
-    opacity: 0;
-  }
-}
+
 .node-tooltip {
   visibility: hidden;
   position: absolute;
