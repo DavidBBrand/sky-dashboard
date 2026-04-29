@@ -366,11 +366,11 @@ img[src*="marker"],
 }
 
 .copyright {
-  font-size: 1.2rem;
-  opacity: 0.88;
+  font-size: 1.4rem;
+  opacity: 0.76;
   margin-top: 40px;
   color: var(--text-sub);
-  font-weight: 200;
+  font-weight: 300;
   font-family: "Barlow Condensed", sans-serif !important;
 }
 
