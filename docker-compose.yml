@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   telemetry-api:
     build: ./backend
@@ -16,6 +14,7 @@ services:
 
   cache:
     image: redis:7-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]  # Disable persistence for dev
     ports:
       - "6379:6379"
 
