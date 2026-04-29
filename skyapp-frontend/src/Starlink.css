@@ -29,7 +29,7 @@
   );
 
   transform-origin: bottom right;
-  animation: radar-spin 3.4s linear infinite;
+  animation: radar-spin 3.8s linear infinite;
   z-index: 1;
   pointer-events: none;
   clip-path: circle(100% at bottom right);
@@ -82,10 +82,10 @@
 .radar-label,
 .radar-direction {
   position: absolute;
-  color: var(--accent-color2);
+  color: var(--accent-color);
   font-family:'Share Tech', sans-serif;
-  letter-spacing: -1px;
-  text-shadow: 0.15px 0.15px 0.2px #000;
+  letter-spacing: -.5px;
+  text-shadow: 0.05px 0.05px 0.1px #6a6d6dde;
   z-index: 10;
   pointer-events: none;
   opacity: 0.88;
