@@ -309,7 +309,7 @@
   margin: 10px auto; /* Centered on mobile */
   display: block;
   padding: 8px 16px;
-  border-radius: 20px;
+  border-radius: 2rem;
   border: 2px solid var(--card-border);
   color: var(--text-main);
   backdrop-filter: blur(3px);
