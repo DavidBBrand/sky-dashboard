@@ -153,12 +153,12 @@
   transform: translateX(-50%);
 }
 .dir-e {
-  right: -35px;
+  right: -30px;
   top: 50%;
   transform: translateY(-50%);
 }
 .dir-w {
-  left: -35px;
+  left: -31px;
   top: 50%;
   transform: translateY(-50%);
 }
