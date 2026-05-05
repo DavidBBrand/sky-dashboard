@@ -11,9 +11,11 @@ interface CompassProps {
 }
 
 const SolarCompass: React.FC<CompassProps> = ({ sunData }) => {
-  const { current_altitude, phase } = sunData;
+  // 1. Use optional chaining and nullish coalescing to prevent undefined
+  const current_altitude = sunData?.current_altitude ?? 0;
+  const phase = sunData?.phase ?? "Standard";
   
-  // Constrain the visual to the container (5% to 95%) so the sun doesn't clip at peak/nadir
+  // 2. Logic: Now current_altitude is guaranteed to be a number (even if 0)
   const verticalPosition = 50 - (current_altitude / 90) * 45;
 
   const getSunColor = () => {
@@ -25,7 +27,6 @@ const SolarCompass: React.FC<CompassProps> = ({ sunData }) => {
 
   return (
     <div className="solar-compass-wrapper">
-      {/* Visual Gauge Area */}
       <div className="solar-gauge-track">
         <div className="horizon-line" />
         <div 
@@ -38,9 +39,11 @@ const SolarCompass: React.FC<CompassProps> = ({ sunData }) => {
         />
       </div>
 
-      {/* Dedicated Label Area - Now safely separated */}
       <div className="altitude-readout">
-        <span className="altitude-value">{current_altitude.toFixed(1)}°</span>
+        {/* 3. Safety first: check if altitude is a number before calling toFixed */}
+        <span className="altitude-value">
+          {typeof current_altitude === 'number' ? current_altitude.toFixed(1) : "0.0"}°
+        </span>
       </div>
     </div>
   );
