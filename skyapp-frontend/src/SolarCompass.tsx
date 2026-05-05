@@ -1,9 +1,9 @@
 import React from 'react';
+import "./SolarCompass.css";
 
-// 1. Define the interface for the sun data coming from your Python backend
 interface SolarTelemetry {
-  current_altitude: number; // Degrees
-  phase: string;            // "Golden Hour", "Blue Hour", etc.
+  current_altitude: number;
+  phase: string;
 }
 
 interface CompassProps {
@@ -13,30 +13,35 @@ interface CompassProps {
 const SolarCompass: React.FC<CompassProps> = ({ sunData }) => {
   const { current_altitude, phase } = sunData;
   
-  // 2. Logic: Map altitude to a visual "height" inside a 100px container
-  // 90 deg (Zenith) = top, 0 deg (Horizon) = middle, -90 deg = bottom
-  const verticalPosition = 50 - (current_altitude / 90) * 50;
+  // Constrain the visual to the container (5% to 95%) so the sun doesn't clip at peak/nadir
+  const verticalPosition = 50 - (current_altitude / 90) * 45;
 
-  // 3. Determine sun color based on your backend 'phase' logic
   const getSunColor = () => {
     if (phase === "Golden Hour") return "#ff9d00";
     if (phase === "Blue Hour") return "#5b86e5";
-    if (current_altitude < 0) return "#2c3e50"; // Dim for night
-    return "#ffce00"; // Standard day
+    if (current_altitude < 0) return "#2c3e50";
+    return "#ffce00";
   };
 
   return (
-    <div className="solar-compass">
-      <div className="horizon-line" />
-      <div 
-        className="sun-indicator"
-        style={{ 
-          top: `${verticalPosition}%`,
-          backgroundColor: getSunColor(),
-          boxShadow: current_altitude > 0 ? `0 0 15px ${getSunColor()}` : 'none'
-        }}
-      />
-      <div className="altitude-label">{current_altitude.toFixed(1)}°</div>
+    <div className="solar-compass-wrapper">
+      {/* Visual Gauge Area */}
+      <div className="solar-gauge-track">
+        <div className="horizon-line" />
+        <div 
+          className="sun-indicator"
+          style={{ 
+            top: `${verticalPosition}%`,
+            backgroundColor: getSunColor(),
+            boxShadow: current_altitude > 0 ? `0 0 15px ${getSunColor()}` : 'none'
+          }}
+        />
+      </div>
+
+      {/* Dedicated Label Area - Now safely separated */}
+      <div className="altitude-readout">
+        <span className="altitude-value">{current_altitude.toFixed(1)}°</span>
+      </div>
     </div>
   );
 };
