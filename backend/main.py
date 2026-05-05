@@ -67,13 +67,12 @@ def get_upcoming_moon_phases():
     return milestones
 
 
-
 @app.get("/starlink-live")
 @cache_sky_data(ttl_seconds=86400)
 async def get_starlink_tles():
     url = "https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=json"
     backup_path = Path(__file__).parent / "starlink_backup.json"
-    
+
     headers = {
         "User-Agent": "Mozilla/5.0 SkyWatch-Telemetry-Monitor/1.0",
         "Accept": "application/json"
@@ -88,15 +87,16 @@ async def get_starlink_tles():
 
         except (httpx.ConnectTimeout, httpx.HTTPStatusError, Exception) as e:
             print(f" LIVE FETCH FAILED: {e}. Switching to local backup.")
-            
+
             # FALLBACK: Load from the local JSON file
             if backup_path.exists():
                 with open(backup_path, "r") as f:
                     data = json.load(f)
                     # return only the last 100 entries to keep it consistent with the live fetch
                     return data[:100]
-            
+
             return {"error": "Satellite link offline."}
+
 
 @app.get("/sky-summary")
 @cache_sky_data(ttl_seconds=120)  # Cache for 2 minutes
@@ -150,12 +150,37 @@ async def get_sky_summary(lat: float = Query(35.92), lon: float = Query(-86.86))
             "is_visible": bool(alt.degrees > 0),
             "distance_au": round(float(distance.au), 2)
         }
+    # 1. Define the transit search (looking for the moment the sun crosses the meridian)
+# We search from the start of today (t0) to the end of today (t1)
+    inflection_times, transit_types = almanac.find_discrete(
+        t0, t1, almanac.meridian_transits(eph, eph['sun'], user_location)
+    )
+
+# transit_types == 1 means 'Upper Culmination' (Solar Noon/Zenith)
+# transit_types == 0 means 'Lower Culmination' (Solar Nadir/Midnight)
+    zenith_time = None
+    zenith_alt = None
+    zenith_az = None
+    if any(transit_types == 1):
+        # Get the exact time object for the zenith
+        t_zenith = inflection_times[transit_types == 1][0]
+        zenith_time = t_zenith.utc_iso()
+    
+        # Calculate the sun's position at that EXACT time
+        zenith_astrometric = observer.at(t_zenith).observe(eph['sun'])
+        alt, az, _ = zenith_astrometric.apparent().altaz()
+    
+        zenith_alt = round(float(alt.degrees), 1)
+        zenith_az = round(float(az.degrees), 1)
 
     return {
         "moon": {"illumination": round(float(illumination * 100), 2)},
         "sun": {
             "sunrise": times[events == 1][0].utc_iso() if any(events == 1) else None,
             "sunset": times[events == 0][0].utc_iso() if any(events == 0) else None,
+            "zenith": zenith_time,
+            "zenith_alt": zenith_alt,
+            "zenith_az": zenith_az,
             "current_altitude": round(current_sun_alt, 1),
             "phase": "Golden Hour" if is_golden_hour else "Blue Hour" if is_blue_hour else "Standard"
         },
