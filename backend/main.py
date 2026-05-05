@@ -107,34 +107,26 @@ async def get_sky_summary(lat: float = Query(35.92), lon: float = Query(-86.86))
     user_location = Topos(latitude_degrees=lat, longitude_degrees=lon)
     observer = earth + user_location
 
-    # Get Sun's current coordinates
+    # 1. SUN & LIGHT PHASE
     sun_astrometric = observer.at(t).observe(sun_obj)
     sun_alt, sun_az, _ = sun_astrometric.apparent().altaz()
     current_sun_alt = float(sun_alt.degrees)
 
-    # Determine "Light Phase"
     is_golden_hour = -4 <= current_sun_alt <= 6
     is_blue_hour = -6 <= current_sun_alt < -4
 
-    # SUNRISE/SUNSET (Handling Polar Edge Cases)
+    # 2. SUNRISE/SUNSET (With Polar Support)
     t0 = ts.utc(t.utc_datetime().year, t.utc_datetime().month, t.utc_datetime().day)
     t1 = ts.utc(t0.utc_datetime() + timedelta(days=1))
     times, events = almanac.find_discrete(t0, t1, almanac.sunrise_sunset(eph, user_location))
 
-    # --- LOGIC FOR POLAR DAY/NIGHT ---
     if len(times) == 0:
-        # No crossing detected. If alt > 0, it's always up. If alt < 0, it's always down.
-        if current_sun_alt > 0:
-            sunrise_val = "Polar Day"
-            sunset_val = "Polar Day"
-        else:
-            sunrise_val = "Polar Night"
-            sunset_val = "Polar Night"
+        sunrise_val = sunset_val = "Polar Day" if current_sun_alt > 0 else "Polar Night"
     else:
         sunrise_val = times[events == 1][0].utc_iso() if any(events == 1) else None
         sunset_val = times[events == 0][0].utc_iso() if any(events == 0) else None
 
-    # ZENITH TELEMETRY
+    # 3. ZENITH TELEMETRY
     inflection_times, transit_types = almanac.find_discrete(
         t0, t1, almanac.meridian_transits(eph, sun_obj, user_location)
     )
@@ -148,11 +140,30 @@ async def get_sky_summary(lat: float = Query(35.92), lon: float = Query(-86.86))
         zenith_alt = round(float(z_alt.degrees), 1)
         zenith_az = round(float(z_az.degrees), 1)
 
-    # MOON & PLANETS (Keeping your existing logic)
+    # 4. MOON DATA
     m = observer.at(t).observe(moon).apparent()
     illumination = m.fraction_illuminated(sun_obj)
-    
-    # ... (Planet logic remains the same) ...
+
+    # 5. RESTORED: PLANET VISIBILITY LOGIC
+    target_planets = {
+        "Venus": eph['venus'],
+        "Mars": eph['mars'],
+        "Jupiter": eph['jupiter_barycenter'],
+        "Saturn": eph['saturn_barycenter'],
+        "Uranus": eph['uranus_barycenter'],
+        "Neptune": eph['neptune_barycenter']
+    }
+
+    planet_data = {}
+    for name, body in target_planets.items():
+        astrometric = observer.at(t).observe(body)
+        p_alt, p_az, distance = astrometric.apparent().altaz()
+        planet_data[name] = {
+            "altitude": round(float(p_alt.degrees), 1),
+            "azimuth": round(float(p_az.degrees), 1),
+            "is_visible": bool(p_alt.degrees > 0),
+            "distance_au": round(float(distance.au), 2)
+        }
 
     return {
         "moon": {"illumination": round(float(illumination * 100), 2)},
@@ -165,9 +176,8 @@ async def get_sky_summary(lat: float = Query(35.92), lon: float = Query(-86.86))
             "current_altitude": round(current_sun_alt, 1),
             "phase": "Golden Hour" if is_golden_hour else "Blue Hour" if is_blue_hour else "Standard"
         },
-        "planets": planet_data # assume planet_data was calculated as before
+        "planets": planet_data
     }
-
 
 @app.get("/weather")
 @cache_sky_data(ttl_seconds=300)  # Cache for 15 mins to stay super safe
