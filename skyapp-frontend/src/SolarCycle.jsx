@@ -31,7 +31,7 @@ const SolarCycle = memo(({ sun, timezone }) => {
     <div className="solar-cycle-container">
       <div className="solar-flex">
         <div className="solar-item" style={{ flex: 1 }}>
-          <div className=" card-title ">Sunrise</div>
+          <div className="sub-title">Sunrise</div>
           <span style={{ fontSize: "3.0rem" }} role="img" aria-label="sunrise">
             🌅
           </span>
@@ -40,12 +40,12 @@ const SolarCycle = memo(({ sun, timezone }) => {
         {/* MIDDLE: Live Altitude & Zenith Time */}
         {/* MIDDLE: Live Altitude & Zenith Telemetry */}
         <div className="solar-item" style={{ flex: 1 }}>
-          <div className="glow-sub">Solar Altitude</div>
+          <div className="sub-title">Altitude</div>
           <SolarCompass sunData={sun} />
 
           <div className="zenith-container" style={{ marginTop: "10px" }}>
             <div
-              className="zenith-label sub-title"
+              className="sub-title"
             >
               Zenith
             </div>
@@ -76,7 +76,7 @@ const SolarCycle = memo(({ sun, timezone }) => {
           </div>
         </div>
         <div className="solar-item" style={{ flex: 1 }}>
-          <div className="card-title">Sunset</div>
+          <div className="sub-title">Sunset</div>
           <span style={{ fontSize: "3.0rem" }} role="img" aria-label="sunset">
             🌇
           </span>
