@@ -4,7 +4,14 @@ import SolarCompass from "./SolarCompass";
 
 const SolarCycle = memo(({ sun, timezone }) => {
   const formatTime = (isoString) => {
+    // 1. Handle empty data
     if (!isoString || !sun) return "--:--";
+
+    // 2. Handle Polar Edge Cases (Midnight Sun / Polar Night)
+    // If the string contains "Polar", return it as-is (e.g., "Polar Day")
+    if (typeof isoString === 'string' && isoString.includes("Polar")) {
+      return isoString;
+    }
 
     try {
       return new Date(isoString).toLocaleTimeString([], {
@@ -15,8 +22,9 @@ const SolarCycle = memo(({ sun, timezone }) => {
         timeZone: timezone || "UTC"
       });
     } catch (error) {
-      console.warn("Invalid timezone provided to SolarCycle:", timezone);
-      // Final fallback to system time so the app doesn't die
+      console.warn("Invalid date or timezone in SolarCycle:", isoString, timezone);
+      
+      // Final fallback: try a standard local format if the timezone object specifically failed
       return new Date(isoString).toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
