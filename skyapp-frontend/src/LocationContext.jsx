@@ -68,11 +68,11 @@ export const LocationProvider = ({ children }) => {
               lon: longitude,
               name: `${cityName}${stateName ? ", " + stateName : ""}`,
               timezone: tz,
-              isInitial: false // Acquisition complete
+              isInitial: true  // Keep it TRUE so App.jsx can fetch the skyData
             });
           } catch (error) {
             console.error("Location initialization failed:", error);
-            setLocation((prev) => ({ ...prev, isInitial: false }));
+            setLocation((prev) => ({ ...prev, isInitial: false })); // failsafe
           }
         },
         (error) => {
@@ -82,7 +82,7 @@ export const LocationProvider = ({ children }) => {
             lon: -86.8689,
             name: "Franklin, TN", // Or call it "Base Station"
             timezone: "America/Chicago",
-            isInitial: false // This tells the UI to stop showing the "Locating..." message
+            isInitial: true // Keep it True so App.jsx can fetch default location
           });
         },
         { enableHighAccuracy: true, timeout: 10000 }

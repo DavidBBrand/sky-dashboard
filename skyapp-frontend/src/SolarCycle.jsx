@@ -45,8 +45,8 @@ const SolarCycle = memo(({ sun, timezone }) => {
           </span>
           <div className="solar-time">{formatTime(sun.sunrise)}</div>
         </div>
+        
         {/* MIDDLE: Live Altitude & Zenith Time */}
-        {/* MIDDLE: Live Altitude & Zenith Telemetry */}
         <div className="solar-item" style={{ flex: 1 }}>
           <div className="sub-title">Altitude</div>
           <SolarCompass sunData={sun} />
@@ -61,7 +61,7 @@ const SolarCycle = memo(({ sun, timezone }) => {
             <div
               className="zenith-time"
               style={{
-                fontSize: "1.4rem",
+                fontSize: "1.2rem",
                 color: "var(--accent-color2)",
     
               }}

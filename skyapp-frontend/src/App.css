@@ -68,6 +68,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   filter: drop-shadow(0 0 6px var(--separator-glow));
+  word-spacing: 8px;
 }
 
 .sub-title {
