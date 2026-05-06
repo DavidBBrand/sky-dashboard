@@ -63,7 +63,7 @@ const SolarCycle = memo(({ sun, timezone }) => {
               style={{
                 fontSize: "1.4rem",
                 color: "var(--accent-color2)",
-                fontWeight: "bold"
+    
               }}
             >
               {formatTime(sun.zenith)}

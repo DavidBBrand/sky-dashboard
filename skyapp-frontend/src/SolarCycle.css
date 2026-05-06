@@ -1,6 +1,6 @@
 .solar-flex {
   display: flex;
-  gap: 20px;
+  gap: 8px;
   align-items: stretch; /* Ensures all items are the same height */
 }
 
@@ -16,7 +16,7 @@
     0 1px 3px rgba(0, 0, 0, 0.1),
     0 0 10px rgba(255, 255, 255, 0.05),
     inset 0 0 12px var(--separator-glow2);
-  padding: 12px;
+  padding: 16px;
   flex: 1; /* Ensures equal width distribution */
 }
 
@@ -25,6 +25,7 @@
   color: var(--accent-color2);
   font-family: "Share tech", sans-serif;
   letter-spacing: -1px;
+  margin-top: 12px;
 }
 
 .solar-label {
@@ -44,11 +45,14 @@
   flex-direction: column;
   align-items: center;
   gap: 2px;
+  background: rgba(89, 89, 54, 0.108);
+  border-radius: 1rem;
+  padding: 10px;
 }
 
 .zenith-time {
   font-family: "Share tech", sans-serif;
-  font-weight: bold;
+  font-weight:lighter;
 }
 
 .zenith-coords {
@@ -57,10 +61,9 @@
   align-items: center;
   font-family: "Share tech", sans-serif;
   letter-spacing: 0.5px;
-  background: rgba(0, 0, 0, 0.1); /* Slight contrast background */
   padding: 4px 12px;
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.01);
 }
 
 /* Ensures the divider between Peak and Azimuth is subtle */
