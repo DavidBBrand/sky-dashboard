@@ -13,9 +13,9 @@
   position: relative;
   flex: 1; /* Takes up most of the space */
   height: 100%;
-  max-width: 60px; /* Keeps the sun track narrow and centered */
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 68px; /* Keeps the sun track narrow and centered */
+  border-left: 1.5px solid rgba(255, 255, 255, 0.154);
+  border-right: 1.5px solid rgba(255, 255, 255, 0.154);
 }
 
 .horizon-line {
@@ -31,8 +31,8 @@
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   transition: top 1s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 2;
