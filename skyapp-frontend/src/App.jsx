@@ -15,7 +15,7 @@ import logoNight from "./assets/skywatch.png";
 function App() {
   const { location, updateLocation } = useLocation();
   const hour = new Date().getHours();
-  const [isNight, setIsNight] = useState(hour < 6 || hour >= 19);
+  const [isNight, setIsNight] = useState(hour < 6 || hour >= 20); // adjusted night hours to 8 PM(20) - 6 AM(6)
   const [skyData, setSkyData] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
   const [issDistance, setIssDistance] = useState(null);
