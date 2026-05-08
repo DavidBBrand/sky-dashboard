@@ -1,14 +1,32 @@
 import React, { memo } from "react";
-import { useLocation } from "./LocationContext.jsx"; // Use context
+import { useLocation } from "./LocationContext"; // Use context
 import "./MapCard.css";
 import SolarCycle from "./SolarCycle";
 
-const MapCard = memo(({ theme, skyData, date }) => {
+interface MapCardProps {
+  theme: "day" | "night";
+  skyData: {
+    sun: {
+      sunrise: string;
+      sunset: string;
+      zenith: string;
+      zenith_alt: number | string;
+      zenith_az: number | string;
+      current_altitude: number;
+      phase: string;
+    };
+    timezone: string;
+  } | null;
+  date: string;
+}
+
+// const MapCard = memo(({ theme, skyData, date }) => {
+const MapCard: React.FC<MapCardProps> = memo(({ theme, skyData, date }) => {
   // Pull location from Context
   const { location } = useLocation();
   const { lat, lon, name } = location;
 
-  const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
+  const MAPBOX_TOKEN = (import.meta.env.VITE_MAPBOX_TOKEN as string) || "";
 
   const zoom = 12;
   const darkStyle = "dark-v11";
@@ -28,7 +46,7 @@ const MapCard = memo(({ theme, skyData, date }) => {
           justifyContent: "center"
         }}
       >
-        <div className="card-title">Solar Arc</div>
+        <div className="card-title">Solar Arc for {date}</div>
         {skyData?.sun ? (
           <SolarCycle sun={skyData.sun} date={date} timezone={location.timezone} />
         ) : (

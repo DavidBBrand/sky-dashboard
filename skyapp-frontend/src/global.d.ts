@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 // src/declarations.d.ts
 declare module "*.css" {
   const content: { [className: string]: string };

@@ -2,17 +2,41 @@ import React, { memo } from "react";
 import "./SolarCycle.css";
 import SolarCompass from "./SolarCompass";
 
-const SolarCycle = memo(({ sun, timezone }) => {
-  const formatTime = (isoString) => {
-    // 1. Handle empty data
-    if (!isoString || !sun) return "--:--";
+// 1. define shape of the Sun telemetry data
+interface SunData {
+  sunrise: string;
+  sunset: string;
+  zenith: string;
+  zenith_alt: number | string;
+  zenith_az: number | string;
+  current_altitude: number; // required by SolarCompass
+  phase: string; // required by Solar Compass
+}
+// legacy javascript logic:
+// const SolarCycle = memo(({ sun, timezone }) => {
+//   const formatTime = (isoString) => {
+// 1. Handle empty data
+//     if (!isoString || !sun) return "--:--";
 
-    // 2. Handle Polar Edge Cases (Midnight Sun / Polar Night)
-    // If the string contains "Polar", return it as-is (e.g., "Polar Day")
+// 2. Handle Polar Edge Cases (Midnight Sun / Polar Night)
+// If the string contains "Polar", return it as-is (e.g., "Polar Day")
+//     if (typeof isoString === 'string' && isoString.includes("Polar")) {
+//       return isoString;
+//     }
+
+interface SolarCycleProps {
+  sun: SunData;
+  timezone: string | null;
+  date: string;
+}
+
+const SolarCycle: React.FC<SolarCycleProps> = memo(({ sun, timezone, date }) => {
+  const formatTime = (isoString: string): string => {
+    if (!isoString || !sun) return "--:--";
+    // handle polar edge cases (e.g., "Polar Day", "Polar Night")
     if (typeof isoString === 'string' && isoString.includes("Polar")) {
       return isoString;
     }
-
     try {
       return new Date(isoString).toLocaleTimeString([], {
         hour: "2-digit",
@@ -39,7 +63,7 @@ const SolarCycle = memo(({ sun, timezone }) => {
     <div className="solar-cycle-container">
       <div className="solar-flex">
         <div className="solar-item" style={{ flex: 1 }}>
-          <div className="sub-title">Sunrise</div>
+          <div className="sub-title">Sunrise on  {date}</div>
           <span style={{ fontSize: "3.0rem" }} role="img" aria-label="sunrise">
             🌅
           </span>

@@ -5,7 +5,7 @@ import Weather from "./Weather.jsx";
 import Planets from "./Planets.jsx";
 import LocationSearch from "./LocationSearch.jsx";
 import GoldenHour from "./GoldenHour.jsx";
-import MapCard from "./MapCard.jsx";
+import MapCard from "./MapCard.tsx";
 import ISSWatcher from "./ISSWatcher.jsx";
 import Starlink from "./Starlink.jsx";
 import Moon from "./Moon.jsx";
