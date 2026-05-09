@@ -59,12 +59,12 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  /* 4. Smooth theme transition */
+  /* Smooth theme transition */
   transition: all 0.5s ease-in-out;
-  /* 1. Force hardware acceleration for smoother gradients */
+  /*  Force hardware acceleration for smoother gradients */
   transform: translateZ(0);
 
-  /* 2. Fix jagged edges on Chrome/Windows */
+  /* Fix jagged edges on Chrome/Windows */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   filter: drop-shadow(0 0 6px var(--separator-glow));
@@ -77,10 +77,10 @@
   margin: 0px 0;
   letter-spacing: 0px;
 
-  /* 1. Dynamic Color */
+  /*  Dynamic Color */
   color: var(--text-main);
   opacity: 0.89;
-  /* 2. Glass  Effect */
+  /*  Glass  Effect */
   text-shadow:
     0 1px 1px rgba(255, 255, 255, 0.3),
     /* Top highlight */ 0 0 6px var(--separator-glow); /* Theme-based glow */
@@ -95,7 +95,7 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  /* 4. Smooth theme transition */
+  /*  Smooth theme transition */
   transition: all 0.5s ease-in-out;
 }
 
@@ -219,7 +219,7 @@
   
 }
 
-/* 1. Consolidate into ONE class to stop the style-fighting */
+/* Consolidate into ONE class to stop the style-fighting */
 .search-wrapper input,
 .search-input-field {
   display: flex !important;
@@ -258,7 +258,7 @@
 }
 .search-wrapper input:focus {
   border-color: var(--accent-color);
-  background: var(--glow-sub); /* Keeping your background consistent */
+  background: var(--glow-sub); 
   box-shadow: 0 0 6px var(--separator-glow2);
 }
 
@@ -503,3 +503,5 @@ img[src*="marker"],
   letter-spacing: -1px;
   margin-top: 5rem;
 }
+
+

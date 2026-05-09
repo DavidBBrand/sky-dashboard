@@ -1,9 +1,9 @@
 :root {
   /* Day Theme (Refined Solar) */
-  --bg-color: #f5f3ef;
-  --mesh-1: rgb(166, 196, 223);
-  --mesh-2: rgb(221, 215, 207);
-  --mesh-3: hsla(40, 20%, 80%, 1); /* From index.css */
+  --bg-color: #fafbf8;
+  --mesh-1: rgb(245, 246, 240);
+  --mesh-2: rgb(237, 240, 221);
+  --mesh-3: rgb(236, 247, 234); /* From index.css */
   
   --card-bg: rgba(60, 87, 168, 0.1);
   --card-border: rgba(62, 51, 35, 0.2);

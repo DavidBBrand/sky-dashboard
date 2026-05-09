@@ -247,6 +247,8 @@
 }
 
 .radar-status {
-  font-size: 1.6rem;
+  font-size: 1.9rem;
   font-family: 'Share Tech', sans-serif;
+  margin-top: 100px;
+  margin-right: 140px;
 }

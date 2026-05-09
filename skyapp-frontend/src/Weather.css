@@ -1,4 +1,4 @@
-/* 1. Main Layout Containers */
+/* Main Layout Containers */
 .weather-container {
     display: flex;
     flex-direction: column;
@@ -15,12 +15,12 @@
     margin: 20px 0 10px;
       color: var(--text-main);
   opacity: 0.85;
-  /* 2. Glass  Effect */
+  /* Glass  Effect */
   text-shadow: 
     0 1px 1px rgba(255, 255, 255, 0.3), /* Top highlight */
     0 0 15px var(--separator-glow);      /* Theme-based glow */
 
-  /* This creates a semi-transparent 'cut-through' effect */
+  /* semi-transparent 'cut-through' effect */
   background: linear-gradient(
     to bottom, 
     var(--text-main) 0%, 
@@ -30,7 +30,7 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  /* 4. Smooth theme transition */
+  /* Smooth theme transition */
   transition: all 0.5s ease-in-out;
 }
 
@@ -104,7 +104,7 @@
     0%, 100% { opacity: 0.5; }
     50% { opacity: 1; }
 }
-/* 5. Loader Component */
+/* Loader Component */
 .weather-loader {
     width: 40px;
     height: 40px;
@@ -126,10 +126,10 @@
   width: 100%;
   height: 2px;
   background: rgba(74, 222, 128, 0.2); /* Faint green scan line */
-  box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
   z-index: 1001;
   pointer-events: none;
-  animation: map-scan 4s linear infinite;
+  animation: map-scan 3.7s linear infinite;
 }
 
 @keyframes map-scan {
