@@ -3,20 +3,37 @@ import * as satellite from "satellite.js";
 import { useLocation } from "./LocationContext";
 import "./Starlink.css";
 
-const Starlink = memo(() => {
-  // FIX: Destructure 'location' (the key used in Context), then get lat/lon
+// 1. Define the TLE (Two-Line Element) structure from your FastAPI backend
+interface TLEData {
+  OBJECT_NAME: string;
+  OBJECT_ID: string;
+  NORAD_CAT_ID: string;
+  TLE_LINE0: string;
+  TLE_LINE1: string;
+  TLE_LINE2: string;
+}
+
+// 2. Define the Radar Node (The processed visual point)
+interface RadarNode {
+  x: number;
+  y: number;
+  id: string;
+  name: string;
+  distance: number;
+}
+
+const Starlink: React.FC = memo(() => {
   const { location } = useLocation();
   const { lat, lon } = location;
 
-  const [nodes, setNodes] = useState([]);
-  const [tles, setTles] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [isAlert, setIsAlert] = useState(false);
+  const [nodes, setNodes] = useState<RadarNode[]>([]);
+  const [tles, setTles] = useState<TLEData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [isAlert, setIsAlert] = useState<boolean>(false);
 
   useEffect(() => {
     setLoading(true);
-    const API_BASE_URL =
-      import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+    const API_BASE_URL = (import.meta.env.VITE_API_URL as string) || "http://127.0.0.1:8000";
 
     fetch(`${API_BASE_URL}/starlink-live?lat=${lat}&lon=${lon}`)
       .then((res) => res.json())
@@ -35,35 +52,42 @@ const Starlink = memo(() => {
 
     const now = new Date();
     const gmst = satellite.gstime(now);
+    
+    // Observer position (Geodetic)
     const observerGd = {
-      latitude: satellite.degreesToRadians(parseFloat(lat)),
-      longitude: satellite.degreesToRadians(parseFloat(lon)),
-      height: 0.122
+      latitude: satellite.degreesToRadians(parseFloat(lat as unknown as string)),
+      longitude: satellite.degreesToRadians(parseFloat(lon as unknown as string)),
+      height: 0.122 // Ground altitude in km
     };
 
-    const visiblePoints = [];
-    // FIX: Added 'let' to avoid ReferenceError
+    const visiblePoints: RadarNode[] = [];
     let closeContact = false;
 
     tles.forEach((sat) => {
       try {
-        const satrec = satellite.json2satrec(sat);
+        // Convert the JSON TLE back to a satellite record object
+        const satrec = satellite.json2satrec(
+          sat.TLE_LINE1, 
+          sat.TLE_LINE2
+        );
+
         if (satrec && !satrec.error) {
           const pv = satellite.propagate(satrec, now);
-          if (pv && pv.position) {
+          
+          if (pv && typeof pv.position !== 'boolean') {
             const satEcf = satellite.eciToEcf(pv.position, gmst);
             const lookAngles = satellite.ecfToLookAngles(observerGd, satEcf);
+
             if (lookAngles.elevation > 0) {
-              // FIX: Use .rangeSat instead of .range
               const slantRangeKm = lookAngles.rangeSat;
 
               if (slantRangeKm) {
                 const slantRangeMiles = Math.round(slantRangeKm * 0.621371);
 
-                // Proximity Alert logic
+                // Proximity Alert logic (Distance in miles)
                 if (slantRangeMiles < 400) closeContact = true;
 
-        
+                // Radar projection math
                 const r = (1 - lookAngles.elevation / (Math.PI / 2)) * 42;
                 const theta = lookAngles.azimuth - Math.PI / 2;
 
@@ -79,7 +103,7 @@ const Starlink = memo(() => {
           }
         }
       } catch (e) {
-        console.log("An error has occured in Starlink satellite logic:", e);
+        console.warn("An error has occurred in Starlink satellite logic:", e);
       }
     });
 
@@ -138,10 +162,10 @@ const Starlink = memo(() => {
           <p className="stat-value glow-sub">{nodes.length}</p>
         </div>
         <div className="stat-group" style={{ textAlign: "right" }}>
-          <p className="stat-caption" >Observer </p>
+          <p className="stat-caption">Observer </p>
           <p className="stat-value glow-sub">
-            {parseFloat(lat).toFixed(1)}°N{" "} / 
-            {Math.abs(parseFloat(lon)).toFixed(1)}°W
+            {parseFloat(lat as unknown as string).toFixed(1)}°N{" "} / 
+            {Math.abs(parseFloat(lon as unknown as string)).toFixed(1)}°W
           </p>
         </div>
       </div>
@@ -150,3 +174,5 @@ const Starlink = memo(() => {
 });
 
 export default Starlink;
+
+

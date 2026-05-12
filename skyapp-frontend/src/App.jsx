@@ -6,9 +6,9 @@ import Planets from "./Planets";
 import LocationSearch from "./LocationSearch.jsx";
 import GoldenHour from "./GoldenHour";
 import MapCard from "./MapCard";
-import ISSWatcher from "./ISSWatcher.jsx";
-import Starlink from "./Starlink.jsx";
-import Moon from "./Moon.jsx";
+import ISSWatcher from "./ISSWatcher";
+import Starlink from "./Starlink";
+import Moon from "./Moon";
 import logoDay from "./assets/skywatchday.png";
 import logoNight from "./assets/skywatch.png";
 

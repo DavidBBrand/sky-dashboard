@@ -2,27 +2,40 @@ import React, { useState, useEffect, memo } from "react";
 import "./ISSWatcher.css";
 import { useLocation } from "./LocationContext";
 
-const ISSWatcher = memo(({ onDistanceUpdate }) => {
-  const [issPos, setIssPos] = useState({ lat: 0, lon: 0 });
-  const [distance, setDistance] = useState(null);
-  const [cityName, setCityName] = useState("Local Station");
+// 1. Define Props Interface
+interface ISSWatcherProps {
+  onDistanceUpdate?: (distance: number) => void;
+}
+
+// 2. Define State Interfaces
+interface ISSPosition {
+  lat: number;
+  lon: number;
+}
+
+const ISSWatcher: React.FC<ISSWatcherProps> = memo(({ onDistanceUpdate }) => {
+  const [issPos, setIssPos] = useState<ISSPosition>({ lat: 0, lon: 0 });
+  const [distance, setDistance] = useState<number | null>(null);
+  // Optional: Keeping cityName for future expansion of the Nominatim logic
+  const [, setCityName] = useState<string>("Local Station");
 
   const { location } = useLocation();
-  const { lat, lon, name } = location; // Pull 'name' to use as a fallback
+  const { lat, lon, name } = location;
 
   useEffect(() => {
-    // 1. Initialize the controller
     const controller = new AbortController();
     const signal = controller.signal;
 
-    const getLocalName = async (issLat, issLon) => {
+    // Type-safe Geocoding (if you decide to re-enable)
+    const getLocalName = async (issLat: number, issLon: number) => {
       try {
+        const email = import.meta.env.VITE_NOMINATIM_EMAIL as string || "anonymous";
         const response = await fetch(
           `https://nominatim.openstreetmap.org/reverse?format=json&lat=${issLat}&lon=${issLon}`,
           {
-            signal, // 2. Attach signal to Nominatim
+            signal,
             headers: {
-              "User-Agent": `SkyWatch/1.0 (${import.meta.env.VITE_NOMINATIM_EMAIL || "anonymous"})`
+              "User-Agent": `SkyWatch/1.0 (${email})`
             }
           }
         );
@@ -38,48 +51,44 @@ const ISSWatcher = memo(({ onDistanceUpdate }) => {
             "Unknown Waters";
           setCityName(city);
         }
-      } catch (err) {
+      } catch (err: any) {
         if (err.name !== "AbortError") console.error("Nominatim error:", err);
       }
     };
 
     const fetchISS = async () => {
       try {
-        // 🛰️ Using a more reliable API that supports HTTPS properly
         const res = await fetch(
           "https://api.wheretheiss.at/v1/satellites/25544",
           { signal }
         );
         const data = await res.json();
 
-        // Note: This API returns numbers directly, so no need for extra parsing
         const issLat = data.latitude;
         const issLon = data.longitude;
 
         setIssPos({ lat: issLat, lon: issLon });
 
-        // Haversine Formula (Keep your existing math below this...)
-        const R = 3958.8;
+        // 3. Haversine Formula for Distance Tracking
+        const R = 3958.8; // Earth's radius in miles
         const dLat = (issLat - lat) * (Math.PI / 180);
-
-        // Calculate Distance (Haversine Formula)
-
         const dLon = (issLon - lon) * (Math.PI / 180);
+        
         const a =
           Math.sin(dLat / 2) * Math.sin(dLat / 2) +
           Math.cos(lat * (Math.PI / 180)) *
             Math.cos(issLat * (Math.PI / 180)) *
             Math.sin(dLon / 2) *
             Math.sin(dLon / 2);
+            
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         const currentDistance = R * c;
 
         setDistance(currentDistance);
         if (onDistanceUpdate) onDistanceUpdate(currentDistance);
-
-        // Optional: Only geocode if it's over a new area (save your rate limit!)
-        // getLocalName(issLat, issLon);
-      } catch (e) {
+        
+        // getLocalName(issLat, issLon); // Call if needed
+      } catch (e: any) {
         if (e.name !== "AbortError") console.error("ISS Tracking Offline");
       }
     };
@@ -88,7 +97,6 @@ const ISSWatcher = memo(({ onDistanceUpdate }) => {
     const interval = setInterval(fetchISS, 10000);
 
     return () => {
-      // 3. Cleanup: Cancel all pending requests and clear interval
       controller.abort();
       clearInterval(interval);
     };
@@ -128,8 +136,12 @@ const ISSWatcher = memo(({ onDistanceUpdate }) => {
       </div>
 
       <div className="telemetry-coords">
-        <div style={{letterSpacing: "1px"}}>Latitude: <span className="glow-sub2"> {parseFloat(issPos.lat).toFixed(2)} </span></div> <div>  Longitude:{" "}
-        <span className="glow-sub2">{parseFloat(issPos.lon).toFixed(2)}</span></div>
+        <div style={{letterSpacing: "1px"}}>
+          Latitude: <span className="glow-sub2"> {issPos.lat.toFixed(2)} </span>
+        </div> 
+        <div> 
+          Longitude: <span className="glow-sub2">{issPos.lon.toFixed(2)}</span>
+        </div>
       </div>
 
       <iframe
@@ -147,3 +159,5 @@ const ISSWatcher = memo(({ onDistanceUpdate }) => {
 });
 
 export default ISSWatcher;
+
+
