@@ -31,7 +31,17 @@ function App() {
     let localSolarHours = (utcHours + solarOffset + 24) % 24;
     const h = Math.floor(localSolarHours);
     const m = Math.floor((localSolarHours - h) * 60);
-    return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
+    const minutes = m.toString().padStart(2, "0");
+
+    // 24 hour logic
+    const solar24 = `${h.toString().padStart(2, "0")}:${minutes}`;
+
+    // 12 hour time logic
+    const period = h >= 12 ? "PM" : "AM";
+    const h12 = h % 12 || 12;
+    const solar12 = `${h12.toString().padStart(2, "0")}:${minutes} ${period}`;
+
+    return { solar24, solar12 };
   };
 
   const getLiveLocalTime = () => {
@@ -61,7 +71,7 @@ function App() {
           year: "numeric",
           timeZone: targetTimeZone
         })
-        .replace(/(\w+)/, "$1.");
+        .replace(/(\w+)/, "$1");
       setLocationDate(dateString);
     } catch (e) {
       console.error("Timezone Error:", e);
@@ -129,6 +139,8 @@ function App() {
       </div>
     );
   }
+
+  const { solar24, solar12 } = getLocalSolarTime();
   return (
     <div className="app-container">
       {/* SYSTEM STATUS OVERLAY */}
@@ -158,14 +170,14 @@ function App() {
         </div>
 
         <div className="telemetry-info">
-          <span className="glow-sub">{location.name}</span>
+          <span className="glow-sub">{location.name}  {locationDate}</span>
           <span className="glow-sub">
             {Math.abs(location.lat).toFixed(2)}°{location.lat >= 0 ? "N" : "S"}{" "}
             / {Math.abs(location.lon).toFixed(2)}°
             {location.lon >= 0 ? "E" : "W"}
           </span>
           <span className="time-display">
-            Solar Time: {getLocalSolarTime()}
+            Solar Time: {solar24} ({solar12})
           </span>
           <span className="glow-sub">
             UTC Offset: {location.lon >= 0 ? "+" : ""}

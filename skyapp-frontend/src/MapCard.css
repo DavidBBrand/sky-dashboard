@@ -18,12 +18,11 @@
   position: relative;
   right: 14px;
   overflow: hidden;
-  border: 8px dotted var(--separator-glow2);
-  padding: 8px;
-  margin-right: 20px;
+  border: 1px solid var(--separator-glow2);
+  padding: 10px;
+  margin:12px auto;
+  color: gray;
 
-
-  
 }
 
 .scanning-line {

@@ -63,7 +63,7 @@ const SolarCycle: React.FC<SolarCycleProps> = memo(({ sun, timezone, date }) => 
     <div className="solar-cycle-container">
       <div className="solar-flex">
         <div className="solar-item" style={{ flex: 1 }}>
-          <div className="sub-title">Sunrise on  {date}</div>
+          <div className="sub-title">Sunrise</div>
           <span style={{ fontSize: "3.0rem" }} role="img" aria-label="sunrise">
             🌅
           </span>

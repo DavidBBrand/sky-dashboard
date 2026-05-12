@@ -50,11 +50,11 @@
 
 .weather-details-grid {
   margin-top: 15px;
-  padding: 18px;
+  padding: 12px;
   border-radius: 2rem;
   display: flex;
   flex-direction:row;
-  gap:16px;
+  gap:12px;
   margin-bottom: 8px;
   
   /* The Glass Effect */
