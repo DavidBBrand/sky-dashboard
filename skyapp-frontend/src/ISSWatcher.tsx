@@ -73,20 +73,20 @@ const ISSWatcher: React.FC<ISSWatcherProps> = memo(({ onDistanceUpdate }) => {
         const R = 3958.8; // Earth's radius in miles
         const dLat = (issLat - lat) * (Math.PI / 180);
         const dLon = (issLon - lon) * (Math.PI / 180);
-        
+
         const a =
           Math.sin(dLat / 2) * Math.sin(dLat / 2) +
           Math.cos(lat * (Math.PI / 180)) *
-            Math.cos(issLat * (Math.PI / 180)) *
-            Math.sin(dLon / 2) *
-            Math.sin(dLon / 2);
-            
+          Math.cos(issLat * (Math.PI / 180)) *
+          Math.sin(dLon / 2) *
+          Math.sin(dLon / 2);
+
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         const currentDistance = R * c;
 
         setDistance(currentDistance);
         if (onDistanceUpdate) onDistanceUpdate(currentDistance);
-        
+
         // getLocalName(issLat, issLon); // Call if needed
       } catch (e: any) {
         if (e.name !== "AbortError") console.error("ISS Tracking Offline");
@@ -136,11 +136,16 @@ const ISSWatcher: React.FC<ISSWatcherProps> = memo(({ onDistanceUpdate }) => {
       </div>
 
       <div className="telemetry-coords">
-        <div style={{letterSpacing: "1px"}}>
-          Latitude: <span className="glow-sub2"> {issPos.lat.toFixed(2)} </span>
-        </div> 
-        <div> 
-          Longitude: <span className="glow-sub2">{issPos.lon.toFixed(2)}</span>
+        <div style={{ letterSpacing: "1px" }}>
+          Latitude: <span className="glow-sub2">
+            {/* Use optional chaining ?. and provide a fallback "0.00" */}
+            {issPos.lat?.toFixed?.(2) ?? "0.00"}
+          </span>
+        </div>
+        <div>
+          Longitude: <span className="glow-sub2">
+            {issPos.lon?.toFixed?.(2) ?? "0.00"}
+          </span>
         </div>
       </div>
 
