@@ -142,8 +142,8 @@ const Starlink: React.FC = memo(() => {
           <span className="radar-label label-center">{location.name}</span>
         </div>
         <span className="radar-label label-r1">400mi</span>
-        <span className="radar-label label-r2">750mi</span>
-        <span className="radar-label label-r3">1600mi</span>
+        <span className="radar-label label-r2">700mi</span>
+        <span className="radar-label label-r3">1800mi</span>
 
         {nodes.map((n) => (
           <div
