@@ -40,7 +40,7 @@
 }
 .main-title {
   font-family: "Fredericka The Great";
-  font-size: 3.6rem; /* Slightly larger for the new name */
+  font-size: 3rem; /* Slightly larger for the new name */
   letter-spacing: 2px;
   margin: 0px auto;
   text-transform: uppercase;
@@ -76,6 +76,7 @@
   font-size: 1.6rem; /* Slightly larger for the new name */
   margin: 0px 0;
   letter-spacing: 0px;
+  font-weight: 300;
 
   /*  Dynamic Color */
   color: var(--text-main);

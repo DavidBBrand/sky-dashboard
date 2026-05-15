@@ -18,7 +18,7 @@ export const LocationProvider = ({ children }) => {
       );
       
       const data = await response.json();
-      console.log("Timezone API Response:", data); // Debug log to inspect the structure
+      // console.log("Timezone API Response:", data); // Debug log to inspect the structure
       return data.timeZone || "UTC";
     } catch (error) {
       console.error("Timezone fetch failed:", error);

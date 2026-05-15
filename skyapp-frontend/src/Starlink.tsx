@@ -42,7 +42,7 @@ const Starlink: React.FC = memo(() => {
         setLoading(false);
       })
       .catch((e) => {
-        console.error("🛰️ DATA LOAD ERROR:", e);
+        console.error(" DATA LOAD ERROR:", e);
         setLoading(false);
       });
   }, [lat, lon]);
@@ -52,7 +52,7 @@ const Starlink: React.FC = memo(() => {
 
     const now = new Date();
     const gmst = satellite.gstime(now);
-    
+
     // Observer position (Geodetic)
     const observerGd = {
       latitude: satellite.degreesToRadians(parseFloat(lat as unknown as string)),
@@ -63,17 +63,20 @@ const Starlink: React.FC = memo(() => {
     const visiblePoints: RadarNode[] = [];
     let closeContact = false;
 
-    tles.forEach((sat) => {
+    tles.forEach((sat: any) => {
       try {
-        // Convert the JSON TLE back to a satellite record object
-        const satrec = satellite.json2satrec(
-          sat.TLE_LINE1, 
-          sat.TLE_LINE2
-        );
+        if (!sat || sat.error) return;
+
+        const line1 = sat.TLE_LINE1;
+        const line2 = sat.TLE_LINE2;
+
+        if (!line1 || !line2) return;
+
+        const satrec = satellite.twoline2satrec(line1, line2);
 
         if (satrec && !satrec.error) {
           const pv = satellite.propagate(satrec, now);
-          
+
           if (pv && typeof pv.position !== 'boolean') {
             const satEcf = satellite.eciToEcf(pv.position, gmst);
             const lookAngles = satellite.ecfToLookAngles(observerGd, satEcf);
@@ -84,18 +87,20 @@ const Starlink: React.FC = memo(() => {
               if (slantRangeKm) {
                 const slantRangeMiles = Math.round(slantRangeKm * 0.621371);
 
-                // Proximity Alert logic (Distance in miles)
                 if (slantRangeMiles < 400) closeContact = true;
 
-                // Radar projection math
                 const r = (1 - lookAngles.elevation / (Math.PI / 2)) * 42;
                 const theta = lookAngles.azimuth - Math.PI / 2;
+
+                
+                const rawId = sat.OBJECT_ID || sat.NORAD_CAT_ID || Math.random();
+                const rawName = sat.OBJECT_NAME || "STARLINK";
 
                 visiblePoints.push({
                   x: 50 + r * Math.cos(theta),
                   y: 50 + r * Math.sin(theta),
-                  id: sat.OBJECT_ID || sat.NORAD_CAT_ID,
-                  name: sat.OBJECT_NAME || "STARLINK",
+                  id: String(rawId),
+                  name: String(rawName),
                   distance: slantRangeMiles
                 });
               }
@@ -103,7 +108,7 @@ const Starlink: React.FC = memo(() => {
           }
         }
       } catch (e) {
-        console.warn("An error has occurred in Starlink satellite logic:", e);
+        console.log(e);
       }
     });
 
@@ -149,7 +154,7 @@ const Starlink: React.FC = memo(() => {
             <span className="node-tooltip">
               <strong className="tooltip-name">{n.name}</strong>
               <br />
-              <span style={{color: "var(--accent-color2)"}}>{n.distance} mi</span>
+              <span style={{ color: "var(--accent-color2)" }}>{n.distance} mi</span>
             </span>
           </div>
         ))}
@@ -164,7 +169,7 @@ const Starlink: React.FC = memo(() => {
         <div className="stat-group" style={{ textAlign: "right" }}>
           <p className="stat-caption">Observer </p>
           <p className="stat-value glow-sub">
-            {parseFloat(lat as unknown as string).toFixed(1)}°N{" "} / 
+            {parseFloat(lat as unknown as string).toFixed(1)}°N{" "} /
             {Math.abs(parseFloat(lon as unknown as string)).toFixed(1)}°W
           </p>
         </div>

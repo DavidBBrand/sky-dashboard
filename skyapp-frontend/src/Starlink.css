@@ -166,14 +166,14 @@
 /* 5. Nodes & Tooltips */
 .radar-node {
   position: absolute;
-  width: 9px;
-  height: 9px;
+  width: 4px;
+  height: 4px;
   background: var(--accent-color);
   border-radius: 50%;
   box-shadow: 0 0 2px var(--accent-color);
   transform: translate(-50%, -50%);
   z-index: 20;
-  animation: node-pulse 3s infinite ease-in-out;
+  animation: node-pulse 2s infinite ease-in-out;
 }
 @keyframes node-pulse {
   0% {
@@ -183,7 +183,7 @@
   50% {
     transform: translate(-50%, -50%) scale(1.1);
     opacity: 0.8;
-    box-shadow: 0 0 3px var(--accent-color);
+    box-shadow: 0 0 1px var(--accent-color);
   }
   100% {
     transform: translate(-50%, -50%) scale(1);

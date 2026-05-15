@@ -70,30 +70,55 @@ def get_upcoming_moon_phases():
 @app.get("/starlink-live")
 @cache_sky_data(ttl_seconds=86400)
 async def get_starlink_tles():
-    url = "https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=json"
+    url = "https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=tle"
     backup_path = Path(__file__).parent / "starlink_backup.json"
 
+    # 1. Disguise the API call as a standard Chrome browser to bypass the 403 block
     headers = {
-        "User-Agent": "Mozilla/5.0 SkyWatch-Telemetry-Monitor/1.0",
-        "Accept": "application/json"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "text/plain, */*; q=0.01",
+        "Accept-Language": "en-US,en;q=0.9"
     }
 
     async with httpx.AsyncClient(follow_redirects=True, headers=headers) as client:
         try:
-            # Short timeout so the user doesn't wait 15s for a failure
-            response = await client.get(url, timeout=5.0)
+            # Increased timeout to 15s to accommodate the large text file
+            response = await client.get(url, timeout=15.0)
             response.raise_for_status()
-            return response.json()[:100]
+
+            raw_lines = [line.strip()
+                         for line in response.text.splitlines() if line.strip()]
+
+            structured_sats = []
+            for i in range(0, len(raw_lines), 3):
+                if i + 2 < len(raw_lines):
+                    name = raw_lines[i]
+                    line1 = raw_lines[i+1]
+                    line2 = raw_lines[i+2]
+
+                    if line1.startswith("1 ") and line2.startswith("2 "):
+                        norad_id = line1[2:7].strip()
+                        structured_sats.append({
+                            "OBJECT_NAME": name,
+                            "OBJECT_ID": norad_id,
+                            "TLE_LINE1": line1,
+                            "TLE_LINE2": line2
+                        })
+
+            # 2. Auto-heal the backup file with the correct format!
+            if len(structured_sats) > 0:
+                with open(backup_path, "w") as f:
+                    json.dump(structured_sats, f)
+
+            return structured_sats[:1500]
 
         except (httpx.ConnectTimeout, httpx.HTTPStatusError, Exception) as e:
             print(f" LIVE FETCH FAILED: {e}. Switching to local backup.")
 
-            # FALLBACK: Load from the local JSON file
             if backup_path.exists():
                 with open(backup_path, "r") as f:
                     data = json.load(f)
-                    # return only the last 100 entries to keep it consistent with the live fetch
-                    return data[:100]
+                    return data[:1500]
 
             return {"error": "Satellite link offline."}
 
@@ -116,15 +141,19 @@ async def get_sky_summary(lat: float = Query(35.92), lon: float = Query(-86.86))
     is_blue_hour = -6 <= current_sun_alt < -4
 
     # 2. SUNRISE/SUNSET (With Polar Support)
-    t0 = ts.utc(t.utc_datetime().year, t.utc_datetime().month, t.utc_datetime().day)
+    t0 = ts.utc(t.utc_datetime().year,
+                t.utc_datetime().month, t.utc_datetime().day)
     t1 = ts.utc(t0.utc_datetime() + timedelta(days=1))
-    times, events = almanac.find_discrete(t0, t1, almanac.sunrise_sunset(eph, user_location))
+    times, events = almanac.find_discrete(
+        t0, t1, almanac.sunrise_sunset(eph, user_location))
 
     if len(times) == 0:
         sunrise_val = sunset_val = "Polar Day" if current_sun_alt > 0 else "Polar Night"
     else:
-        sunrise_val = times[events == 1][0].utc_iso() if any(events == 1) else None
-        sunset_val = times[events == 0][0].utc_iso() if any(events == 0) else None
+        sunrise_val = times[events == 1][0].utc_iso() if any(
+            events == 1) else None
+        sunset_val = times[events == 0][0].utc_iso() if any(
+            events == 0) else None
 
     # 3. ZENITH TELEMETRY
     inflection_times, transit_types = almanac.find_discrete(
@@ -178,6 +207,7 @@ async def get_sky_summary(lat: float = Query(35.92), lon: float = Query(-86.86))
         },
         "planets": planet_data
     }
+
 
 @app.get("/weather")
 @cache_sky_data(ttl_seconds=300)  # Cache for 15 mins to stay super safe
@@ -266,4 +296,3 @@ if __name__ == "__main__":
     print("Initializing Sky Watch Telemetry Dashboard...")
     # allows you to run the server by typing 'python main.py'
     uvicorn.run(app, host="0.0.0.0", port=8000)
-
