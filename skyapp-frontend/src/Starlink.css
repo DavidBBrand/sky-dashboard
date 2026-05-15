@@ -105,7 +105,7 @@
 }
 
 .radar-label {
-  font-size: 1rem;
+  font-size: .8rem;
   left: 51%;
   font-weight: bold;
 }
@@ -113,8 +113,7 @@
   position: static;
   left: 14px;
   top: -8px;
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: .8rem;
   background: rgba(0, 0, 0, 0.03);
   white-space: nowrap;
 
@@ -166,8 +165,8 @@
 /* 5. Nodes & Tooltips */
 .radar-node {
   position: absolute;
-  width: 4px;
-  height: 4px;
+  width: 3px;
+  height: 3px;
   background: var(--accent-color);
   border-radius: 50%;
   box-shadow: 0 0 2px var(--accent-color);
