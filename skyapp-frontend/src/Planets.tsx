@@ -126,12 +126,14 @@ const Planets: React.FC<PlanetsProps> = memo(({ skyData }) => {
                       color: isBelowHorizon ? "#a34631" : "#4a95ae",
                       fontWeight: "600",
                       letterSpacing: "-1px",
+                      lineHeight: "1",
+                      marginBottom: "-3px"
                       
                     }}
                   >
                     {info.altitude}° Alt
                   </div>
-                  <div>
+                  <div style={{ lineHeight: "1", marginBottom: "2px"}}>
                     <span className="distance">Distance: </span>
                     <span className="glow-sub2">
                       {info.distance_au} AU
