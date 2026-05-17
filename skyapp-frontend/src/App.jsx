@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "./LocationContext.jsx";
+import { useLocation } from "./LocationContext";
 import "./App.css";
 import Weather from "./Weather";
 import Planets from "./Planets";

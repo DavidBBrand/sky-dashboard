@@ -104,7 +104,7 @@ body::before {
     radial-gradient(6px 6px at 85% 27%, #ffffff, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
   
   /* Shrinking this multiplier creates the 5x density effect */
-  background-size: 270px 360px; 
+  background-size: 470px 300px; 
   
   opacity: var(--star-opacity);
   will-change: opacity;
