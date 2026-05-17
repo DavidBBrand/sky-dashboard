@@ -1,0 +1,492 @@
+import React, { useState, useEffect } from "react";
+import { useLocation } from "./LocationContext";
+import "./App.css";
+import Weather from "./Weather";
+import Planets from "./Planets";
+import LocationSearch from "./LocationSearch";
+import GoldenHour from "./GoldenHour";
+import MapCard from "./MapCard";
+import ISSWatcher from "./ISSWatcher";
+import Starlink from "./Starlink";
+import Moon from "./Moon";
+import logoDay from "./assets/skywatchday.png";
+import logoNight from "./assets/skywatch.png";
+
+// 1. Define flexible interfaces for your API payloads
+export interface SunData {
+  sunrise?: string;
+  sunset?: string;
+  phase?: number | string;
+  [key: string]: any; 
+}
+
+export interface SkyData {
+  sun?: SunData;
+  [key: string]: any; // Allows Planets/MapCard to access other fields safely
+}
+
+export interface WeatherData {
+  timezone?: string;
+  [key: string]: any;
+}
+
+const App: React.FC = () => {
+  const { location, updateLocation } = useLocation();
+  const hour = new Date().getHours();
+  
+  // 2. Strongly type your state variables
+  const [isNight, setIsNight] = useState<boolean>(hour < 6 || hour >= 20);
+  const [skyData, setSkyData] = useState<SkyData | null>(null);
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+  const [issDistance, setIssDistance] = useState<number | null>(null);
+  const [locationDate, setLocationDate] = useState<string>("");
+
+  const currentLogo = isNight ? logoNight : logoDay;
+
+  const getLocalSolarTime = () => {
+    // TS enforces this check because location.lon can be null
+    if (!location || location.lon === null) return { solar24: "--:--", solar12: "--:--" };
+    
+    const now = new Date();
+    const utcHours = now.getUTCHours() + now.getUTCMinutes() / 60;
+    const solarOffset = location.lon / 15;
+    let localSolarHours = (utcHours + solarOffset + 24) % 24;
+    const h = Math.floor(localSolarHours);
+    const m = Math.floor((localSolarHours - h) * 60);
+    const minutes = m.toString().padStart(2, "0");
+
+    const solar24 = `${h.toString().padStart(2, "0")}:${minutes}`;
+    const period = h >= 12 ? "PM" : "AM";
+    const h12 = h % 12 || 12;
+    const solar12 = `${h12.toString().padStart(2, "0")}:${minutes} ${period}`;
+
+    return { solar24, solar12 };
+  };
+
+  const getLiveLocalTime = () => {
+    if (!weatherData || !weatherData.timezone) return "--:--";
+
+    try {
+      return new Date().toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+        timeZone: weatherData.timezone
+      });
+    } catch (e) {
+      console.error("Local Time Error:", e);
+      return "--:--";
+    }
+  };
+
+  useEffect(() => {
+    const targetTimeZone = weatherData?.timezone || "America/Chicago";
+    try {
+      const dateString = new Date()
+        .toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+          timeZone: targetTimeZone
+        })
+        .replace(/(\w+)/, "$1");
+      setLocationDate(dateString);
+    } catch (e) {
+      console.error("Timezone Error:", e);
+    }
+  }, [location.lat, location.lon, weatherData?.timezone]);
+
+  useEffect(() => {
+    if (location.isInitial && skyData?.sun?.sunrise && skyData?.sun?.sunset) {
+      const now = new Date();
+      const sunrise = new Date(skyData.sun.sunrise);
+      const sunset = new Date(skyData.sun.sunset);
+
+      const nowMins = now.getHours() * 60 + now.getMinutes();
+      const sunriseMins = sunrise.getHours() * 60 + sunrise.getMinutes();
+      const sunsetMins = sunset.getHours() * 60 + sunset.getMinutes();
+
+      const shouldBeNight = nowMins < sunriseMins || nowMins > sunsetMins;
+      setIsNight(shouldBeNight);
+
+      updateLocation({ ...location, isInitial: false } as typeof location);
+    }
+  }, [skyData, location, updateLocation]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      isNight ? "night" : "day"
+    );
+  }, [isNight]);
+
+  useEffect(() => {
+    if (location.lat === null) return;
+
+    const controller = new AbortController();
+    const fetchSkyData = async () => {
+      try {
+        const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+        const response = await fetch(
+          `${API_BASE_URL}/sky-summary?lat=${location.lat}&lon=${location.lon}`,
+          { signal: controller.signal }
+        );
+        
+        const data: SkyData = await response.json();
+        setSkyData(data);
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name !== "AbortError") {
+          console.error("FETCH ERROR:", err);
+        }
+      }
+    };
+
+    fetchSkyData();
+    return () => controller.abort();
+  }, [location.lat, location.lon]);
+
+  // 3. Early Return Type Narrowing
+  if (location.lat === null || location.lon === null) {
+    return (
+      <div className="loading-screen card-title">
+        <div className="scanner"></div>
+        <div>System Initializing...</div>
+        <div>
+          Location access required for observer coordinates. Please click <strong>'Allow'</strong>.
+        </div>
+      </div>
+    );
+  }
+
+  // Below this line, TypeScript mathematically guarantees location.lat and location.lon are numbers!
+  const { solar24, solar12 } = getLocalSolarTime();
+
+  return (
+    <div className="app-container">
+      {location.isInitial && (
+        <div className="system-status-bar">
+          <span className="blink">●</span> Initializing...
+        </div>
+      )}
+      <button
+        onClick={() => setIsNight(!isNight)}
+        className="theme-toggle-btn"
+        aria-label="Toggle day/night mode"
+      >
+        {isNight ? "🌙 Night Mode" : "☀️ Day Mode"}
+      </button>
+
+      <header className="header-section">
+        <h1 className="main-title">SKY WATCH</h1>
+        <h2 className="sub-title">Telemetry Dashboard</h2>
+
+        <div
+          className="logo-container"
+          style={{ backgroundImage: `url(${currentLogo})` }}
+        ></div>
+        <div className="search-wrapper">
+          <LocationSearch onLocationChange={updateLocation} />
+        </div>
+
+        <div className="telemetry-info">
+          <span className="glow-sub">{location.name}  {locationDate}</span>
+          <span className="glow-sub">
+            {Math.abs(location.lat).toFixed(2)}°{location.lat >= 0 ? "N" : "S"} /{" "}
+            {Math.abs(location.lon).toFixed(2)}°{location.lon >= 0 ? "E" : "W"}
+          </span>
+          <span className="time-display">
+            Solar Time: {solar24} ({solar12})
+          </span>
+          <span className="glow-sub">
+            UTC Offset: {location.lon >= 0 ? "+" : ""}
+            {(location.lon / 15).toFixed(1)} HRS
+          </span>
+          <span className="time-display">
+            Local Time: {weatherData ? getLiveLocalTime() : "--:--"}
+          </span>
+          {skyData?.sun?.phase && <GoldenHour sunData={skyData.sun} />}
+        </div>
+      </header>
+
+      <div className="dashboard-grid">
+        <div className="glass-card">
+          <Moon date={locationDate} />
+        </div>
+        <div className="glass-card">
+          <Weather
+            onDataReceived={setWeatherData}
+            sun={skyData?.sun}
+            theme={isNight ? "night" : "day"}
+          />
+        </div>
+        <div
+          className={`glass-card ${
+            issDistance !== null && issDistance < 500 ? "proximity-alert-active" : ""
+          }`}
+        >
+          <ISSWatcher onDistanceUpdate={setIssDistance} />
+        </div>
+        <div className="glass-card">
+          <Starlink />
+        </div>
+        <div className="glass-card">
+          <MapCard
+            theme={isNight ? "night" : "day"}
+            skyData={skyData}
+            date={locationDate}
+          />
+        </div>
+        <div className="glass-card">
+          {skyData ? (
+            <Planets skyData={skyData} />
+          ) : (
+            <div className="loading-card glow-sub2">
+              <div>Syncing with {location.name}...</div>
+            </div>
+          )}
+        </div>
+      </div>
+      <p className="copyright glow-sub2"> © 2026 David Brand</p>
+    </div>
+  );
+};
+
+export default App;
+
+
+// legacy jsx:
+
+// import { useState, useEffect } from "react";
+// import { useLocation } from "./LocationContext";
+// import "./App.css";
+// import Weather from "./Weather";
+// import Planets from "./Planets";
+// import LocationSearch from "./LocationSearch";
+// import GoldenHour from "./GoldenHour";
+// import MapCard from "./MapCard";
+// import ISSWatcher from "./ISSWatcher";
+// import Starlink from "./Starlink";
+// import Moon from "./Moon";
+// import logoDay from "./assets/skywatchday.png";
+// import logoNight from "./assets/skywatch.png";
+
+// function App() {
+//   const { location, updateLocation } = useLocation();
+//   const hour = new Date().getHours();
+//   const [isNight, setIsNight] = useState(hour < 6 || hour >= 20); // adjusted night hours to 8 PM(20) - 6 AM(6)
+//   const [skyData, setSkyData] = useState(null);
+//   const [weatherData, setWeatherData] = useState(null);
+//   const [issDistance, setIssDistance] = useState(null);
+//   const [locationDate, setLocationDate] = useState("");
+
+//   const currentLogo = isNight ? logoNight : logoDay;
+
+//   const getLocalSolarTime = () => {
+//     if (!location) return "--:--";
+//     const now = new Date();
+//     const utcHours = now.getUTCHours() + now.getUTCMinutes() / 60;
+//     const solarOffset = location.lon / 15;
+//     let localSolarHours = (utcHours + solarOffset + 24) % 24;
+//     const h = Math.floor(localSolarHours);
+//     const m = Math.floor((localSolarHours - h) * 60);
+//     const minutes = m.toString().padStart(2, "0");
+
+//     // 24 hour logic
+//     const solar24 = `${h.toString().padStart(2, "0")}:${minutes}`;
+
+//     // 12 hour time logic
+//     const period = h >= 12 ? "PM" : "AM";
+//     const h12 = h % 12 || 12;
+//     const solar12 = `${h12.toString().padStart(2, "0")}:${minutes} ${period}`;
+
+//     return { solar24, solar12 };
+//   };
+
+//   const getLiveLocalTime = () => {
+//     // Visual Crossing
+//     if (!weatherData || !weatherData.timezone) return "--:--";
+
+//     try {
+//       return new Date().toLocaleTimeString("en-US", {
+//         hour: "2-digit",
+//         minute: "2-digit",
+//         hour12: true,
+//         timeZone: weatherData.timezone
+//       });
+//     } catch (e) {
+//       console.error("Local Time Error:", e);
+//       return "--:--";
+//     }
+//   };
+//   // Sync Date with Timezone
+//   useEffect(() => {
+//     const targetTimeZone = weatherData?.timezone || "America/Chicago";
+//     try {
+//       const dateString = new Date()
+//         .toLocaleDateString("en-US", {
+//           month: "short",
+//           day: "numeric",
+//           year: "numeric",
+//           timeZone: targetTimeZone
+//         })
+//         .replace(/(\w+)/, "$1");
+//       setLocationDate(dateString);
+//     } catch (e) {
+//       console.error("Timezone Error:", e);
+//     }
+//   }, [location.lat, location.lon, weatherData?.timezone]);
+
+
+//   useEffect(() => {
+//     if (location.isInitial && skyData?.sun?.sunrise && skyData?.sun?.sunset) {
+//       const now = new Date();
+//       const sunrise = new Date(skyData.sun.sunrise);
+//       const sunset = new Date(skyData.sun.sunset);
+
+//       const nowMins = now.getHours() * 60 + now.getMinutes();
+//       const sunriseMins = sunrise.getHours() * 60 + sunrise.getMinutes();
+//       const sunsetMins = sunset.getHours() * 60 + sunset.getMinutes();
+
+//       const shouldBeNight = nowMins < sunriseMins || nowMins > sunsetMins;
+//       setIsNight(shouldBeNight);
+
+//       // Switch off isInitial so the user can manually toggle the theme
+//       updateLocation({ ...location, isInitial: false });
+//     }
+//     // Add the missing dependencies here:
+//   }, [skyData, location, updateLocation]);
+
+//   // This ensures the attribute is set even if skyData fails to load
+//   useEffect(() => {
+//     document.documentElement.setAttribute(
+//       "data-theme",
+//       isNight ? "night" : "day"
+//     );
+//   }, [isNight]);
+//   // Global Sky Data Fetch
+//   useEffect(() => {
+//     if (location.lat === null) return;
+
+//     const controller = new AbortController();
+//     const fetchSkyData = async () => {
+//       try {
+//         const API_BASE_URL =
+//           import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+//         const response = await fetch(
+//           `${API_BASE_URL}/sky-summary?lat=${location.lat}&lon=${location.lon}`,
+//           { signal: controller.signal }
+//         );
+//         const data = await response.json();
+//         setSkyData(data);
+//       } catch (err) {
+//         if (err.name !== "AbortError") console.error("FETCH ERROR:", err);
+//       }
+//     };
+
+//     fetchSkyData();
+//     return () => controller.abort();
+//   }, [location.lat, location.lon]); // fires once lat changes from null
+//   if (location.lat === null) {
+//     return (
+//       <div className="loading-screen card-title">
+//         <div className="scanner"></div>
+//         <div>System Initializing...</div>
+//         <div>
+//           Location access required for observer coordinates. Please click <strong>'Allow'</strong>.
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   const { solar24, solar12 } = getLocalSolarTime();
+//   return (
+//     <div className="app-container">
+//       {/* SYSTEM STATUS OVERLAY */}
+//       {location.isInitial && (
+//         <div className="system-status-bar">
+//           <span className="blink">●</span> Initializing...
+//         </div>
+//       )}
+//       <button
+//         onClick={() => setIsNight(!isNight)}
+//         className="theme-toggle-btn"
+//         aria-label="Toggle day/night mode"
+//       >
+//         {isNight ? "🌙 Night Mode" : "☀️ Day Mode"}
+//       </button>
+
+//       <header className="header-section">
+//         <h1 className="main-title">SKY WATCH</h1>
+//         <h2 className="sub-title">Telemetry Dashboard</h2>
+
+//         <div
+//           className="logo-container"
+//           style={{ backgroundImage: `url(${currentLogo})` }}
+//         ></div>
+//         <div className="search-wrapper">
+//           <LocationSearch onLocationChange={updateLocation} />
+//         </div>
+
+//         <div className="telemetry-info">
+//           <span className="glow-sub">{location.name}  {locationDate}</span>
+//           <span className="glow-sub">
+//             {Math.abs(location.lat).toFixed(2)}°{location.lat >= 0 ? "N" : "S"}{" "}
+//             / {Math.abs(location.lon).toFixed(2)}°
+//             {location.lon >= 0 ? "E" : "W"}
+//           </span>
+//           <span className="time-display">
+//             Solar Time: {solar24} ({solar12})
+//           </span>
+//           <span className="glow-sub">
+//             UTC Offset: {location.lon >= 0 ? "+" : ""}
+//             {(location.lon / 15).toFixed(1)} HRS
+//           </span>
+//           <span className="time-display">
+//             Local Time: {weatherData ? getLiveLocalTime() : "--:--"}
+//           </span>
+//           {skyData?.sun?.phase && <GoldenHour sunData={skyData.sun} />}
+//         </div>
+//       </header>
+
+//       <div className="dashboard-grid">
+//         <div className="glass-card">
+//           <Moon date={locationDate} />
+//         </div>
+//         <div className="glass-card">
+//           <Weather
+//             onDataReceived={setWeatherData}
+//             sun={skyData?.sun}
+//             theme={isNight ? "night" : "day"}
+//           />
+//         </div>
+//         <div
+//           className={`glass-card ${issDistance < 500 ? "proximity-alert-active" : ""}`}
+//         >
+//           <ISSWatcher onDistanceUpdate={setIssDistance} />
+//         </div>
+//         <div className="glass-card">
+//           <Starlink />
+//         </div>
+//         <div className="glass-card">
+//           <MapCard
+//             theme={isNight ? "night" : "day"}
+//             skyData={skyData}
+//             date={locationDate}
+//           />
+//         </div>
+//         <div className="glass-card">
+//           {skyData ? (
+//             <Planets skyData={skyData} />
+//           ) : (
+//             <div className="loading-card glow-sub2">
+//               <div>Syncing with {location.name}...</div>
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//       <p className="copyright glow-sub2"> © 2026 David Brand</p>
+//     </div>
+//   );
+// }
+
+// export default App;
