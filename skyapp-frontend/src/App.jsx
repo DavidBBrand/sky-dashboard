@@ -3,7 +3,7 @@ import { useLocation } from "./LocationContext";
 import "./App.css";
 import Weather from "./Weather";
 import Planets from "./Planets";
-import LocationSearch from "./LocationSearch.jsx";
+import LocationSearch from "./LocationSearch";
 import GoldenHour from "./GoldenHour";
 import MapCard from "./MapCard";
 import ISSWatcher from "./ISSWatcher";
