@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./WeatherMap.css";
 
-// 1. Interface for the Recenter helper
+// Interface for the Recenter helper
 interface MapCoords {
   lat: number;
   lon: number;
@@ -19,7 +19,7 @@ const RecenterMap: React.FC<MapCoords> = ({ lat, lon }) => {
   return null;
 };
 
-// 2. Interface for the Main WeatherMap
+// Interface for the Main WeatherMap
 interface WeatherMapProps {
   lat: number;
   lon: number;
@@ -27,7 +27,7 @@ interface WeatherMapProps {
 }
 
 const WeatherMap: React.FC<WeatherMapProps> = ({ lat, lon, theme }) => {
-  // 3. Type-safe access to your OpenWeather Wind/Map key
+  //  Type-safe access to your OpenWeather Wind/Map key
   const OPENWEATHER_API_KEY = (import.meta.env.VITE_WIND_MAP_KEY as string) || "";
   const isNight = theme === "night";
 

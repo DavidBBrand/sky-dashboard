@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import "./SolarCycle.css";
 import SolarCompass from "./SolarCompass";
 
-// 1. define shape of the Sun telemetry data
+//  define shape of the Sun telemetry data
 interface SunData {
   sunrise: string;
   sunset: string;
@@ -12,17 +12,7 @@ interface SunData {
   current_altitude: number; // required by SolarCompass
   phase: string; // required by Solar Compass
 }
-// legacy javascript logic:
-// const SolarCycle = memo(({ sun, timezone }) => {
-//   const formatTime = (isoString) => {
-// 1. Handle empty data
-//     if (!isoString || !sun) return "--:--";
 
-// 2. Handle Polar Edge Cases (Midnight Sun / Polar Night)
-// If the string contains "Polar", return it as-is (e.g., "Polar Day")
-//     if (typeof isoString === 'string' && isoString.includes("Polar")) {
-//       return isoString;
-//     }
 
 interface SolarCycleProps {
   sun: SunData;

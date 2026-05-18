@@ -3,7 +3,7 @@ import * as satellite from "satellite.js";
 import { useLocation } from "./LocationContext";
 import "./Starlink.css";
 
-// 1. Define the TLE (Two-Line Element) structure from your FastAPI backend
+//  Define the TLE (Two-Line Element) structure from your FastAPI backend
 interface TLEData {
   OBJECT_NAME: string;
   OBJECT_ID: string;
@@ -13,7 +13,7 @@ interface TLEData {
   TLE_LINE2: string;
 }
 
-// 2. Define the Radar Node (The processed visual point)
+//  Define the Radar Node (The processed visual point)
 interface RadarNode {
   x: number;
   y: number;
@@ -88,13 +88,13 @@ const Starlink: React.FC = memo(() => {
                 const slantRangeMiles = Math.round(slantRangeKm * 0.621371);
                 const MAX_RANGE = 500; // The absolute edge of your radar screen in miles
 
-                // 1. Hard cutoff: Ignore anything outside our local bubble
+                //  Ignore anything outside our local bubble
                 if (slantRangeMiles <= MAX_RANGE) {
 
                   // Trigger alert if they get within 150 miles
                   if (slantRangeMiles < 150) closeContact = true;
 
-                  // 2. Linear Distance Scaling:
+                  //  Linear Distance Scaling:
                   // If distance is 500mi, r = 48% (outer edge of the CSS circle).
                   // If distance is 250mi, r = 24% (middle ring).
                   const r = (slantRangeMiles / MAX_RANGE) * 48;
